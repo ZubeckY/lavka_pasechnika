@@ -5,6 +5,12 @@
 * {
   font-family: 'HelveticaNeueCyr', sans-serif !important;
 }
+/* */
+a {
+  font-size: 14px;
+  color: #5a6167 !important;
+  text-decoration: none;
+}
 /* scroller */
 ::-webkit-scrollbar {
   width: 8px;

@@ -21,8 +21,6 @@
 
     <pre v-text="getMapURL"></pre>
 
-    <pre v-text="mapPoints"></pre>
-
   </div>
 </template>
 

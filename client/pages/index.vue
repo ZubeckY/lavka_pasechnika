@@ -1,30 +1,12 @@
 <template>
   <v-container>
 
-    <header class="py-2">
-      <div class="d-flex flex-row justify-space-between">
-        <a @click="routing('/')">Главная</a>
-        <a @click="routing('/')">Каталог</a>
-        <a @click="routing('/')">Условия доставки и оплаты</a>
-        <a @click="routing('/')">Акции</a>
-        <a @click="routing('/')">О магазине</a>
-        <yandex-reviews/>
-        <a @click="routing('/contacts')">Контакты и адреса</a>
-
-
-      </div>
-
-      <v-divider/>
-    </header>
-
-
     <section v-show="false">
       <div>
         <v-card-title>Полезные советы</v-card-title>
         <v-card-text>В формате сторис</v-card-text>
       </div>
     </section>
-
 
     <!-- width = 991 - спрятать стрелки -->
     <section>
@@ -79,32 +61,8 @@
     <section class="mt-5">
       <div>
         <v-card-title>Популярные товары</v-card-title>
-
         <div class="d-flex flex-row mt-4">
-          <v-card class="product-card rounded-xl mr-3"
-                  style="box-shadow: 0 0 18px 7px rgba(34, 60, 80, .1)"
-                  width="180px" height="325px"
-                  v-for="i in 6" :key="i">
-            <div class="product-card__container">
-              <v-img class="rounded-xl" width="160px" height="160px"
-                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2kCrO5vzXnkiGZyI4hLoBY-FaUYe-iQRPg&usqp=CAU" alt="#"></v-img>
-
-              <v-card-title class="product-card__title mt-3">Мёд золотарник</v-card-title>
-
-              <div class="product-card__variables d-flex flex-row overflow-x-auto my-2">
-                <v-card class="product-card__variables_card rounded-xl mr-2"
-                        @click="routing('/test')" v-for="i in 5" :key="i"
-                        min-width="85px" min-height="56px" elevation="0">
-                </v-card>
-              </div>
-
-              <v-btn class="text-none font-weight-bold" height="40px"
-                     style="border-radius: 8px" color="white" elevation="0" block>
-                Выбрать
-              </v-btn>
-
-            </div>
-          </v-card>
+          <catalog-item v-for="i in 6" :key="i"/>
         </div>
       </div>
     </section>
@@ -130,7 +88,6 @@
 
           <v-card-subtitle class="font-weight-bold mt-4" style="color: #411a04; font-size: 16px; line-height: 14px">Квитко Николай Игнатьевич</v-card-subtitle>
           <v-card-text style="color:#eb9f11; font-size: 13px; line-height: 15px">основатель пасеки и пчеловод</v-card-text>
-
         </div>
 
 
