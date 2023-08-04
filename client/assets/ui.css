@@ -1,0 +1,18 @@
+/* product-card */
+.product-card {
+  background: linear-gradient(135deg, #f7f6f4, #f1f0ee, #f6f5f3, #eeedeb)
+}
+.product-card__container {
+  margin: 10px;
+}
+.product-card__title {
+  font-size: 14px !important;
+}
+.product-card__variables::-webkit-scrollbar,
+.product-card__variables::-webkit-scrollbar-track,
+.product-card__variables::-webkit-scrollbar-thumb {
+  display: none;
+}
+.product-card__variables_card {
+  border: 2px #dee2e6 solid !important;
+}
