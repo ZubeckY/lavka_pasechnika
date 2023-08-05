@@ -1,16 +1,15 @@
 <template>
-  <v-container>
-
+  <div>
     <section v-show="false">
-      <div>
+      <v-container>
         <v-card-title>Полезные советы</v-card-title>
         <v-card-text>В формате сторис</v-card-text>
-      </div>
+      </v-container>
     </section>
 
     <!-- width = 991 - спрятать стрелки -->
     <section>
-      <div>
+      <v-container>
         <v-carousel v-model="activeSlide"
                     class="custom-rounded mt-8"
                     next-icon="mdi-arrow-right-thin"
@@ -37,13 +36,11 @@
             </v-slide-item>
           </v-slide-group>
         </v-sheet>
-      </div>
+      </v-container>
     </section>
 
-
-
     <section class="mt-3">
-      <div>
+      <v-container>
         <v-card-title>Категории</v-card-title>
         <v-card-text>Более 10 категорий и подкатегорий натуральной продукции</v-card-text>
 
@@ -55,51 +52,53 @@
           <v-card class="custom-rounded ma-1" elevation="1" color="#98806d" width="480px" height="120px"></v-card>
           <v-card class="custom-rounded ma-1" elevation="1" color="#1f3738" width="190px" height="120px"></v-card>
         </div>
-      </div>
+      </v-container>
     </section>
 
     <section class="mt-5">
-      <div>
+      <v-container>
         <v-card-title>Популярные товары</v-card-title>
         <div class="d-flex flex-row mt-4">
           <catalog-item v-for="i in 6" :key="i"/>
         </div>
-      </div>
+      </v-container>
     </section>
 
     <section style="margin-top: 140px;">
-      <div class="d-flex flex-row">
+      <v-container>
+        <div class="d-flex flex-row">
 
-        <div class="">
+          <div class="">
 
-          <v-card-title style="color: #411a04;">Семейная пасека <br> с 10-ти летней историей </v-card-title>
+            <v-card-title style="color: #411a04;">Семейная пасека <br> с 10-ти летней историей </v-card-title>
 
-          <div class="my-4" style="width: 70px; height: 2px; background: #eb9f11"></div>
+            <div class="my-4" style="width: 70px; height: 2px; background: #eb9f11"></div>
 
-          <v-card-text class="font-weight-light" style="max-width: 620px; font-size: 16px; color: #411a04; line-height: 16px; letter-spacing: .1px !important">
-            У нас есть цель — сделать наш родной Южный мёд таким же популярным, как Башкирский и Алтайский.
-            У нас есть все условия и возможности ее добиться.
-          </v-card-text>
-          <v-card-text class="font-weight-light mt-4" style="max-width: 690px; font-size: 16px; color: #411a04; line-height: 16px; letter-spacing: .1px !important">
-            Мы используем все доступные нам современные технологии, чтобы сохранять, поддерживать и увеличивать популяцию породы Краснодарских пчёл.
-            Человечество не сможет и трёх лет продержаться, если с пчёлами что-то случиться, поэтому сейчас в условиях кризиса окружающей среды как никогда важно заботится об этом.
-            Мы <br> постоянно сотрудничаем с НИИ в области пчеловодства и способствуем развитию селекционной работы в России в целом.
-          </v-card-text>
+            <v-card-text class="font-weight-light" style="max-width: 620px; font-size: 16px; color: #411a04; line-height: 16px; letter-spacing: .1px !important">
+              У нас есть цель — сделать наш родной Южный мёд таким же популярным, как Башкирский и Алтайский.
+              У нас есть все условия и возможности ее добиться.
+            </v-card-text>
+            <v-card-text class="font-weight-light mt-4" style="max-width: 690px; font-size: 16px; color: #411a04; line-height: 16px; letter-spacing: .1px !important">
+              Мы используем все доступные нам современные технологии, чтобы сохранять, поддерживать и увеличивать популяцию породы Краснодарских пчёл.
+              Человечество не сможет и трёх лет продержаться, если с пчёлами что-то случиться, поэтому сейчас в условиях кризиса окружающей среды как никогда важно заботится об этом.
+              Мы <br> постоянно сотрудничаем с НИИ в области пчеловодства и способствуем развитию селекционной работы в России в целом.
+            </v-card-text>
 
-          <v-card-subtitle class="font-weight-bold mt-4" style="color: #411a04; font-size: 16px; line-height: 14px">Квитко Николай Игнатьевич</v-card-subtitle>
-          <v-card-text style="color:#eb9f11; font-size: 13px; line-height: 15px">основатель пасеки и пчеловод</v-card-text>
+            <v-card-subtitle class="font-weight-bold mt-4" style="color: #411a04; font-size: 16px; line-height: 14px">Квитко Николай Игнатьевич</v-card-subtitle>
+            <v-card-text style="color:#eb9f11; font-size: 13px; line-height: 15px">основатель пасеки и пчеловод</v-card-text>
+          </div>
+
+
+          <div style="width: 500px; height: 330px">
+            <img class="d-block" style="position:relative; top: -40px; width: 100%; height: 100%" alt="#" src="~assets/images/family.png">
+          </div>
+
         </div>
-
-
-        <div style="width: 500px; height: 330px">
-          <img class="d-block" style="position:relative; top: -40px; width: 100%; height: 100%" alt="#" src="~assets/images/family.png">
-        </div>
-
-      </div>
+      </v-container>
     </section>
 
     <section class="mt-1">
-      <div>
+      <v-container>
         <v-card-title class="justify-center mb-2" style="color: #411a04; font-size: 28px; letter-spacing: -0.1px;">Почему выбирают нас?</v-card-title>
         <v-card-text class="font-weight-regular text-center" style="color: #411a04; font-size: 18px; letter-spacing: -0.1px; line-height: 20px">
           Медовая и натуральная продукция
@@ -112,18 +111,16 @@
           <img class="d-block" style="width: 100%; height: 100%" alt="#" src="~assets/images/why-me.png">
         </div>
 
-      </div>
+      </v-container>
     </section>
 
-
-  </v-container>
+  </div>
 </template>
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator"
 @Component
 export default class Pages extends Vue {
   activeSlide: number = 0
-
 
   routing (link: string) {
     return this.$router.push(link)

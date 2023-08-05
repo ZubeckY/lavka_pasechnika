@@ -2,15 +2,17 @@
   <v-app>
     <v-main>
       <v-fade-transition>
-
-        <v-card elevation="0" height="100%" color="#fef6f2">
+        <v-card class="d-flex flex-column" elevation="0" height="100%" color="#fef6f2">
           <main-header/>
 
-          <v-fade-transition>
-            <nuxt/>
-          </v-fade-transition>
-        </v-card>
+          <div style="flex: 1 1 auto;">
+            <v-fade-transition>
+              <nuxt/>
+            </v-fade-transition>
+          </div>
 
+          <main-footer/>
+        </v-card>
       </v-fade-transition>
     </v-main>
   </v-app>

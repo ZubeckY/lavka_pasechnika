@@ -16,12 +16,13 @@
         </v-btn>
       </v-card-actions>
 
-      <iframe style="width:100%;height:100%;border:none;border-radius:8px;
+      <iframe style="width:100%;height:95%;border:none;border-radius:8px;
             box-sizing:border-box" src="https://yandex.ru/maps-reviews-widget/112646265113?comments">
       </iframe>
 
       <a href="https://yandex.ru/maps/org/lavka_pasechnika_rf/112646265113/" target="_blank"
-         style="color:#b3b3b3;
+         style="
+             color:#b3b3b3;
              font-family:YS Text,sans-serif;
              box-sizing:border-box;
              text-decoration:none;

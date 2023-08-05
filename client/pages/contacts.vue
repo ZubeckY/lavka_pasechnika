@@ -1,25 +1,34 @@
 <template>
   <div>
 
-    <iframe :src="getMapURL"
-            frameborder="0"
-            border-radius="8px"
-            allowfullscreen="true"
-            width="860" height="345"
-            style="position: relative;">
-    </iframe>
-
-    <v-chip-group v-model="mapping" active-class="white--text" column>
-      <v-chip v-for="(item, i) in mapPoints" :key="i" :value="item.value"
-              :color="mapping === item.value ? '#37a164' : '#e0e0e0'">
-        {{ item.text }}
-      </v-chip>
-    </v-chip-group>
-
-
-    <pre v-text="mapping"></pre>
-
-    <pre v-text="getMapURL"></pre>
+    <section>
+      <v-container>
+        <v-row>
+          <v-col class="ma-0 pa-0" cols="auto">
+            <iframe :src="getMapURL"
+                    frameborder="0"
+                    border-radius="8px"
+                    allowfullscreen="true"
+                    width="860" height="345"
+                    style="position: relative;">
+            </iframe>
+          </v-col>
+          <v-col class="ma-0 pa-0" cols="3">
+            <div class="pl-10">
+              <v-card-title style="font-size: 18px;">До встречи в наших магазинах</v-card-title>
+              <v-chip-group v-model="mapping" active-class="white--text" column>
+                <v-chip style="font-size: 13px; height: 28px"
+                        v-for="(item, i) in mapPoints"
+                        :key="i" :value="item.value"
+                        :color="mapping === item.value ? '#37a164' : '#e0e0e0'">
+                  {{ item.text }}
+                </v-chip>
+              </v-chip-group>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+    </section>
 
   </div>
 </template>
