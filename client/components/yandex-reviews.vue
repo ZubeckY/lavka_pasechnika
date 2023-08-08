@@ -5,13 +5,12 @@
       <a v-on="on" v-bind="attrs">Отзывы</a>
     </template>
 
-    <div style="background:#ffffff;width:760px;height:800px;overflow:hidden;position:relative;">
+    <div style="background:#ffffff;width:760px;height:740px;overflow:hidden;position:relative;">
 
       <v-card-actions class="pb-0">
         <v-spacer></v-spacer>
-        <v-btn @click="dialog = false"
-               elevation="0" fab small
-               color="grey lighten-3">
+        <v-btn @click="dialog = false" fab small
+               elevation="0" color="grey lighten-3">
           <v-icon color="grey">mdi-close</v-icon>
         </v-btn>
       </v-card-actions>

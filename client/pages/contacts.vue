@@ -1,36 +1,43 @@
 <template>
-  <div>
+  <section>
+    <v-container>
 
-    <section>
-      <v-container>
-        <v-row>
-          <v-col class="ma-0 pa-0" cols="auto">
-            <iframe :src="getMapURL"
-                    frameborder="0"
-                    border-radius="8px"
-                    allowfullscreen="true"
-                    width="860" height="345"
-                    style="position: relative;">
-            </iframe>
-          </v-col>
-          <v-col class="ma-0 pa-0" cols="3">
-            <div class="pl-10">
-              <v-card-title style="font-size: 18px;">До встречи в наших магазинах</v-card-title>
-              <v-chip-group v-model="mapping" active-class="white--text" column>
-                <v-chip style="font-size: 13px; height: 28px"
-                        v-for="(item, i) in mapPoints"
-                        :key="i" :value="item.value"
-                        :color="mapping === item.value ? '#37a164' : '#e0e0e0'">
-                  {{ item.text }}
-                </v-chip>
-              </v-chip-group>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
+      <div class="d-flex flex-row mt-5 mb-10" style="position:relative; left: -10px;">
+        <v-btn style="border-radius: 8px"
+               width="44px" height="44px" min-width="0"
+               color="#26ae60" elevation="0" dark>
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-btn>
+        <v-card-title class="ml-3">Контакты</v-card-title>
+      </div>
 
-  </div>
+      <v-row class="mb-5">
+        <v-col class="ma-0 pa-0" cols="auto">
+          <iframe :src="getMapURL"
+                  frameborder="0"
+                  border-radius="8px"
+                  allowfullscreen="true"
+                  width="860" height="345"
+                  style="position: relative;">
+          </iframe>
+        </v-col>
+        <v-col class="ma-0 pa-0" cols="3">
+          <div class="pl-9">
+            <v-card-title class="mb-1" style="font-size: 18px;">До встречи в наших магазинах</v-card-title>
+            <v-chip-group v-model="mapping" active-class="white--text" column>
+              <v-chip style="font-size: 13px; height: 28px"
+                      v-for="(item, i) in mapPoints"
+                      :key="i" :value="item.value"
+                      :color="mapping === item.value ? '#37a164' : '#e0e0e0'">
+                {{ item.text }}
+              </v-chip>
+            </v-chip-group>
+          </div>
+        </v-col>
+      </v-row>
+
+    </v-container>
+  </section>
 </template>
 
 <script lang="ts">
