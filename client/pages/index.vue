@@ -89,15 +89,15 @@
           </div>
 
 
-          <div style="width: 500px; height: 330px">
-            <img class="d-block" style="position:relative; top: -40px; width: 100%; height: 100%" alt="#" src="~assets/images/family.png">
+          <div style="width: 500px; height: 330px; position: relative; top: -40px;">
+            <img class="d-block" style="width: 100%; height: 100%" alt="#" src="~assets/images/company.png">
           </div>
 
         </div>
       </v-container>
     </section>
 
-    <section class="mt-1">
+    <section class="mt-6">
       <v-container>
         <v-card-title class="justify-center mb-2" style="color: #411a04; font-size: 28px; letter-spacing: -0.1px;">Почему выбирают нас?</v-card-title>
         <v-card-text class="font-weight-regular text-center" style="color: #411a04; font-size: 18px; letter-spacing: -0.1px; line-height: 20px">

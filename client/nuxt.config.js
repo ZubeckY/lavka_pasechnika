@@ -13,7 +13,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
     ]
   },
 
@@ -34,6 +34,23 @@ export default {
 
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/firebase',
+  ],
+
+  firebase: [
+    {
+      config: {
+        apiKey: "AIzaSyBn2Nqhm49k9RN-7HeA4tPAujlYG3zYqYk",
+        authDomain: "lavka-pasechnika-rf-a069f.firebaseapp.com",
+        projectId: "lavka-pasechnika-rf-a069f",
+        storageBucket: "lavka-pasechnika-rf-a069f.appspot.com",
+        messagingSenderId: "1056712525346",
+        appId: "1:1056712525346:web:e584718a5ee9288a2cac7b"
+      },
+      services: {
+        auth: true // Just as example. Can be any other service.
+      }
+    }
   ],
 
   axios: {
@@ -58,6 +75,10 @@ export default {
     }
   },
 
+  image: {
+    inject: true
+  },
+
   build: {
-  }
+  },
 }

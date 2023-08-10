@@ -38,19 +38,19 @@
 
             <div class="d-flex flex-row">
               <div style="width: 35px; height: 35px; margin-right: 8px;">
-                <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/social/vk.png">
+                <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/social/vklogo.png">
               </div>
 
               <div style="width: 35px; height: 35px; margin-right: 8px;">
-                <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/social/viber.png">
+                <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/social/вайбер.png">
               </div>
 
               <div style="width: 35px; height: 35px; margin-right: 8px;">
-                <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/social/whats-app.png">
+                <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/social/вотсапп.png">
               </div>
 
               <div style="width: 35px; height: 35px; margin-right: 8px;">
-                <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/social/telegram.png">
+                <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/social/телеграм.png">
               </div>
             </div>
           </div>

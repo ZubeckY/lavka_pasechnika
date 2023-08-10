@@ -12,7 +12,7 @@
 
         <div class="d-flex flex-row ml-8">
           <div style="position:relative; top: -20px; width: 40px; height: 64px;">
-            <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/header/rating_5_0.png">
+            <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/header/флажок.png">
           </div>
           <div class="mt-3 ml-3" style="position:relative; width: 147px; height: 41px;">
             <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/header/rating_5_0_stars.png">
@@ -35,13 +35,13 @@
           <v-card-subtitle style="font-size: 10px">Написать на прямую:</v-card-subtitle>
           <div class="d-flex flex-row mt-1">
             <div style="width: 26px; height: 26px; margin-left: 6px;">
-              <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/header/vk.png">
+              <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/social/vklogo.png">
             </div>
             <div class="mx-1" style="width: 26px; height: 26px;">
-              <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/header/viber.png">
+              <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/social/вайбер.png">
             </div>
             <div style="width: 26px; height: 26px;">
-              <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/header/whats-app.png">
+              <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~assets/images/social/вотсапп.png">
             </div>
           </div>
         </div>
