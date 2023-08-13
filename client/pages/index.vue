@@ -121,6 +121,15 @@ import {Component, Vue} from "vue-property-decorator"
 @Component
 export default class Pages extends Vue {
   activeSlide: number = 0
+  items: any = []
+
+  created () {
+    this.items = this.getCollections()
+  }
+
+  getCollections () {
+    return this.$store.getters['mainproducts/mainProducts'];
+  }
 
   routing (link: string) {
     return this.$router.push(link)

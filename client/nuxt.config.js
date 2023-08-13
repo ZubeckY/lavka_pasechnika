@@ -38,18 +38,43 @@ export default {
   ],
 
   firebase: {
-      config: {
-        apiKey: "AIzaSyBn2Nqhm49k9RN-7HeA4tPAujlYG3zYqYk",
-        authDomain: "lavka-pasechnika-rf-a069f.firebaseapp.com",
-        projectId: "lavka-pasechnika-rf-a069f",
-        storageBucket: "lavka-pasechnika-rf-a069f.appspot.com",
-        messagingSenderId: "1056712525346",
-        appId: "1:1056712525346:web:e584718a5ee9288a2cac7b"
-      },
-      services: {
-        auth: true // Just as example. Can be any other service.
-      }
+    config: {
+      apiKey: "AIzaSyBn2Nqhm49k9RN-7HeA4tPAujlYG3zYqYk",
+      authDomain: "lavka-pasechnika-rf-a069f.firebaseapp.com",
+      projectId: "lavka-pasechnika-rf-a069f",
+      storageBucket: "lavka-pasechnika-rf-a069f.appspot.com",
+      messagingSenderId: "1056712525346",
+      appId: "1:1056712525346:web:e584718a5ee9288a2cac7b"
     },
+    services: {
+      auth: {
+        initialize: {
+          onAuthStateChangedAction: 'onAuthStateChanged',
+        },
+        ssr: true,
+        emulatorPort: 9099,
+        disableEmulatorWarnings: false,
+      },
+      firestore: {
+        memoryOnly: false,
+        enablePersistence: true,
+        emulatorPort: 8080,
+      },
+      functions: true,
+      storage: {
+        emulatorPort: 9199,
+        emulatorHost: 'localhost',
+      },
+      database: {
+        emulatorPort: 9000
+      },
+      messaging: true,
+      performance: true,
+      appCheck: true,
+      analytics: true,
+      remoteConfig: true,
+    }
+  },
 
   axios: {
     baseURL: '/',
