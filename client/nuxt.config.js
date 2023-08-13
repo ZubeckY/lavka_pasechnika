@@ -37,8 +37,7 @@ export default {
     '@nuxtjs/firebase',
   ],
 
-  firebase: [
-    {
+  firebase: {
       config: {
         apiKey: "AIzaSyBn2Nqhm49k9RN-7HeA4tPAujlYG3zYqYk",
         authDomain: "lavka-pasechnika-rf-a069f.firebaseapp.com",
@@ -50,8 +49,7 @@ export default {
       services: {
         auth: true // Just as example. Can be any other service.
       }
-    }
-  ],
+    },
 
   axios: {
     baseURL: '/',
