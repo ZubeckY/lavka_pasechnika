@@ -123,12 +123,14 @@ export default class Pages extends Vue {
   activeSlide: number = 0
   items: any = []
 
-  created () {
-    this.items = this.getCollections()
+  async created () {
+    this.items = await this.getCollections()
+    console.log(this.items)
   }
 
   getCollections () {
-    return this.$store.getters['mainproducts/mainProducts'];
+    return this.$store.dispatch('mainproducts/loadProducts', this.$store)
+    // return this.$store.getters['mainproducts/mainProducts'];
   }
 
   routing (link: string) {
