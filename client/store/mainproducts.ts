@@ -31,7 +31,7 @@ export const actions = {
       const querySnapshot = await getDocs(q);
       const productList = querySnapshot.docs.map(doc => doc.data());
 
-      // store.commit("mainproducts/setProducts", productList);
+      // store.commit("mainproduct/setProducts", productList);
 
       return productList
 
@@ -42,7 +42,7 @@ export const actions = {
 
   async addProduct (_conf: any, product: any){
     try {
-      return await addDoc (collection(db, "mainproducts"), {...product});
+      return await addDoc (collection(db, "mainproduct"), {...product});
     } catch (e) {
       return Promise.reject(e)
     }
@@ -50,7 +50,7 @@ export const actions = {
 
   // async removeProduct (_conf: any, productId: any){
   //   try {
-  //     await this.$fire.firestore.collection('mainproducts').doc(productId).delete();
+  //     await this.$fire.firestore.collection('mainproduct').doc(productId).delete();
   //   } catch (e) {
   //     return Promise.reject(e)
   //   }
@@ -59,5 +59,5 @@ export const actions = {
 }
 
 export const getters = {
-  mainProducts: (state: any) => state.main_products,
+  mainproduct: (state: any) => state.main_products,
 }
