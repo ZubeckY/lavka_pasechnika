@@ -15,7 +15,7 @@
                     next-icon="mdi-arrow-right-thin"
                     prev-icon="mdi-arrow-left-thin"
                     hide-delimiters height="290px">
-          <v-carousel-item v-for="i in 3" :key="i">
+          <v-carousel-item v-for="i in 2" :key="i">
             <v-sheet color="#69696969" height="100%"></v-sheet>
           </v-carousel-item>
         </v-carousel>
@@ -24,7 +24,7 @@
         <v-sheet class="d-flex justify-center" color="transparent">
           <v-slide-group v-model="activeSlide"
                          center-active show-arrows>
-            <v-slide-item v-for="i in 3" :key="i" v-slot="{ active, toggle }">
+            <v-slide-item v-for="i in 2" :key="i" v-slot="{ active, toggle }">
               <!-- Картинки -->
 
               <v-card class="custom-rounded ml-0 mt-2 ma-3"
@@ -39,18 +39,49 @@
       </v-container>
     </section>
 
-    <section class="mt-3">
+    <section class="mt-2">
       <v-container>
         <v-card-title>Категории</v-card-title>
         <v-card-text>Более 10 категорий и подкатегорий натуральной продукции</v-card-text>
 
         <div class="d-flex flex-row flex-wrap mt-2">
-          <v-card class="custom-rounded ma-1" elevation="1" color="#765337" width="480px" height="120px"></v-card>
-          <v-card class="custom-rounded ma-1" elevation="1" color="#786e24" width="190px" height="120px"></v-card>
-          <v-card class="custom-rounded ma-1" elevation="1" color="#ae794b" width="480px" height="120px"></v-card>
-          <v-card class="custom-rounded ma-1" elevation="1" color="#cf8e0e" width="480px" height="120px"></v-card>
-          <v-card class="custom-rounded ma-1" elevation="1" color="#98806d" width="480px" height="120px"></v-card>
-          <v-card class="custom-rounded ma-1" elevation="1" color="#1f3738" width="190px" height="120px"></v-card>
+          <v-card class="custom-rounded ma-1 pa-3" elevation="1" color="#765337" @click="routing('/allproducts')"
+                  width="480px" height="120px" dark :img="require(`~/assets/images/cards/honey.jpg`)">
+            <v-card-title class="font-weight-medium" style="font-size: 16px">
+              Мёд: <br> классический, <br> с добавками, <br> с орехами
+            </v-card-title>
+          </v-card>
+          <v-card class="custom-rounded ma-1 pa-3" elevation="1" color="#786e24" @click="routing('/allproducts')"
+                  width="190px" height="120px" dark :img="require(`~/assets/images/cards/chai.jpg`)">
+            <v-card-title class="font-weight-medium" style="font-size: 16px">
+              Чай и травы
+            </v-card-title>
+          </v-card>
+          <v-card class="custom-rounded ma-1 pa-3" elevation="1" color="#ae794b" @click="routing('/allproducts')"
+                  width="480px" height="120px" dark :img="require(`~/assets/images/cards/cosmetics.png`)">
+            <v-card-title class="font-weight-medium" style="font-size: 16px">
+              Натуральная <br> косметика
+            </v-card-title>
+          </v-card>
+          <v-card class="custom-rounded ma-1 pa-3" elevation="1" color="#cf8e0e" @click="routing('/allproducts')"
+                  width="480px" height="120px" dark :img="require(`~/assets/images/cards/beeproduct.png`)">
+            <v-card-title class="font-weight-medium" style="font-size: 16px">
+              Пчелопродукция: <br> соты, перга, пыльца <br> забрус и т.д.
+            </v-card-title>
+          </v-card>
+          <v-card class="custom-rounded ma-1 pa-3" elevation="1" color="#98806d" @click="routing('/allproducts')"
+                  width="480px" height="120px" dark :img="require(`~/assets/images/cards/balzams.png`)">
+            <v-card-title class="font-weight-medium" style="font-size: 16px">
+              Бальзам, сиропы <br> масла
+            </v-card-title>
+          </v-card>
+
+          <v-card class="custom-rounded ma-1 pa-3" elevation="1" @click="routing('/allproducts')"
+                  style="background: linear-gradient(#1f3738, #5c6d6e)" width="190px" height="120px" dark >
+            <v-card-title class="font-weight-medium" style="font-size: 16px">
+              Смотреть <br> ещё товары
+            </v-card-title>
+          </v-card>
         </div>
       </v-container>
     </section>
@@ -58,17 +89,32 @@
     <section class="mt-5">
       <v-container>
         <v-card-title>Популярные товары</v-card-title>
-        <div class="d-flex flex-row mt-4">
-          <catalog-item v-for="i in 6" :key="i"/>
+
+        <!-- <pre v-text="items[0]['NameMainProduct']"></pre> -->
+        <!-- <pre v-text="items[0]['ImageMainProduct']"></pre> -->
+        <!-- <pre v-text="items[0]['Description']"></pre> -->
+        <!-- <pre v-text="items[0]['weightproducts']"></pre> -->
+        <!-- <pre v-text="items[0]['TittleMainCategory']"></pre> -->
+        <!-- <pre v-text="items[0]['UniqueMainProductid']"></pre> -->
+        <!-- <pre v-text="items[0]['Sostav']"></pre> -->
+        <!-- <pre v-text="items[0]['Calories']"></pre> -->
+
+        <div class="d-flex flex-row mt-4" v-if="isLoaded">
+          <catalog-item-load v-for="i in limit" :key="i"/>
         </div>
+
+        <div class="d-flex flex-row mt-4" v-else>
+          <catalog-item v-for="(item, i) in items" :item="item" :key="i"/>
+        </div>
+
       </v-container>
     </section>
 
-    <section style="margin-top: 140px;">
+    <section style="margin-top: 110px;">
       <v-container>
         <div class="d-flex flex-row">
 
-          <div class="">
+          <div>
 
             <v-card-title style="color: #411a04;">Семейная пасека <br> с 10-ти летней историей </v-card-title>
 
@@ -118,18 +164,43 @@
 </template>
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator"
+
 @Component
 export default class Pages extends Vue {
-  activeSlide: number = 0
   items: any = []
 
+  limit: number = 6
+  activeSlide: number = 0
+  isLoaded: boolean = true
+
   async created () {
-    this.items = await this.getCollections()
-    console.log(this.items)
+    return this.getCollections()
   }
 
   getCollections () {
-    return this.$store.dispatch('mainproducts/loadProducts', this.$store)
+    try {
+      let count = 3
+      let interval: any = setInterval (async () => {
+
+        if (count <= 0 || this.items.length > 0) {
+          this.isLoaded = false
+          return clearInterval(interval)
+        }
+
+        count --
+        return this.items = await this.$store.dispatch
+        (
+          'mainproducts/loadProducts',
+          {
+            store: this.$store,
+            limitVal: this.limit
+          }
+        )
+      }, 750)
+    } catch (e: any) {
+      console.log(e)
+    }
+
     // return this.$store.getters['mainproducts/mainProducts'];
   }
 

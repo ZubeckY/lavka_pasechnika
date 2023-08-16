@@ -7,33 +7,34 @@ import {
   limit
 } from "firebase/firestore";
 
-import {db} from '../plugins/firebase'
+import {db} from '~/plugins/firebase'
 
 export const state = () => ({
   main_products: []
 })
 
 export const mutations = {
-  setProducts (state: any, productList: any){
+  setProducts (state: any, productList: any) {
     return state.main_products = productList;
   }
 }
 
 export const actions = {
 
-  async loadProducts (_conf: any, store: any){
+  async loadProducts (_conf: any, data: any){
     try {
+      const {store, limitVal, orderByVal} = data
 
       const productCollection = collection(db, "mainproduct")
-      const q = await query(productCollection, limit(10));
-      console.log(q)
-
+      const q = await query(productCollection, limit(limitVal ?? 10));
       const querySnapshot = await getDocs(q);
-      const productList = querySnapshot.docs.map(doc => doc.data());
 
+      // const productList = querySnapshot.docs.map(doc => doc.data());
       // store.commit("mainproduct/setProducts", productList);
 
-      return productList
+      // return productList
+
+      return querySnapshot.docs.map(doc => doc.data());
 
     } catch (e) {
       return Promise.reject(e)

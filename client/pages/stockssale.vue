@@ -22,7 +22,7 @@
           <v-skeleton-loader class="mx-1" type="chip" v-for="i in 7" :key="i"/>
         </div>
 
-        <catalog-item-load v-for="i in 12" :key="i"/>
+        <catalog-item-load v-for="i in limit" :key="i"/>
       </div>
 
       <div v-else class="d-flex flex-row flex-wrap">
@@ -35,7 +35,7 @@
           </v-chip>
         </v-chip-group>
 
-        <catalog-item v-for="i in 6" :key="i"></catalog-item>
+        <catalog-item v-for="(item, i) in items" :item="item" :key="i"/>
       </div>
 
     </v-container>
@@ -45,7 +45,10 @@
 import {Component, Vue} from "vue-property-decorator"
 @Component
 export default class Stockssale extends Vue {
+  items: any = []
+  limit: number = 36
   isLoaded: boolean = true
+
   category: string = "all"
   categories: any = [
     {
@@ -110,10 +113,33 @@ export default class Stockssale extends Vue {
     },
   ]
 
-  created () {
-    setTimeout(() => {
-      this.isLoaded = false
-    }, 1000)
+  async created () {
+    return this.getCollections()
+  }
+
+  getCollections () {
+    try {
+      let count = 3
+      let interval: any = setInterval (async () => {
+
+        if (count <= 0 || this.items.length > 0) {
+          this.isLoaded = false
+          return clearInterval(interval)
+        }
+
+        count --
+        return this.items = await this.$store.dispatch
+        (
+          'mainproducts/loadProducts',
+          {
+            store: this.$store,
+            limitVal: this.limit
+          }
+        )
+      }, 750)
+    } catch (e: any) {
+      console.log(e)
+    }
   }
 }
 </script>

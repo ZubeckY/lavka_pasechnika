@@ -1,5 +1,5 @@
 <template>
-  <v-card class="product-card rounded-xl mr-3"
+  <v-card class="product-card rounded-xl mr-3 mb-5"
           style="box-shadow: 0 0 18px 7px rgba(34, 60, 80, .1)"
           width="180px" height="325px">
     <div class="product-card__container">

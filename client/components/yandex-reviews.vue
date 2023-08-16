@@ -2,7 +2,9 @@
   <v-dialog max-width="760px" v-model="dialog">
 
     <template v-slot:activator="{ on, attrs }">
-      <a v-on="on" v-bind="attrs">Отзывы</a>
+      <div v-on="on" v-bind="attrs">
+        <slot></slot>
+      </div>
     </template>
 
     <div style="background:#ffffff;width:760px;height:740px;overflow:hidden;position:relative;">
