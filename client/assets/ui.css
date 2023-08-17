@@ -33,3 +33,7 @@
 .product-card__variables_card {
   border: 2px #dee2e6 solid !important;
 }
+
+.product-card__variables_card--active {
+  border: 2px #26ae60 solid !important;
+}

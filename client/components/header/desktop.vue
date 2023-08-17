@@ -74,7 +74,6 @@
         <a @click="routing('')">Условия доставки и оплаты</a>
         <a @click="routing('/stockssale')">Акции</a>
         <a @click="routing('')">О магазине</a>
-        <a @click="routing('/contacts')">Контакты и адреса</a>
         <yandex-reviews>
           <a @click="routing('')" class="d-block">Отзывы</a>
         </yandex-reviews>
