@@ -12,7 +12,7 @@
 
         <yandex-reviews>
           <div class="d-flex flex-row ml-8">
-            <div style="position:relative; top: -20px; width: 40px; height: 64px;">
+            <div style="position:relative; top: -20px; width: 42px; height: 66px;">
               <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~/assets/images/header/флажок.png">
             </div>
             <div class="mt-3 ml-3" style="position:relative; width: 147px; height: 41px;">
@@ -22,7 +22,7 @@
         </yandex-reviews>
 
         <div class="ml-8">
-          <v-card-subtitle style="font-size: 10px">Скачать приложение</v-card-subtitle>
+          <v-card-subtitle style="font-size: 10px;">Скачать приложение</v-card-subtitle>
           <div class="d-flex flex-row justify-center mt-1">
             <a class="header-link-icon d-block mr-2" target="_blank" href="https://apps.apple.com/ru/app/лавка-пасечника-рф/id1669531191?platform=iphone">
               <img alt="#" src="~/assets/images/header/app-store.png">

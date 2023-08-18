@@ -20,7 +20,7 @@ export const actions = {
     try {
       const {store, limitVal, orderByVal} = data
 
-      const productCollection = collection(db, "products")
+      const productCollection = collection(db, "advantage")
       const q = await query(productCollection, limit(limitVal ?? 10))
       const querySnapshot = await getDocs(q);
 
@@ -32,7 +32,7 @@ export const actions = {
 
   async getProduct (_conf: any, data: any) {
     try {
-      const docRef = doc(db, "products", data)
+      const docRef = doc(db, "advantage", data)
       const docSnap = await getDoc (docRef)
 
       return getData(docSnap)

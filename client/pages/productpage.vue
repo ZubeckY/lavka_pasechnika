@@ -19,26 +19,65 @@
       </div>
 
       <v-row>
-
         <v-col class="ma-0 pa-0" cols="auto">
-          <v-card class="custom-rounded" elevation="0"
-                  width="340px" height="460px" :img="item['ProductImage']">
-          </v-card>
+          <v-skeleton-loader v-if="!!(!weightProducts.length)"
+                             class="custom-rounded" type="image"
+                             width="340px" height="460px"/>
+
+          <v-carousel v-else class="custom-rounded" style="width: 340px"
+                      height="460px" hide-delimiter-background
+                      :show-arrows="!(imageList(weightProducts[model]).length <= 1)"
+                      :hide-delimiters="imageList(weightProducts[model]).length <= 1">
+
+            <v-carousel-item v-for="image in imageList(weightProducts[model])" :key="image" :src="image"/>
+          </v-carousel>
         </v-col>
 
         <v-col class="my-0 mx-8 pa-0">
-          <div></div>
 
+          <div @click="listAdvantage.length > 6 ? show = !show : ''">
+            <v-card-title class="mb-3" style="font-size: 14px">Полезные свойства</v-card-title>
+
+            <div class="d-flex flex-row flex-wrap">
+              <advantage-card v-for="advantage in firstListAdvantage(listAdvantage)"
+                              :key="advantage.id" :advantage="advantage">
+              </advantage-card>
+            </div>
+
+            <v-expand-transition>
+
+              <div v-if="show" class="d-flex flex-row flex-wrap">
+                <advantage-card v-for="advantage in secondListAdvantage(listAdvantage)"
+                                :key="advantage.id" :advantage="advantage">
+                </advantage-card>
+              </div>
+
+            </v-expand-transition>
+
+            <div v-if="listAdvantage.length > 6" class="d-flex justify-center mb-2">
+              <div class="font-weight-medium"
+                   style="font-size: 14px; letter-spacing: .3px">
+                {{ show ? 'Свернуть' : 'Показать ещё' }}
+                <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+              </div>
+            </div>
+
+            <div v-else class="mb-3"></div>
+
+          </div>
 
           <v-card color="transparent" elevation="0">
             <v-card-title style="font-size: 14px">Описание</v-card-title>
-            <v-card-text class="mt-2" style="font-size: 14px; line-height: 14px">{{ product['Description'] }}</v-card-text>
+            <v-card-text class="mt-2" style="font-size: 14px; line-height: 14px; white-space: pre-wrap">{{ product['Description'] }}</v-card-text>
           </v-card>
+
         </v-col>
 
         <v-col class="ma-0 pa-0" cols="auto">
-          <v-card class="d-flex flex-column custom-rounded" elevation="5"
-                  width="350px" >
+          <v-card class="d-flex flex-column custom-rounded"
+                  elevation="5" width="350px"
+                  :disabled="!!(!weightProducts.length)"
+                  :loading="!!(!weightProducts.length)">
 
             <div class="pl-4 pr-1 py-2">
               <v-card-title class="mt-2" style="font-size: 19px">{{ weightProducts[model] ? weightProducts[model]['ProductName'] : '' }}</v-card-title>
@@ -97,51 +136,80 @@
 import {Component, Vue, Watch} from "vue-property-decorator"
 @Component
 export default class Productpage extends Vue {
+  show: boolean = false
   model: any = 0
   item: any = {}
   product: any = {}
+  listAdvantage: any = []
   weightProducts: any = []
 
   async created () {
-    return await this.initProduct()
+    return await this.initAll ()
   }
 
-  async initProduct () {
-    let {docMainproduct, docproduct}: any = this.$router.currentRoute.query
+  async initAll () {
+    try {
+      let {docMainproduct, docproduct}: any = this.$router.currentRoute.query
 
-    if (!docMainproduct && !docproduct) {
-      console.log('Нема продукта')
-      return
+      if (!docMainproduct && !docproduct) {
+        console.log('Нема продукта')
+        return
+      }
+
+      this.item = await this.initItem(docproduct)
+      this.product = await this.initProduct(docMainproduct)
+      this.listAdvantage = await this.initList('listadvantage', 'advantage/getProduct')
+      this.weightProducts = await this.initList ('weightproducts', 'products/getProduct')
+      this.model = this.weightProducts.map((elem: any) => elem.id).indexOf(docproduct)
+    } catch (e) {
+      console.log(e)
     }
-
-    this.item = await this.$store.dispatch ('products/getProduct', docproduct)
-    this.product = await this.$store.dispatch ('mainproducts/getProduct', docMainproduct)
-
-    await this.initWeightProducts()
   }
 
-  async initWeightProducts () {
-    let array: any = []
-    let {docproduct}: any = this.$router.currentRoute.query
+  async initItem (id: any) {
+    return await this.$store.dispatch ('products/getProduct', id)
+  }
 
-    let products = this.product['weightproducts'].map((doc: any) => {
+  async initProduct (id: any) {
+    return await this.$store.dispatch ('mainproducts/getProduct', id)
+  }
+
+  async initList (type: string, storage: string) {
+    let array: any = []
+
+    let products = this.product[type].map((doc: any) => {
       let link = doc['_key']['path']['segments']
       return link[link.length - 1]
     });
 
     for (let i = 0; i < products.length; i++) {
-      let product = await this.$store.dispatch ('products/getProduct', products[i])
+      let product = await this.$store.dispatch (storage, products[i])
       array.push(product)
     }
 
-    this.weightProducts = array
-    this.model = this.weightProducts.map((elem: any) => elem.id).indexOf(docproduct)
+    return array
   }
-
 
   @Watch('model')
   changeCurrentRoute () {
     return this.routing(this.linkProductPage(this.product.id, this.weightProducts[this.model].id))
+  }
+
+  imageList (image: any) {
+    let firstImage = image['ProductImage']
+    let images = image['imgsProduct']
+    let array = []
+    array.push(firstImage)
+    array.push(...images)
+    return array
+  }
+
+  firstListAdvantage (list: any) {
+    return list.filter ((item: any, i: number) => i <= 5)
+  }
+
+  secondListAdvantage (list: any) {
+    return list.filter ((item: any, i: number) => i >= 6)
   }
 
   linkProductPage (id: any, product: any) {
