@@ -9,7 +9,7 @@
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
 
-        <v-card-title class="ml-3" style="font-style: italic">{{ onlyNameProduct }}</v-card-title>
+        <v-card-title class="philosopher-font ml-3" style="font-size: 24px">{{ onlyNameProduct }}</v-card-title>
 
         <v-btn style="border-radius: 8px"
                width="44px" height="44px" min-width="0"
@@ -62,15 +62,40 @@
               </div>
             </div>
 
-            <div v-else class="mb-3"></div>
-
           </div>
 
           <v-card color="transparent" elevation="0">
-            <v-card-title style="font-size: 14px">Описание</v-card-title>
-            <v-card-text class="mt-2" style="font-size: 14px; line-height: 14px; white-space: pre-wrap">{{ product['Description'] }}</v-card-text>
-          </v-card>
+            <v-card-title style="font-size: 14px; line-height: 14px;">Описание</v-card-title>
+            <v-card-text class="overflow-y-hidden" style="max-height: 170px; font-size: 14px; line-height: 14px; white-space: pre-line;">
+              {{ product['Description'] }}
+            </v-card-text>
 
+            <v-dialog v-model="readMoreDialog" max-width="500">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn class="read-more--underline text-none pa-0 mt-3" color="#26ae60"
+                       v-bind="attrs" v-on="on" small text>
+                  Читать подробнее
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-actions class="pt-3 pb-0">
+                  <v-card-title>Описание</v-card-title>
+                  <v-spacer></v-spacer>
+                  <v-btn icon @click="readMoreDialog = false">
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </v-card-actions>
+
+                <v-card-text class="pt-0 px-4 pb-5" style="font-size: 14px; line-height: 14px; white-space: pre-line;">
+                  {{ product['Description'] }}
+                </v-card-text>
+
+              </v-card>
+            </v-dialog>
+
+
+          </v-card>
         </v-col>
 
         <v-col class="ma-0 pa-0" cols="auto">
@@ -137,6 +162,7 @@ import {Component, Vue, Watch} from "vue-property-decorator"
 @Component
 export default class Productpage extends Vue {
   show: boolean = false
+  readMoreDialog: boolean = false
   model: any = 0
   item: any = {}
   product: any = {}

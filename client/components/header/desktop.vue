@@ -22,7 +22,7 @@
         </yandex-reviews>
 
         <div class="ml-8">
-          <v-card-subtitle style="font-size: 10px;">Скачать приложение</v-card-subtitle>
+          <v-card-subtitle class="download-title--underline" style="font-size: 10px;">Скачать приложение</v-card-subtitle>
           <div class="d-flex flex-row justify-center mt-1">
             <a class="header-link-icon d-block mr-2" target="_blank" href="https://apps.apple.com/ru/app/лавка-пасечника-рф/id1669531191?platform=iphone">
               <img alt="#" src="~/assets/images/header/app-store.png">

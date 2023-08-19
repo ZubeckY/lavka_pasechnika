@@ -37,3 +37,27 @@
 .product-card__variables_card--active {
   border: 2px #26ae60 solid !important;
 }
+
+.download-title--underline {
+  position: relative;
+}
+.download-title--underline::after {
+  position: absolute;
+  width: 100%;
+  bottom: 1px;
+  left: 0;
+  content: "";
+  border-bottom: 3px dashed #fcc000;
+}
+
+.read-more-title--underline {
+  position: relative;
+}
+.read-more--underline::after {
+  position: absolute;
+  width: 100%;
+  bottom: 1px;
+  left: 0;
+  content: "";
+  border-bottom: 1px dashed #26ae60;
+}
