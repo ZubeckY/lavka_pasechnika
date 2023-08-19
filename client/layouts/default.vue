@@ -51,9 +51,17 @@
   </v-app>
 </template>
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator"
+import {Component, Vue, Watch} from "vue-property-decorator"
 @Component
 export default class Default extends Vue {
+  @Watch('$route')
+  changeScrollTo () {
+    window.scrollTo ({
+      top: 0,
+      left: 0
+    })
+  }
+
   cartDialog: boolean = false
 }
 </script>
