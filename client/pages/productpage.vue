@@ -68,7 +68,7 @@
             <v-card-title style="font-size: 14px; line-height: 14px;">Описание</v-card-title>
 
             <!-- описание по количеству строк -->
-            <v-card-text class="overflow-y-hidden" style="height: calc(14px * 12);">
+            <v-card-text class="overflow-y-hidden" style="max-height: calc(14px * 12);">
               <div style="font-size: 14px; line-height: 14px; white-space: pre-line;">
                 {{ product['Description'] }}
               </div>
