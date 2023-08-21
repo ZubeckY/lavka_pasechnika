@@ -15,27 +15,15 @@
                     next-icon="mdi-arrow-right-thin"
                     prev-icon="mdi-arrow-left-thin"
                     hide-delimiters height="290px">
-          <v-carousel-item v-for="i in 2" :key="i">
+          <v-carousel-item v-for="i in countSlide" :key="i">
             <v-sheet color="#69696969" height="100%"></v-sheet>
           </v-carousel-item>
         </v-carousel>
 
         <!-- Слайды поменьше -->
-        <v-sheet class="d-flex justify-center" color="transparent">
-          <v-slide-group v-model="activeSlide"
-                         center-active show-arrows>
-            <v-slide-item v-for="i in 2" :key="i" v-slot="{ active, toggle }">
-              <!-- Картинки -->
+        <small-slides :activeSlide="activeSlide"
+                      :countSlide="countSlide"/>
 
-              <v-card class="custom-rounded ml-0 mt-2 ma-3"
-                      elevation="0"
-                      height="4px" @click="toggle"
-                      :color="active ? '#26ae60' : '#9e9e9e'"
-                      :width="active ? '34px' : '18px'">
-              </v-card>
-            </v-slide-item>
-          </v-slide-group>
-        </v-sheet>
       </v-container>
     </section>
 
@@ -171,6 +159,7 @@ export default class Pages extends Vue {
 
   limit: number = 6
   activeSlide: number = 0
+  countSlide: number = 2
   isLoaded: boolean = true
 
   async created () {
