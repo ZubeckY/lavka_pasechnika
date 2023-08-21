@@ -35,7 +35,7 @@
 
         <v-col class="my-0 mx-8 pa-0">
 
-          <div @click="listAdvantage.length > 6 ? show = !show : ''">
+          <div @click="listAdvantage.length > 6 ? show = !show : ''" class="cursor-pointer">
             <v-card-title class="mb-3" style="font-size: 14px">Полезные свойства</v-card-title>
 
             <div class="d-flex flex-row flex-wrap">
@@ -54,7 +54,7 @@
 
             </v-expand-transition>
 
-            <div v-if="listAdvantage.length > 6" class="d-flex justify-center mb-2">
+            <div v-if="listAdvantage.length > 6" class="d-flex justify-center mb-2 cursor-pointer">
               <div class="font-weight-medium"
                    style="font-size: 14px; letter-spacing: .3px">
                 {{ show ? 'Свернуть' : 'Показать ещё' }}
@@ -66,8 +66,12 @@
 
           <v-card color="transparent" elevation="0">
             <v-card-title style="font-size: 14px; line-height: 14px;">Описание</v-card-title>
-            <v-card-text class="overflow-y-hidden" style="max-height: 170px; font-size: 14px; line-height: 14px; white-space: pre-line;">
-              {{ product['Description'] }}
+
+            <!-- описание по количеству строк -->
+            <v-card-text class="overflow-y-hidden" style="height: calc(14px * 12);">
+              <div style="font-size: 14px; line-height: 14px; white-space: pre-line;">
+                {{ product['Description'] }}
+              </div>
             </v-card-text>
 
             <v-dialog v-model="readMoreDialog" max-width="500">
