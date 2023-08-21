@@ -11,7 +11,7 @@
         <v-card-title class="ml-3">Контакты</v-card-title>
       </div>
 
-      <v-row class="mb-5">
+      <v-row>
         <v-col class="ma-0 pa-0 pl-2">
           <iframe :src="getMapURL"
                   frameborder="0"
@@ -22,7 +22,7 @@
           </iframe>
         </v-col>
         <v-col class="ma-0 pa-0" cols="3">
-          <locations class="pl-5"
+          <locations class="pl-4"
                      :mapping="mapping"
                      :mapPoints="mapPoints"/>
         </v-col>

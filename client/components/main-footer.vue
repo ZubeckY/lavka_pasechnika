@@ -1,7 +1,7 @@
 <template>
-  <footer style="margin-top: 90px;">
+  <footer style="margin-top: 80px;">
     <v-container>
-      <v-row class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0" style="margin-bottom: -40px !important">
 
         <!-- Контакты -->
         <v-col class="ma-0 pa-0" cols="auto">
@@ -63,7 +63,7 @@
         </v-col>
 
         <!-- Меню -->
-        <v-col class="ma-0 pa-0" style="margin-left: 60px !important" cols="auto">
+        <v-col class="ma-0 pa-0" style="margin-left: 50px !important" cols="auto">
           <div>
             <v-card-title class="mb-3" style="font-size: 19px">Меню</v-card-title>
             <div class="d-flex flex-column">
@@ -95,7 +95,7 @@
       </v-row>
     </v-container>
 
-    <v-divider class="my-4"/>
+    <v-divider class="mb-4"/>
 
     <v-container>
       <v-row class="d-flex align-center pa-1">
