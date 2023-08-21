@@ -60,7 +60,7 @@
           <v-card class="custom-rounded ma-1 pa-3" elevation="1" color="#98806d" @click="routing('/allproducts')"
                   width="480px" height="120px" dark :img="require(`~/assets/images/cards/balzams.png`)">
             <v-card-title class="font-weight-medium pt-1" style="font-size: 16px; line-height: 18px !important;">
-              Бальзам, сиропы <br> масла
+              Бальзамы, сиропы <br> масла
             </v-card-title>
           </v-card>
           <v-card class="custom-rounded ma-1 pa-3" elevation="1" @click="routing('/allproducts')"
