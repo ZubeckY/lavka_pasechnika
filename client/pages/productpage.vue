@@ -20,17 +20,54 @@
 
       <v-row>
         <v-col class="ma-0 pa-0" cols="auto">
-          <v-skeleton-loader v-if="!!(!weightProducts.length)"
-                             class="custom-rounded" type="image"
-                             width="340px" height="460px"/>
+          <div v-if="!!(!weightProducts.length)">
+            <v-skeleton-loader class="custom-rounded"
+                               type="image" width="340px"/>
 
-          <v-carousel v-else class="custom-rounded" style="width: 340px"
-                      height="460px" hide-delimiter-background
-                      :show-arrows="!(imageList(weightProducts[model]).length <= 1)"
-                      :hide-delimiters="imageList(weightProducts[model]).length <= 1">
+            <div class="d-flex flex-row">
+              <v-skeleton-loader v-for="i in 2" :key="i"
+                                 class="custom-rounded ml-0 ma-3"
+                                 type="image" width="120px" height="80px"/>
+            </div>
 
-            <v-carousel-item v-for="image in imageList(weightProducts[model])" :key="image" :src="image"/>
-          </v-carousel>
+          </div>
+
+          <div v-else>
+            <carousel-dialog maxWidth="572px"
+                             :carousel="carousel"
+                             :img="imageList(weightProducts[model])">
+
+              <v-carousel v-model="carousel"
+                          class="custom-rounded"
+                          style="width: 340px"
+                          hide-delimiters height="460px"
+                          :show-arrows="!(imageList(weightProducts[model]).length <= 1)">
+
+                <v-carousel-item v-for="image in imageList(weightProducts[model])" :key="image" :src="image"/>
+
+              </v-carousel>
+            </carousel-dialog>
+
+            <!-- Слайды поменьше -->
+            <v-sheet max-width="800" color="transparent">
+              <v-slide-group v-model="carousel"
+                             center-active
+                             show-arrows>
+                <v-slide-item v-for="(item, i) in imageList(weightProducts[model])"
+                              :key="i" v-slot="{ active, toggle }">
+                  <!-- Картинки -->
+                  <v-card :style="active ? 'filter: grayscale(20%) contrast(125%); border: 3px solid #26ae60' : 'filter: grayscale(60%)'"
+                          class="custom-rounded ml-0 ma-3"
+                          width="120px"
+                          height="80px"
+                          @click="toggle"
+                          :img="item">
+                  </v-card>
+                </v-slide-item>
+              </v-slide-group>
+            </v-sheet>
+          </div>
+
         </v-col>
 
         <v-col class="my-0 mx-8 pa-0">
@@ -165,6 +202,8 @@
 import {Component, Vue, Watch} from "vue-property-decorator"
 @Component
 export default class Productpage extends Vue {
+  carousel: number = 0
+
   show: boolean = false
   readMoreDialog: boolean = false
   model: any = 0

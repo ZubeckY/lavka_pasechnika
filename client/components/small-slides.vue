@@ -1,7 +1,7 @@
 <template>
   <!-- Слайды поменьше -->
   <v-sheet class="d-flex justify-center" color="transparent">
-    <v-slide-group v-model="activeSlide" center-active show-arrows>
+    <v-slide-group v-model="activeSlide" center-active show-arrows mandatory>
       <v-slide-item v-for="i in countSlide" :key="i" v-slot="{ active, toggle }">
 
         <!-- Картинки -->

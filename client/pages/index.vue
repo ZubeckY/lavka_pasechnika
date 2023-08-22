@@ -15,8 +15,8 @@
                     next-icon="mdi-arrow-right-thin"
                     prev-icon="mdi-arrow-left-thin"
                     hide-delimiters height="290px">
-          <v-carousel-item v-for="i in countSlide" :key="i">
-            <v-sheet color="#69696969" height="100%"></v-sheet>
+          <v-carousel-item v-for="i in countSlide" :key="i"
+                           :src="require(`~/assets/images/slider-1.png`)">
           </v-carousel-item>
         </v-carousel>
 

@@ -3,6 +3,9 @@
   padding-top: 0 !important;
   max-width: 1200px !important;
 }
+.v-dialog {
+  box-shadow: none !important;
+}
 .v-card__text,
 .v-card__title,
 .v-card__subtitle {
