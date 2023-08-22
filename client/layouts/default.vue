@@ -54,6 +54,7 @@
 import {Component, Vue, Watch} from "vue-property-decorator"
 @Component
 export default class Default extends Vue {
+  cartDialog: boolean = false
   @Watch('$route')
   changeScrollTo () {
     window.scrollTo ({
@@ -61,7 +62,5 @@ export default class Default extends Vue {
       left: 0
     })
   }
-
-  cartDialog: boolean = false
 }
 </script>

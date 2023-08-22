@@ -64,7 +64,7 @@
               <div style="width: 10px; height: 10px; border-radius: 50%; background: #31eca8; margin-bottom: 2px; margin-right: 7px;"></div>
               <div style="font-size: 10px">Пн-Вск 7:00-21:00</div>
             </div>
-            <div class="font-weight-bold mt-1" style="font-size: 15px">+7 (918) 325-55-56</div>
+            <div class="font-weight-bold mt-1" style="font-size: 15px">+7 (928) 960-61-50</div>
           </div>
         </div>
       </div>

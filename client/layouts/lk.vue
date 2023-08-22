@@ -14,42 +14,30 @@
                        color="#26ae60" elevation="0" dark>
                   <v-icon>mdi-chevron-left</v-icon>
                 </v-btn>
-
-                <v-card-title class="ml-3">Личный кабинет — Главная</v-card-title>
+                <v-card-title class="ml-3">Личный кабинет — {{whatIsPape }} </v-card-title>
               </div>
 
-
               <div class="d-flex flex-row">
-                <div>
+                <v-card class="d-flex align-center custom-rounded"
+                        elevation="0" width="200px" height="295px">
 
-                  <v-card class="d-flex align-center custom-rounded"
-                          width="200px" height="295px">
-                    <v-list dense width="inherit">
-                      <v-list-item-group v-model="model"
-                                         active-class="my-green-color white--text">
+                  <v-list width="inherit" dense rounded>
+                    <v-list-item-group v-model="model" mandatory
+                                       active-class="my-green-color white--text">
 
-                        <v-list-item v-for="(item, i) in items" :key="i">
-                          <v-list-item-icon class="mr-2">
-                            <v-icon v-text="item.icon"></v-icon>
-                          </v-list-item-icon>
-                          <v-list-item-content class="font-weight-medium">
-                            <v-list-item-title v-text="item.text"></v-list-item-title>
-                          </v-list-item-content>
-                        </v-list-item>
+                      <v-list-item v-for="(item, i) in items"
+                                   :key="i" router
+                                   :to="item.link">
+                        <v-list-item-icon class="mr-2">
+                          <v-icon v-text="item.icon"></v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content style="font-size: 14px; line-height: 14px"
+                                             class="font-weight-medium" v-text="item.text"/>
+                      </v-list-item>
 
-                        <v-list-item>
-                          <v-list-item-icon class="mr-2">
-                            <v-icon>mdi-exit-to-app</v-icon>
-                          </v-list-item-icon>
-                          <v-list-item-content class="font-weight-medium">
-                            <v-list-item-title>Выход</v-list-item-title>
-                          </v-list-item-content>
-                        </v-list-item>
-
-                      </v-list-item-group>
-                    </v-list>
-                  </v-card>
-                </div>
+                    </v-list-item-group>
+                  </v-list>
+                </v-card>
 
                 <div class="ml-6 mr-2">
                   <v-fade-transition>
@@ -75,26 +63,41 @@ export default class Lk extends Vue {
   items: any = [
     {
       icon: 'mdi-chart-donut',
+      title: 'Главная',
       text: 'Главная',
+      link: '/lk'
     },
     {
       icon: 'mdi-history',
+      title: 'Мои заказы',
       text: 'Мои заказы',
+      link: '/myorders'
     },
     {
       icon: 'mdi-cart-outline',
+      title: 'Моя корзина',
       text: 'Моя корзина',
+      link: '/mybusket'
     },
     {
       icon: 'mdi-star-outline',
+      title: 'Бонусные баллы',
       text: 'Бонусные баллы',
+      link: '/bonuscard'
     },
     {
       icon: 'mdi-moped-outline',
-      text: 'Адреса доставки и личные данные',
+      title: 'Адрес доставки',
+      text: 'Адрес доставки и личные данные',
+      link: '/adress-delivery'
+    },
+    {
+      icon: 'mdi-exit-to-app',
+      title: 'Выход',
+      text: 'Выход',
+      link: '/?logout=true'
     },
   ]
-
 
   @Watch('$route')
   changeScrollTo () {
@@ -104,13 +107,8 @@ export default class Lk extends Vue {
     })
   }
 
-  cartDialog: boolean = false
+  get whatIsPape () {
+    return this.items[this.model]['title']
+  }
 }
 </script>
-
-<style scoped>
-.v-application .my-green-color {
-  background-color: #26ae60 !important;
-  border-color: #26ae60 !important;
-}
-</style>

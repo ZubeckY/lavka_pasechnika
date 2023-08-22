@@ -42,3 +42,7 @@ input[type="number"]:focus {
 .philosopher-font {
   font-family: 'Philosopher', sans-serif !important;
 }
+.v-application .my-green-color {
+  background-color: #26ae60 !important;
+  border-color: #26ae60 !important;
+}

@@ -1,6 +1,6 @@
 <template>
   <div>
-    Личный кабинет
+    Адрес доставки
   </div>
 </template>
 <script lang="ts">
@@ -8,6 +8,6 @@ import {Component, Vue, Watch} from "vue-property-decorator"
 @Component ({
   layout: 'lk'
 })
-export default class Lk extends Vue {
+export default class AdressDelivery extends Vue {
 }
 </script>
