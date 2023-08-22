@@ -2,11 +2,11 @@
   <div style="max-width: 290px">
     <div>
       <v-card-title class="mb-1" style="font-size: 18px;">До встречи в наших магазинах</v-card-title>
-      <v-chip-group v-model="mapping" active-class="white--text" column>
+      <v-chip-group v-model="localMapping" active-class="white--text" column>
         <v-chip style="font-size: 13px; height: 28px"
                 v-for="(item, i) in mapPoints"
                 :key="i" :value="item.value"
-                :color="mapping === item.value ? '#37a164' : '#e0e0e0'">
+                :color="localMapping === item.value ? '#37a164' : '#e0e0e0'">
           {{ item.text }}
         </v-chip>
       </v-chip-group>
@@ -46,17 +46,27 @@
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue, Prop} from "vue-property-decorator"
+import {Component, Vue, Prop, Watch} from "vue-property-decorator"
 @Component
 export default class Locations extends Vue {
   @Prop () mapping: any
   @Prop () mapPoints: any
 
+  localMapping: any = ''
   activeSlide: number = 0
   countSlide: number = 3
 
+  created () {
+    this.localMapping = this.mapping
+  }
+
+  @Watch ('localMapping')
+  changer () {
+    this.$emit('changeMapping', this.localMapping)
+  }
+
   get getAddress () {
-    return this.mapPoints.filter((item: any) => item.value === this.mapping)[0]?.address
+    return this.mapPoints.filter((item: any) => item.value === this.localMapping)[0]?.address
   }
 
 }

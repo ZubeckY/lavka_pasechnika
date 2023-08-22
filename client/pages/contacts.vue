@@ -24,7 +24,8 @@
         <v-col class="ma-0 pa-0" cols="3">
           <locations class="pl-4"
                      :mapping="mapping"
-                     :mapPoints="mapPoints"/>
+                     :mapPoints="mapPoints"
+                     @changeMapping="changeMapping"/>
         </v-col>
       </v-row>
 
@@ -45,6 +46,10 @@ export default class Contacts extends Vue {
 
   get getMapURL () {
     return this.mapPoints.filter((item: any) => item.value === this.mapping)[0]?.map
+  }
+
+  changeMapping (value: any) {
+    this.mapping = value
   }
 
 }
