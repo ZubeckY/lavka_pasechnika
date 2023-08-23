@@ -9,7 +9,9 @@
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
 
-        <v-card-title class="philosopher-font ml-3" style="font-size: 24px">{{ onlyNameProduct }}</v-card-title>
+        <!-- Название мёда -->
+        <v-skeleton-loader v-if="!onlyNameProduct" class="custom-rounded" type="image" width="200px" height="35px"></v-skeleton-loader>
+        <v-card-title v-else class="philosopher-font ml-3" style="font-size: 24px">{{ onlyNameProduct }}</v-card-title>
 
         <v-btn style="border-radius: 8px"
                width="44px" height="44px" min-width="0"
@@ -19,20 +21,28 @@
       </div>
 
       <v-row>
+        <!-- Слайдер -->
         <v-col class="ma-0 pa-0" cols="auto">
+
+          <!-- Слайдер--загрузка -->
           <div v-if="!!(!weightProducts.length)">
-            <v-skeleton-loader class="custom-rounded"
-                               type="image" width="340px"/>
+            <div>
+              <v-skeleton-loader type="image" width="340px"
+                                 style="border-radius: 15px 15px 0 0"/>
+              <v-skeleton-loader type="image" width="340px"
+                                 style="border-radius: 0 0 15px 15px"/>
+            </div>
 
             <div class="d-flex flex-row">
               <v-skeleton-loader v-for="i in 2" :key="i"
                                  class="custom-rounded ml-0 ma-3"
-                                 type="image" width="120px" height="80px"/>
+                                 type="image" width="80px" height="100px"/>
             </div>
-
           </div>
 
+          <!-- Слайдер--контент -->
           <div v-else>
+            <!-- Слайды побольше -->
             <carousel-dialog maxWidth="572px"
                              :carousel="carousel"
                              :img="imageList(weightProducts[model])">
@@ -42,9 +52,7 @@
                           style="width: 340px"
                           hide-delimiters height="460px"
                           :show-arrows="!(imageList(weightProducts[model]).length <= 1)">
-
                 <v-carousel-item v-for="image in imageList(weightProducts[model])" :key="image" :src="image"/>
-
               </v-carousel>
             </carousel-dialog>
 
@@ -58,8 +66,8 @@
                   <!-- Картинки -->
                   <v-card :style="active ? 'filter: grayscale(20%) contrast(125%); border: 3px solid #26ae60' : 'filter: grayscale(60%)'"
                           class="custom-rounded ml-0 ma-3"
-                          width="120px"
-                          height="80px"
+                          width="80px"
+                          height="100px"
                           @click="toggle"
                           :img="item">
                   </v-card>
@@ -67,12 +75,20 @@
               </v-slide-group>
             </v-sheet>
           </div>
-
         </v-col>
 
+        <!-- Полезные свойства и текст -->
         <v-col class="my-0 mx-8 pa-0">
+          <!-- Полезные свойства--загрузка -->
+          <div v-if="!listAdvantage.length">
+            <v-card-title class="mb-3" style="font-size: 14px">Полезные свойства</v-card-title>
+            <div class="d-flex flex-row flex-wrap">
+              <advantage-card-load v-for="i in 4" :key="i"/>
+            </div>
+          </div>
 
-          <div @click="listAdvantage.length > 6 ? show = !show : ''" class="cursor-pointer">
+          <!-- Полезные свойства--контент -->
+          <div v-else @click="listAdvantage.length > 6 ? show = !show : ''" class="cursor-pointer">
             <v-card-title class="mb-3" style="font-size: 14px">Полезные свойства</v-card-title>
 
             <div class="d-flex flex-row flex-wrap">
@@ -82,13 +98,11 @@
             </div>
 
             <v-expand-transition>
-
               <div v-if="show" class="d-flex flex-row flex-wrap">
                 <advantage-card v-for="advantage in secondListAdvantage(listAdvantage)"
                                 :key="advantage.id" :advantage="advantage">
                 </advantage-card>
               </div>
-
             </v-expand-transition>
 
             <div v-if="listAdvantage.length > 6" class="d-flex justify-center mb-2 cursor-pointer">
@@ -98,10 +112,21 @@
                 <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
               </div>
             </div>
-
           </div>
 
-          <v-card color="transparent" elevation="0">
+          <!-- Описание--загрузка -->
+          <v-card v-if="!product['Description']" color="transparent" elevation="0">
+            <v-card-title style="font-size: 14px; line-height: 14px;">Описание</v-card-title>
+
+            <v-skeleton-loader class="mt-3" type="sentences"></v-skeleton-loader>
+            <v-skeleton-loader class="mt-2" type="sentences"></v-skeleton-loader>
+            <v-skeleton-loader type="paragraph"></v-skeleton-loader>
+
+            <v-skeleton-loader class="mt-2" type="sentences"></v-skeleton-loader>
+          </v-card>
+
+          <!-- Описание--контент -->
+          <v-card v-else color="transparent" elevation="0">
             <v-card-title style="font-size: 14px; line-height: 14px;">Описание</v-card-title>
 
             <!-- описание по количеству строк -->
@@ -135,15 +160,36 @@
               </v-card>
             </v-dialog>
 
-
           </v-card>
         </v-col>
 
+        <!-- Вес -->
         <v-col class="ma-0 pa-0" cols="auto">
-          <v-card class="d-flex flex-column custom-rounded"
-                  elevation="5" width="350px"
-                  :disabled="!!(!weightProducts.length)"
-                  :loading="!!(!weightProducts.length)">
+
+          <!-- Вес--загрузка -->
+          <v-card v-if="!!(!weightProducts.length)"
+                  class="custom-rounded py-1 px-3"
+                  width="350px" height="275px">
+
+            <v-skeleton-loader class="mt-4" type="heading"/>
+            <v-skeleton-loader class="mt-2" type="text" width="75px" />
+
+            <div class="d-flex flex-row flex-wrap my-0 py-0 px-2 mt-5">
+              <v-skeleton-loader v-for="i in 2" :key="i" type="image"
+                                 class="mr-2 mb-3"
+                                 width="102px" height="65px"
+                                 style="border-radius: 8px">
+              </v-skeleton-loader>
+            </div>
+
+            <v-skeleton-loader class="mt-2" type="heading" width="150px"/>
+            <v-skeleton-loader class="custom-rounded mt-3" type="image"
+                               width="100%" height="50px"/>
+          </v-card>
+
+          <!-- Вес--контент -->
+          <v-card v-else class="d-flex flex-column custom-rounded"
+                  elevation="5" width="350px">
 
             <div class="pl-4 pr-1 py-2">
               <v-card-title class="mt-2" style="font-size: 19px">{{ weightProducts[model] ? weightProducts[model]['ProductName'] : '' }}</v-card-title>
@@ -153,19 +199,21 @@
             <v-item-group v-model="model" mandatory
                           class="d-flex flex-row flex-wrap my-0 py-0 px-2"
                           active-class="product-card__variables_card--active">
-              <v-item v-for="(value, i) in weightProducts" :key="i" v-slot="{ active, toggle }">
+              <v-item v-for="(value, i) in weightProducts" :key="i"
+                      v-slot="{ active, toggle }">
 
                 <v-card class="product-card__variables_card cursor-pointer ml-2 mb-3"
-                        width="102px" height="65px" elevation="0" @click="toggle" style="border-radius: 8px">
+                        width="102px" height="65px" elevation="0"
+                        @click="toggle" style="border-radius: 8px">
 
                   <div class="d-flex flex-column justify-center align-center" style="height: inherit">
                     <v-card-subtitle class="text-center font-weight-bold" style="font-size: 15px; color:#000; line-height: 10px;">
-                      <span>{{ value['volumeinml'] }}</span>
+                      <span>{{ value ? value['volumeinml'] : '' }}</span>
                       <span>мл.</span>
                     </v-card-subtitle>
 
                     <v-card-text class="text-center ml-2" style="font-size: 13px">
-                      <span>{{ value['ProductPrice'] }}</span> &nbsp;
+                      <span>{{ value ? value['ProductPrice'] : '' }}</span> &nbsp;
                       <v-icon style="position:relative; left: -5px;" class="ma-0 pa-0" x-small>mdi-currency-rub</v-icon>
                     </v-card-text>
                   </div>
@@ -199,7 +247,7 @@
   </section>
 </template>
 <script lang="ts">
-import {Component, Vue, Watch} from "vue-property-decorator"
+import {Component, Ref, Vue, Watch} from "vue-property-decorator"
 @Component
 export default class Productpage extends Vue {
   carousel: number = 0
@@ -265,8 +313,12 @@ export default class Productpage extends Vue {
   }
 
   imageList (image: any) {
-    let firstImage = image['ProductImage']
-    let images = image['imgsProduct']
+    if (!image) {
+      return []
+    }
+
+    let firstImage = image['ProductImage'] ? image['ProductImage'] : ''
+    let images = image['imgsProduct'] ? image['imgsProduct'] : []
     let array = []
     array.push(firstImage)
     array.push(...images)
