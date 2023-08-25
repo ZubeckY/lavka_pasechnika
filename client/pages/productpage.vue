@@ -228,7 +228,8 @@
             </v-card-title>
 
             <v-card-actions class="pa-4 pt-0">
-              <v-btn class="custom-rounded font-weight-regular text-none"
+              <v-btn @click="addOne"
+                     class="custom-rounded font-weight-regular text-none"
                      elevation="0" height="50px" color="#26ae60"
                      style="font-size: 16px; letter-spacing: .4px;" dark block>
                 <!-- todo заменить v-icon-->
@@ -262,6 +263,25 @@ export default class Productpage extends Vue {
 
   async created () {
     return await this.initAll ()
+  }
+
+  addOne () {
+    let product = this.product
+    let weightProduct = this.weightProducts[this.model]
+
+    let data = {
+      count: 1,
+      productId: weightProduct.id,
+      mainProductId: product.id,
+      productName: weightProduct.ProductName,
+      productPrice: weightProduct.ProductPrice,
+      productImage: weightProduct.ProductImage,
+    }
+
+    this.$store.dispatch ("busket/addOne", data).then(() => {
+      console.log(this.$store.state.busket.list)
+    })
+
   }
 
   async initAll () {
