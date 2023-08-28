@@ -228,7 +228,8 @@
             </v-card-title>
 
             <v-card-actions class="pa-4 pt-0">
-              <v-btn @click="addOne"
+              <v-btn v-if="!busketItem"
+                     @click="countPlus"
                      class="custom-rounded font-weight-regular text-none"
                      elevation="0" height="50px" color="#26ae60"
                      style="font-size: 16px; letter-spacing: .4px;" dark block>
@@ -238,6 +239,35 @@
                 </v-card>
                 <span>Добавить в корзину</span>
               </v-btn>
+
+              <v-card v-else
+                      class="custom-rounded d-flex align-center justify-space-between flex-row"
+                      width="100%" height="50px"
+                      elevation="0" color="#26ae60">
+                <div class="d-flex align-center flex-row">
+                  <v-btn icon dark large @click="countMinus">
+                    <v-icon>mdi-minus</v-icon>
+                  </v-btn>
+
+                  <v-card-title class="font-weight-regular white--text mx-3" style="font-size: 16px">
+                    {{ busketItem ? busketItem.count : '' }} шт.
+                  </v-card-title>
+
+                  <v-btn icon dark large @click="countPlus">
+                    <v-icon>mdi-plus</v-icon>
+                  </v-btn>
+                </div>
+
+                <v-btn class="custom-rounded text-none pa-0"
+                       @click="routing('/mybusket')"
+                       elevation="0"
+                       width="50%"
+                       height="inherit"
+                       color="#159d4f" dark style="letter-spacing: .3px">
+                  <v-icon class="mr-2" style="font-size: 18px">mdi-briefcase-outline</v-icon>
+                  Перейти <br> в корзину
+                </v-btn>
+              </v-card>
             </v-card-actions>
 
           </v-card>
@@ -258,6 +288,8 @@ export default class Productpage extends Vue {
   model: any = 0
   item: any = {}
   product: any = {}
+  busketItem: any = {}
+
   listAdvantage: any = []
   weightProducts: any = []
 
@@ -265,11 +297,11 @@ export default class Productpage extends Vue {
     return await this.initAll ()
   }
 
-  addOne () {
+  createDataToBusket () {
     let product = this.product
     let weightProduct = this.weightProducts[this.model]
 
-    let data = {
+    return {
       count: 1,
       productId: weightProduct.id,
       mainProductId: product.id,
@@ -277,11 +309,26 @@ export default class Productpage extends Vue {
       productPrice: weightProduct.ProductPrice,
       productImage: weightProduct.ProductImage,
     }
+  }
 
+  async getDataFromBusket () {
+    let busket = this.$store.getters['busket/getList']
+    let one = busket.map ((e: any) => e.productId).indexOf(this.createDataToBusket().productId)
+    this.busketItem = busket[one]
+  }
+
+  countPlus () {
+    let data = this.createDataToBusket ()
     this.$store.dispatch ("busket/addOne", data).then(() => {
-      console.log(this.$store.state.busket.list)
+      this.getDataFromBusket ()
     })
+  }
 
+  countMinus () {
+    let data = this.createDataToBusket ()
+    this.$store.dispatch ("busket/deleteOne", data).then(() => {
+      this.getDataFromBusket ()
+    })
   }
 
   async initAll () {
@@ -298,6 +345,9 @@ export default class Productpage extends Vue {
       this.listAdvantage = await this.initList('listadvantage', 'advantage/getProduct')
       this.weightProducts = await this.initList ('weightproducts', 'products/getProduct')
       this.model = this.weightProducts.map((elem: any) => elem.id).indexOf(docproduct)
+
+      this.getDataFromBusket ()
+
     } catch (e) {
       console.log(e)
     }
@@ -329,6 +379,7 @@ export default class Productpage extends Vue {
 
   @Watch('model')
   changeCurrentRoute () {
+    this.getDataFromBusket ()
     return this.routing(this.linkProductPage(this.product.id, this.weightProducts[this.model].id))
   }
 

@@ -33,13 +33,13 @@
 
           <v-card class="custom-rounded d-flex flex-column justify-center align-center"
                   @click.stop elevation="0" width="40px" height="100px" color="#26ae60" dark>
-            <v-btn icon>
+            <v-btn icon @click="countPlus(listItem)">
               <v-icon>mdi-plus</v-icon>
             </v-btn>
             <v-card-title class="d-flex align-center justify-center font-weight-medium my-1" style="font-size: 16px">
               {{ listItem.count }}
             </v-card-title>
-            <v-btn icon>
+            <v-btn icon @click="countMinus(listItem)">
               <v-icon>mdi-minus</v-icon>
             </v-btn>
           </v-card>
@@ -54,7 +54,8 @@
               color="transparent">
 
         <v-img class="mx-auto" width="174px" height="214px" alt="#"
-               :src="require(`~/assets/images/honeyhivecart.png`)"></v-img>
+               :src="require(`~/assets/images/honeyhivecart.png`)"
+               :lazy-src="require(`~/assets/images/honeyhivecart.png`)"/>
 
         <v-card-title class="d-flex justify-center text-center mt-6">В корзине пока <br> ничего нет</v-card-title>
         <v-card-text class="text-center font-weight-medium mt-4"
@@ -66,11 +67,13 @@
 
         <v-card-actions class="d-flex flex-column mx-auto mt-2" style="width: 220px;">
           <v-btn class="font-weight-bold text-none custom-rounded" dark block height="40px"
-                 color="#26ae60" style="font-size: 16px; letter-spacing: .3px">
+                 color="#26ae60" style="font-size: 16px; letter-spacing: .3px"
+                 @click="routing('/allproducts')">
             К покупкам
           </v-btn>
           <v-btn class="font-weight-bold text-none mt-2" text
-                 color="#26ae60" style="font-size: 16px; letter-spacing: .3px">
+                 color="#26ae60" style="font-size: 16px; letter-spacing: .3px"
+                 @click="routing('/stockssale')">
             Акции и скидки
           </v-btn>
         </v-card-actions>
@@ -167,12 +170,13 @@ export default class Mybusket extends Vue {
   couponDiscount: number = 0
 
   created () {
-    let storeData = this.$store.getters['busket/getList']
-    this.list = storeData
-    this.itemsCount = storeData.length
-
+    this.initBusket()
     // console.log(this.$cookies.get('auth'))
-    // console.log(this.$store.state.busket)
+  }
+
+  initBusket () {
+    this.list = this.$store.getters['busket/getList']
+    this.itemsCount = this.totalCountItems ?? 0
   }
 
   routing (link: string) {
@@ -181,6 +185,15 @@ export default class Mybusket extends Vue {
 
   linkProductPage (id: any, product: any) {
     return '/productpage?docMainproduct=' + id + '&docproduct=' + product
+  }
+
+  get totalCountItems () {
+    let count = 0
+    let storeData = this.$store.getters['busket/getList']
+    for (let i = 0; i < storeData.length; i++) {
+      count += storeData[i]['count']
+    }
+    return count
   }
 
   get priceWithoutDiscount () {
@@ -201,12 +214,16 @@ export default class Mybusket extends Vue {
     return count - this.discount - this.couponDiscount
   }
 
-  countPlus () {
-
+  countPlus (data: any) {
+    this.$store.dispatch ("busket/addOne", data).then(() => {
+      this.initBusket()
+    })
   }
 
-  countMinus () {
-
+  countMinus (data: any) {
+    this.$store.dispatch ("busket/deleteOne", data).then(() => {
+      this.initBusket()
+    })
   }
 
 }

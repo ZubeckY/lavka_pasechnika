@@ -4,9 +4,12 @@
 
     <div class="product-card__container d-flex flex-column" style="height: calc(100% - 20px)">
 
-      <v-img class="rounded-xl cursor-pointer" width="160px" height="160px"
-             @click="routing(linkProductPage(item['id'], linkId(item['weightproducts'][0])))"
-             :src="item['ImageMainProduct']" alt="#"></v-img>
+      <v-img class="rounded-xl cursor-pointer"
+             width="160px" height="160px" alt="#"
+             :src="item['ImageMainProduct']"
+             :lazy-src="item['ImageMainProduct']"
+             @click="routing(linkProductPage(item['id'],
+             linkId(item['weightproducts'][0])))"/>
 
       <v-card-title class="product-card__title cursor-pointer d-flex align-center pt-1 overflow-y-hidden"
                     @click="routing(linkProductPage(item['id'], linkId(item['weightproducts'][0])))">
