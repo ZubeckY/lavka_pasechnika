@@ -9,42 +9,9 @@
       </v-card-actions>
 
       <div v-if="itemsCount > 0">
-        <v-card v-for="(listItem, i) in list" :key="i"
-                class="d-flex flex-row custom-rounded pa-2 mb-2"
-                width="100%" elevation="0"
-                @click="routing(linkProductPage(
-                  listItem['mainProductId'],
-                  listItem['productId']))">
-          <v-card class="custom-rounded"
-                  elevation="0"
-                  width="100px"
-                  height="100px"
-                  color="#e5e5e5"
-                  :img="listItem.productImage">
-          </v-card>
-
-          <div class="mt-2 ml-2">
-            <v-card-title class="font-weight-medium" style="font-size: 16px">{{ listItem.productName }}</v-card-title>
-            <v-card-subtitle>Цена: {{ listItem.productPrice }} ₽</v-card-subtitle>
-            <v-card-text class="font-weight-regular">Подитог: {{ listItem.count * listItem.productPrice }} ₽</v-card-text>
-          </div>
-
-          <v-spacer/>
-
-          <v-card class="custom-rounded d-flex flex-column justify-center align-center"
-                  @click.stop elevation="0" width="40px" height="100px" color="#26ae60" dark>
-            <v-btn icon @click="countPlus(listItem)">
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
-            <v-card-title class="d-flex align-center justify-center font-weight-medium my-1" style="font-size: 16px">
-              {{ listItem.count }}
-            </v-card-title>
-            <v-btn icon @click="countMinus(listItem)">
-              <v-icon>mdi-minus</v-icon>
-            </v-btn>
-          </v-card>
-
-        </v-card>
+        <busket-card v-for="(listItem, i) in list"
+                     :key="i" :listItem="listItem"
+                     @initBusket="initBusket"/>
       </div>
 
       <v-card v-else
@@ -171,7 +138,6 @@ export default class Mybusket extends Vue {
 
   created () {
     this.initBusket()
-    // console.log(this.$cookies.get('auth'))
   }
 
   initBusket () {
@@ -183,13 +149,12 @@ export default class Mybusket extends Vue {
     return this.$router.push(link)
   }
 
-  linkProductPage (id: any, product: any) {
-    return '/productpage?docMainproduct=' + id + '&docproduct=' + product
-  }
-
   get totalCountItems () {
     let count = 0
     let storeData = this.$store.getters['busket/getList']
+
+    if (!storeData) return 0
+
     for (let i = 0; i < storeData.length; i++) {
       count += storeData[i]['count']
     }
@@ -199,6 +164,9 @@ export default class Mybusket extends Vue {
   get priceWithoutDiscount () {
     let count = 0
     let storeData = this.$store.getters['busket/getList']
+
+    if (!storeData) return 0
+
     for (let i = 0; i < storeData.length; i++) {
       count += storeData[i]['count'] * storeData[i]['productPrice']
     }
@@ -208,22 +176,13 @@ export default class Mybusket extends Vue {
   get priceWithDiscount () {
     let count = 0
     let storeData = this.$store.getters['busket/getList']
+
+    if (!storeData) return 0
+
     for (let i = 0; i < storeData.length; i++) {
       count += storeData[i]['count'] * storeData[i]['productPrice']
     }
     return count - this.discount - this.couponDiscount
-  }
-
-  countPlus (data: any) {
-    this.$store.dispatch ("busket/addOne", data).then(() => {
-      this.initBusket()
-    })
-  }
-
-  countMinus (data: any) {
-    this.$store.dispatch ("busket/deleteOne", data).then(() => {
-      this.initBusket()
-    })
   }
 
 }

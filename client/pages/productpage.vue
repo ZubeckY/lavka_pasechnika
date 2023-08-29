@@ -313,6 +313,8 @@ export default class Productpage extends Vue {
 
   async getDataFromBusket () {
     let busket = this.$store.getters['busket/getList']
+    if (!busket) return this.busketItem = {}
+
     let one = busket.map ((e: any) => e.productId).indexOf(this.createDataToBusket().productId)
     this.busketItem = busket[one]
   }

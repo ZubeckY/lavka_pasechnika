@@ -57,6 +57,7 @@
 </template>
 <script lang="ts">
 import {Component, Vue, Watch} from "vue-property-decorator"
+import getBusketFromLocalStorage from "~/assets/scripts/getBusketFromLocalStorage";
 @Component
 export default class Lk extends Vue {
   model: number = 0
@@ -98,6 +99,16 @@ export default class Lk extends Vue {
       link: '/?logout=true'
     },
   ]
+
+  created () {
+    this.getBusket ()
+    // console.log(this.$cookies.get('auth'))
+  }
+
+  getBusket () {
+    let data = getBusketFromLocalStorage()
+    this.$store.dispatch ('busket/initList', data)
+  }
 
   @Watch('$route')
   changeScrollTo () {

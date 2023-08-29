@@ -3,9 +3,14 @@ export const state = () => ({
 })
 
 export const mutations = {
+  initList (state: any, data: any) {
+    return state.list = data
+  },
   addOne (state: any, data: any) {
     const pos = state.list.map((e: any) => e.productId).indexOf(data.productId)
-    return pos == -1 ? state.list.push(data) : state.list[pos].count ++
+    pos == -1 ? state.list.push(data) : state.list[pos].count ++
+    localStorage.setItem('busket', JSON.stringify(state.list))
+    return
   },
   deleteOne (state: any, data: any) {
     const pos = state.list.map((e: any) => e.productId).indexOf(data.productId)
@@ -13,13 +18,17 @@ export const mutations = {
     state.list[pos].count --
 
     if (state.list[pos].count <= 0) {
-      let list = state.list.filter ((item: any) => item.count > 0)
-      return state.list = list
+      state.list = state.list.filter ((item: any) => item.count > 0)
     }
+
+    localStorage.setItem('busket', JSON.stringify(state.list))
   },
 }
 
 export const actions = {
+  initList (store: any, data: any) {
+    return store.commit('initList', data)
+  },
   addOne (store: any, data: any) {
     return store.commit('addOne', data)
   },
@@ -33,7 +42,6 @@ export const actions = {
 
 export const getters = {
   getList (state: any) {
-    return JSON.parse(JSON.stringify(state.list))
+    return state.list
   },
-
 }
