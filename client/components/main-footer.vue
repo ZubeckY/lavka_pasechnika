@@ -58,8 +58,7 @@
 
         <!-- До встречи в наших магазинах -->
         <v-col class="ma-0 pa-0" style="margin-left: 30px !important" cols="auto">
-          <locations :mapping="mapping"
-                     :mapPoints="mapPoints"/>
+          <locations />
         </v-col>
 
         <!-- Меню -->
@@ -125,14 +124,6 @@
 import {Component, Vue} from "vue-property-decorator"
 @Component
 export default class MainFooter extends Vue {
-  mapping: any = "goryachiy-klyuch"
-  mapPoints: any = []
-
-  created () {
-    // Делаем костыль, в виде jSON, тем самым избавляемся от зависимости
-    this.mapPoints = JSON.parse(JSON.stringify(this.$store.state.mapPoints))
-  }
-
   get getNowYear () {
     return new Date ().getFullYear()
   }

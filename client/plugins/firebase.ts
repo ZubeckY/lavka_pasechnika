@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
-import { getAnalytics } from "firebase/analytics"
 import { getFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
@@ -12,7 +11,6 @@ const firebaseConfig = {
   appId: "1:1056712525346:web:e584718a5ee9288a2cac7b"
 };
 
-export const app = initializeApp(firebaseConfig)
-export const auth = getAuth(app)
-// export const analytics = getAnalytics(app)
-export const db = getFirestore(app)
+export const app: any   =   initializeApp(firebaseConfig)
+export const auth: any  =   getAuth(app)
+export const db: any    =   getFirestore(app)

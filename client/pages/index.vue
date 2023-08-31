@@ -7,25 +7,7 @@
       </v-container>
     </section>
 
-    <!-- width = 991 - спрятать стрелки -->
-    <section>
-      <v-container>
-        <v-carousel v-model="activeSlide"
-                    class="custom-rounded mt-8"
-                    next-icon="mdi-arrow-right-thin"
-                    prev-icon="mdi-arrow-left-thin"
-                    hide-delimiters height="290px">
-          <v-carousel-item v-for="i in countSlide" :key="i"
-                           :src="require(`~/assets/images/slider-1.png`)">
-          </v-carousel-item>
-        </v-carousel>
-
-        <!-- Слайды поменьше -->
-        <small-slides :activeSlide="activeSlide"
-                      :countSlide="countSlide"/>
-
-      </v-container>
-    </section>
+    <banner/>
 
     <section class="mt-2">
       <v-container>
@@ -76,15 +58,6 @@
     <section class="mt-5">
       <v-container>
         <v-card-title>Популярные товары</v-card-title>
-
-        <!-- <pre v-text="items[0]['NameMainProduct']"></pre> -->
-        <!-- <pre v-text="items[0]['ImageMainProduct']"></pre> -->
-        <!-- <pre v-text="items[0]['Description']"></pre> -->
-        <!-- <pre v-text="items[0]['weightproducts']"></pre> -->
-        <!-- <pre v-text="items[0]['TittleMainCategory']"></pre> -->
-        <!-- <pre v-text="items[0]['UniqueMainProductid']"></pre> -->
-        <!-- <pre v-text="items[0]['Sostav']"></pre> -->
-        <!-- <pre v-text="items[0]['Calories']"></pre> -->
 
         <div class="d-flex flex-row mt-4" v-if="isLoaded">
           <catalog-item-load v-for="i in limit" :key="i"/>
@@ -157,8 +130,6 @@ export default class Pages extends Vue {
   items: any = []
 
   limit: number = 6
-  activeSlide: number = 0
-  countSlide: number = 2
   isLoaded: boolean = true
 
   async created () {

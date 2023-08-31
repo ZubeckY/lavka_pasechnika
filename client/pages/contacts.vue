@@ -13,19 +13,10 @@
 
       <v-row>
         <v-col class="ma-0 pa-0 pl-2">
-          <iframe :src="getMapURL"
-                  frameborder="0"
-                  border-radius="8px"
-                  allowfullscreen="true"
-                  width="860" height="345"
-                  style="position: relative;">
-          </iframe>
+          <div v-html="mapping"></div>
         </v-col>
         <v-col class="ma-0 pa-0" cols="3">
-          <locations class="pl-4"
-                     :mapping="mapping"
-                     :mapPoints="mapPoints"
-                     @changeMapping="changeMapping"/>
+          <locations class="pl-4" @changeMapping="changeMapping"/>
         </v-col>
       </v-row>
 
@@ -36,21 +27,10 @@
 import {Component, Vue} from "vue-property-decorator"
 @Component
 export default class Contacts extends Vue {
-  mapping: any = "goryachiy-klyuch"
-  mapPoints: any = []
-
-  created () {
-    // Делаем костыль, в виде jSON, тем самым избавляемся от зависимости
-    this.mapPoints = JSON.parse(JSON.stringify(this.$store.state.mapPoints))
-  }
-
-  get getMapURL () {
-    return this.mapPoints.filter((item: any) => item.value === this.mapping)[0]?.map
-  }
+  mapping: any = ""
 
   changeMapping (value: any) {
-    this.mapping = value
+    return this.mapping = value
   }
-
 }
 </script>

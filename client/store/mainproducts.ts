@@ -4,7 +4,9 @@ import {
   getDocs,
   query,
   orderBy,
-  limit, doc, getDoc
+  limit,
+  doc,
+  getDoc
 } from "firebase/firestore"
 import {db} from '~/plugins/firebase'
 import {getData} from "~/assets/scripts/getDataDoc"
