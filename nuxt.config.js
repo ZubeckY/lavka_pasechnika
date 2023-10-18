@@ -5,6 +5,10 @@ const isDev = process.env.NODE_ENV !== 'production' ?? false
 
 export default {
   mode: 'universal',
+  server: {
+    host: '0.0.0.0',
+    port: 3003
+  },
   head: {
     titleTemplate: '%s - client',
     title: 'client',
