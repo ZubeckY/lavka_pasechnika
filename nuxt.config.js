@@ -57,6 +57,10 @@ export default {
     proxy: true
   },
 
+  proxy: {
+    '/api-payment/': { target: 'https://api.yookassa.ru/v3/payments/', pathRewrite: {'^/api-payment/': ''} }
+  },
+
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {

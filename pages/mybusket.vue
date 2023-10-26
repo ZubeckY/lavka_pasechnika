@@ -1,5 +1,15 @@
 <template>
   <div class="d-flex flex-row">
+    <v-dialog class="d-flex justify-center align-center" overlay-color="#e6e6e650" v-model="dialog">
+      <div style="width: 100%;" class="d-flex justify-center align-center overflow-hidden">
+        <v-progress-circular :width="6"
+                             :size="150"
+                             color="grey"
+                             indeterminate>
+        </v-progress-circular>
+      </div>
+    </v-dialog>
+
     <div style="width: 100vw; max-width: 600px;">
       <v-card-actions class="pa-0 mb-2">
         <v-spacer/>
@@ -116,7 +126,7 @@
                width="300px"
                height="45px"
                color="#26ae60" dark
-               style="font-size: 16px; letter-spacing: .3px">
+               style="font-size: 16px; letter-spacing: .3px" @click="generatePay">
           Оформить заказ
         </v-btn>
 
@@ -132,8 +142,9 @@ import {Component, Vue, Watch} from "vue-property-decorator"
 })
 export default class Mybusket extends Vue {
   list: any = []
-  itemsCount: number = 0
+  dialog: boolean = false
   discount: number = 0
+  itemsCount: number = 0
   couponDiscount: number = 0
 
   created () {
@@ -147,6 +158,25 @@ export default class Mybusket extends Vue {
 
   routing (link: string) {
     return this.$router.push(link)
+  }
+
+  async generatePay () {
+    const price: number = this.priceWithoutDiscount
+    this.dialog = true
+    await this.$store.dispatch(
+      'orders/generatePayLink',
+      {
+        store: this.$store,
+        value: price,
+        description: "Заказ №1"
+      }
+    ).then((data: any) => {
+      window.open(data.data.confirmation.confirmation_url, '_blank')
+    }).catch((e) => {
+      console.log(e)
+    }).finally(() => {
+      this.dialog = false
+    })
   }
 
   get totalCountItems () {
