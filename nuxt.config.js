@@ -4,7 +4,6 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default
 const isDev = process.env.NODE_ENV !== 'production' ?? false
 
 export default {
-  mode: 'universal',
   server: {
     host: '0.0.0.0',
     port: 3003
@@ -42,6 +41,7 @@ export default {
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv',
     "nuxt-storm"
   ],
 

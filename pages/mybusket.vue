@@ -137,7 +137,8 @@
 </template>
 <script lang="ts">
 import {Component, Vue, Watch} from "vue-property-decorator"
-@Component ({
+
+@Component({
   layout: 'lk'
 })
 export default class Mybusket extends Vue {
@@ -147,31 +148,42 @@ export default class Mybusket extends Vue {
   itemsCount: number = 0
   couponDiscount: number = 0
 
-  created () {
+  created() {
     this.initBusket()
   }
 
-  initBusket () {
+  initBusket() {
     this.list = this.$store.getters['busket/getList']
     this.itemsCount = this.totalCountItems ?? 0
   }
 
-  routing (link: string) {
+  routing(link: string) {
     return this.$router.push(link)
   }
 
-  async generatePay () {
-    const price: number = this.priceWithoutDiscount
+  async generatePay() {
     this.dialog = true
+
     await this.$store.dispatch(
       'orders/generatePayLink',
       {
         store: this.$store,
-        value: price,
-        description: "Заказ №1"
+        value: this.priceWithoutDiscount,
+        description: "Заказ №1",
+        return_url: location.href
       }
-    ).then((data: any) => {
+    ).then(async (data: any) => {
+      console.log(data)
+      await this.$store.dispatch(
+        'orders/createOrder',
+        {
+          Total_Value: this.priceWithoutDiscount,
+          payment_id: data.data.id,
+        }
+      )
+
       window.open(data.data.confirmation.confirmation_url, '_blank')
+      // window.location.href = data.data.confirmation.confirmation_url
     }).catch((e) => {
       console.log(e)
     }).finally(() => {
@@ -179,36 +191,19 @@ export default class Mybusket extends Vue {
     })
   }
 
-  get totalCountItems () {
-    let count = 0
-    let storeData = this.$store.getters['busket/getList']
-
-    if (!storeData) return 0
-
-    for (let i = 0; i < storeData.length; i++) {
-      count += storeData[i]['count']
-    }
-    return count
+  get totalCountItems() {
+    return this.$store.getters['busket/getCountItems']
   }
 
-  get priceWithoutDiscount () {
-    let count = 0
-    let storeData = this.$store.getters['busket/getList']
-
-    if (!storeData) return 0
-
-    for (let i = 0; i < storeData.length; i++) {
-      count += storeData[i]['count'] * storeData[i]['productPrice']
-    }
-    return count
+  get priceWithoutDiscount() {
+    return this.$store.getters['busket/getTotalPrice']
   }
 
-  get priceWithDiscount () {
+  get priceWithDiscount() {
     let count = 0
     let storeData = this.$store.getters['busket/getList']
 
     if (!storeData) return 0
-
     for (let i = 0; i < storeData.length; i++) {
       count += storeData[i]['count'] * storeData[i]['productPrice']
     }

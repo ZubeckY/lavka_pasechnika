@@ -3,11 +3,7 @@
     <v-container>
 
       <div class="d-flex flex-row justify-space-between mt-5 mb-10" style="position:relative; left: -10px;">
-        <v-btn style="border-radius: 8px" @click="routing('/')"
-               width="44px" height="44px" min-width="0"
-               color="#26ae60" elevation="0" dark>
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
+        <button-back/>
 
         <!-- Название мёда -->
         <v-skeleton-loader v-if="!onlyNameProduct" class="custom-rounded" type="image" width="200px" height="35px"></v-skeleton-loader>
@@ -25,7 +21,7 @@
         <v-col class="ma-0 pa-0" cols="auto">
 
           <!-- Слайдер--загрузка -->
-          <div v-if="!!(!weightProducts.length)">
+          <div v-if="!weightProducts.length">
             <div>
               <v-skeleton-loader type="image" width="340px"
                                  style="border-radius: 15px 15px 0 0"/>
@@ -167,7 +163,7 @@
         <v-col class="ma-0 pa-0" cols="auto">
 
           <!-- Вес--загрузка -->
-          <v-card v-if="!!(!weightProducts.length)"
+          <v-card v-if="!weightProducts.length"
                   class="custom-rounded py-1 px-3"
                   width="350px" height="275px">
 
@@ -348,7 +344,7 @@ export default class Productpage extends Vue {
       this.weightProducts = await this.initList ('weightproducts', 'products/getProduct')
       this.model = this.weightProducts.map((elem: any) => elem.id).indexOf(docproduct)
 
-      this.getDataFromBusket ()
+      await this.getDataFromBusket()
 
     } catch (e) {
       console.log(e)

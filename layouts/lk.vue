@@ -9,7 +9,7 @@
             <v-container>
 
               <div class="d-flex flex-row my-5" style="position:relative; left: -10px;">
-                <v-btn style="border-radius: 8px" @click="$router.push('/')"
+                <v-btn style="border-radius: 8px" @click="getBack"
                        width="44px" height="44px" min-width="0"
                        color="#26ae60" elevation="0" dark>
                   <v-icon>mdi-chevron-left</v-icon>
@@ -103,6 +103,14 @@ export default class Lk extends Vue {
   created () {
     this.getBusket ()
     // console.log(this.$cookies.get('auth'))
+  }
+
+  getBack() {
+    if (!document.referrer) {
+      return location.href = '/'
+    } else {
+      return location.href = document.referrer
+    }
   }
 
   getBusket () {

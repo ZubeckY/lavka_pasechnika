@@ -44,4 +44,27 @@ export const getters = {
   getList (state: any) {
     return state.list
   },
+
+  getCountItems (state: any) {
+    let count = 0
+    let storeData = state.list
+
+    if (!storeData) return 0
+    for (let i = 0; i < storeData.length; i++) {
+      count += storeData[i]['count']
+    }
+    return count
+  },
+
+  getTotalPrice(state: any) {
+    let count = 0
+    let storeData = state.list
+
+    if (!storeData) return 0
+    for (let i = 0; i < storeData.length; i++) {
+      count += storeData[i]['count'] * storeData[i]['productPrice']
+    }
+    return count
+  },
+
 }
