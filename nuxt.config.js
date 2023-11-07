@@ -58,7 +58,8 @@ export default {
   },
 
   proxy: {
-    '/api-payment/': { target: 'https://api.yookassa.ru/v3/payments/', pathRewrite: {'^/api-payment/': ''} }
+    '/api-payment/': { target: process.env.API_YOO_KASSA_LINK, pathRewrite: {'^/api-payment/': ''} },
+    '/api-products/': { target: process.env.API_PRODUCTS_LINK, pathRewrite: {'^/api-products/': ''} }
   },
 
   vuetify: {
