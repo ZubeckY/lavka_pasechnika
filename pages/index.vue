@@ -132,36 +132,49 @@ export default class Pages extends Vue {
   limit: number = 6
   isLoaded: boolean = true
 
-  async created () {
-    return this.getCollections()
+  async mounted () {
+    return await this.getCollections()
   }
 
-  getCollections () {
-    try {
-      let count = 3
-      let interval: any = setInterval (async () => {
-
-        if (count <= 0 || this.items.length > 0) {
-          this.isLoaded = false
-          return clearInterval(interval)
-        }
-
-        count --
-        return this.items = await this.$store.dispatch
-        (
-          'mainproducts/loadProducts',
-          {
-            store: this.$store,
-            limitVal: this.limit
-          }
-        )
-      }, 750)
-    } catch (e: any) {
-      console.log(e)
-    }
-
-    // return this.$store.getters['mainproducts/mainProducts'];
+  async getCollections() {
+    await this.$axios.get('/api-products/product/?limit=6')
+      .then((data: any) => {
+        this.items = data.data.results
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+      .finally(() => {
+        this.isLoaded = false
+      })
   }
+
+  // getCollections () {
+  //   try {
+  //     let count = 3
+  //     let interval: any = setInterval (async () => {
+  //
+  //       if (count <= 0 || this.items.length > 0) {
+  //         this.isLoaded = false
+  //         return clearInterval(interval)
+  //       }
+  //
+  //       count --
+  //       return this.items = await this.$store.dispatch
+  //       (
+  //         'mainproducts/loadProducts',
+  //         {
+  //           store: this.$store,
+  //           limitVal: this.limit
+  //         }
+  //       )
+  //     }, 750)
+  //   } catch (e: any) {
+  //     console.log(e)
+  //   }
+  //
+  //   // return this.$store.getters['mainproducts/mainProducts'];
+  // }
 
   routing (link: string) {
     return this.$router.push(link)

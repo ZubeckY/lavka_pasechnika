@@ -6,14 +6,14 @@
 
       <v-img class="rounded-xl cursor-pointer"
              width="160px" height="160px" alt="#"
-             :src="item['ImageMainProduct']"
-             :lazy-src="item['ImageMainProduct']"
-             @click="routing(linkProductPage(item['id'],
-             linkId(item['weightproducts'][0])))"/>
+             :src="item['image']"
+             :lazy-src="item['image']"
+             @click="routing(linkProductPage(item['id']))
+             linkId(item['weightproducts'][0])"/>
 
       <v-card-title class="product-card__title cursor-pointer d-flex align-center pt-1 overflow-y-hidden"
-                    @click="routing(linkProductPage(item['id'], linkId(item['weightproducts'][0])))">
-        {{ item['NameMainProduct'] }}
+                    @click="routing(linkProductPage(item['id']))">
+        {{ item['title'] }}
       </v-card-title>
 
       <div style="flex: 1 1 auto"></div>
@@ -24,7 +24,7 @@
 
             <div class="swiper-slide" v-for="(value, i) in weightProducts" :key="i" style="width: 85px">
               <v-card class="product-card__variables_card cursor-pointer" style="border-radius: 8px"
-                      @click="routing(linkProductPage(item['id'], value.id))"
+                      @click="routing(linkProductPage(item))"
                       height="44px" elevation="0">
 
                 <div class="d-flex flex-column justify-center align-center pt-1" style="height: inherit">
@@ -47,7 +47,7 @@
       </div>
 
       <v-btn class="text-none font-weight-bold" height="40px"
-             @click="routing(linkProductPage(item['id'], linkId(item['weightproducts'][0])))"
+             @click="routing(linkProductPage(item))"
              style="border-radius: 8px" color="white" elevation="0" block>
         Выбрать
       </v-btn>
@@ -83,23 +83,11 @@ export default class CatalogItem extends Vue {
   }
 
   async initWeightProducts () {
-    let array: any = []
-
-    let products = this.item['weightproducts'] ? this.item['weightproducts'].map((doc: any) => {
-      let link = doc['_key']['path']['segments']
-      return link[link.length - 1]
-    }) : []
-
-    for (let i = 0; i < products.length; i++) {
-      let product = await this.$store.dispatch ('products/getProduct', products[i])
-      array.push(product)
-    }
-
-    this.weightProducts = array
+    return this.item['sub_products']
   }
 
-  linkProductPage (id: any, product: any) {
-    return '/productpage?docMainproduct=' + id + '&docproduct=' + product
+  linkProductPage (product: any) {
+    return '/productpage'
   }
 
   linkId (info: any) {
