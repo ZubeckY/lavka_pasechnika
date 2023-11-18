@@ -6,7 +6,7 @@
         <button-back/>
 
         <!-- Название мёда -->
-        <v-skeleton-loader v-if="!item['title']" class="custom-rounded" type="image" width="200px" height="35px"></v-skeleton-loader>
+        <v-skeleton-loader v-if="textLoad" class="custom-rounded" type="image" width="200px" height="35px"/>
         <v-card-title v-else class="philosopher-font ml-3" style="font-size: 24px">{{ item['title'] }}</v-card-title>
 
         <v-btn style="border-radius: 8px"
@@ -21,7 +21,7 @@
         <v-col class="ma-0 pa-0" cols="auto">
 
           <!-- Слайдер--загрузка -->
-          <div v-if="!subProducts.length">
+          <div v-if="subProductsLoad">
             <div>
               <v-skeleton-loader type="image" width="340px" style="border-radius: 15px 15px 0 0"/>
               <v-skeleton-loader type="image" width="340px" style="border-radius: 0 0 15px 15px"/>
@@ -36,12 +36,9 @@
           <!-- Слайдер--контент -->
           <div v-else>
             <!-- Слайды побольше -->
-            <carousel-dialog maxWidth="572px" :carousel="carousel"
-                             :img="imageList(subProducts[model])">
-
+            <carousel-dialog maxWidth="572px" :carousel="carousel" :img="imageList(subProducts[model])">
               <v-carousel v-model="carousel" class="custom-rounded"
-                          style="width: 340px"
-                          hide-delimiters height="460px"
+                          style="width: 340px" hide-delimiters height="460px"
                           :show-arrows="!(imageList(subProducts[model]).length <= 1)">
                 <v-carousel-item v-for="image in imageList(subProducts[model])" :key="image" :src="image"/>
               </v-carousel>
@@ -53,8 +50,9 @@
                 <v-slide-item v-for="(item, i) in imageList(subProducts[model])"
                               :key="i" v-slot="{ active, toggle }">
                   <!-- Картинки -->
-                  <v-card :style="active ? 'filter: grayscale(20%) contrast(125%); border: 3px solid #26ae60' : 'filter: grayscale(60%)'"
-                          class="custom-rounded ml-0 ma-3" width="80px" height="100px" @click="toggle" :img="item">
+                  <v-card
+                    :style="active ? 'filter: grayscale(20%) contrast(125%); border: 3px solid #26ae60' : 'filter: grayscale(60%)'"
+                    class="custom-rounded ml-0 ma-3" width="80px" height="100px" @click="toggle" :img="item">
                   </v-card>
                 </v-slide-item>
               </v-slide-group>
@@ -65,7 +63,7 @@
         <!-- Полезные свойства и текст -->
         <v-col class="my-0 mx-8 pa-0">
           <!-- Полезные свойства--загрузка -->
-          <div v-if="!listAdvantage.length">
+          <div v-if="listAdvantageLoad">
             <v-card-title class="mb-3" style="font-size: 14px">Полезные свойства</v-card-title>
             <div class="d-flex flex-row flex-wrap">
               <advantage-card-load v-for="i in 4" :key="i"/>
@@ -100,7 +98,7 @@
           </div>
 
           <!-- Описание--загрузка -->
-          <v-card v-if="!item['description']" color="transparent" elevation="0">
+          <v-card v-if="textLoad" color="transparent" elevation="0">
             <v-card-title style="font-size: 14px; line-height: 14px;">Описание</v-card-title>
 
             <v-skeleton-loader class="mt-3" type="sentences"></v-skeleton-loader>
@@ -152,12 +150,12 @@
         <v-col class="ma-0 pa-0" cols="auto">
 
           <!-- Вес--загрузка -->
-          <v-card v-if="!subProducts.length"
+          <v-card v-if="subProductsLoad"
                   class="custom-rounded py-1 px-3"
                   width="350px" height="275px">
 
             <v-skeleton-loader class="mt-4" type="heading"/>
-            <v-skeleton-loader class="mt-2" type="text" width="75px" />
+            <v-skeleton-loader class="mt-2" type="text" width="75px"/>
 
             <div class="d-flex flex-row flex-wrap my-0 py-0 px-2 mt-5">
               <v-skeleton-loader v-for="i in 2" :key="i" type="image"
@@ -177,8 +175,10 @@
                   elevation="5" width="350px">
 
             <div class="pl-4 pr-1 py-2">
-              <v-card-title class="mt-2" style="font-size: 19px">{{ subProducts[model] ? subProducts[model]['title'] : '' }}</v-card-title>
-              <v-card-title class="mt-1 mb-2" style="font-size: 16px">Вес </v-card-title>
+              <v-card-title class="mt-2" style="font-size: 19px">
+                {{ subProducts[model] ? subProducts[model]['title'] : '' }}
+              </v-card-title>
+              <v-card-title class="mt-1 mb-2" style="font-size: 16px">Вес</v-card-title>
             </div>
 
             <v-item-group v-model="model" mandatory
@@ -192,7 +192,8 @@
                         @click="toggle" style="border-radius: 8px">
 
                   <div class="d-flex flex-column justify-center align-center" style="height: inherit">
-                    <v-card-subtitle class="text-center font-weight-bold" style="font-size: 15px; color:#000; line-height: 10px;">
+                    <v-card-subtitle class="text-center font-weight-bold"
+                                     style="font-size: 15px; color:#000; line-height: 10px;">
                       <span>{{ value.weight_value }}</span>
                       <span>{{ value.weight_measure.value }}</span>
                     </v-card-subtitle>
@@ -213,44 +214,44 @@
             </v-card-title>
 
             <v-card-actions class="pa-4 pt-0">
-              <v-btn v-if="!busketItem" @click="countPlus"
-                     class="custom-rounded font-weight-regular text-none"
-                     elevation="0" height="50px" color="#26ae60"
-                     style="font-size: 16px; letter-spacing: .4px;" dark block>
+              <v-btn v-if="countInCart <= 0" class="custom-rounded font-weight-regular text-none"
+                     elevation="0" height="50px" color="#26ae60" style="font-size: 16px; letter-spacing: .4px;"
+                     dark block @click="addToCartItem">
                 <!-- todo заменить v-icon-->
-                <v-card class="d-flex justify-center align-center rounded-circle pa-2 mr-2" color="#159d4f" elevation="0">
+                <v-card class="d-flex justify-center align-center rounded-circle pa-2 mr-2" color="#159d4f"
+                        elevation="0">
                   <v-icon style="font-size: 18px">mdi-briefcase-outline</v-icon>
                 </v-card>
                 <span>Добавить в корзину</span>
               </v-btn>
 
-              <v-card v-else
-                      class="custom-rounded d-flex align-center justify-space-between flex-row"
-                      width="100%" height="50px"
-                      elevation="0" color="#26ae60">
+              <v-card v-else class="custom-rounded d-flex align-center justify-space-between flex-row"
+                      width="100%" height="50px" elevation="0" color="#26ae60">
                 <div class="d-flex align-center flex-row">
-                  <v-btn icon dark large @click="countMinus">
+
+                  <!-- Добавить кол-во -->
+                  <v-btn icon dark large>
                     <v-icon>mdi-minus</v-icon>
                   </v-btn>
 
+                  <!-- Значение кол-во -->
                   <v-card-title class="font-weight-regular white--text mx-3" style="font-size: 16px">
-                    {{ busketItem ? busketItem.count : '' }} шт.
+                    {{ countInCart }} шт.
                   </v-card-title>
 
-                  <v-btn icon dark large @click="countPlus">
+                  <!-- Добавить убрать кол-во -->
+                  <v-btn icon dark larg>
                     <v-icon>mdi-plus</v-icon>
                   </v-btn>
                 </div>
 
-                <v-btn class="custom-rounded text-none pa-0"
-                       @click="routing('/mybusket')"
-                       elevation="0"
-                       width="50%"
-                       height="inherit"
-                       color="#159d4f" dark style="letter-spacing: .3px">
+                <!-- Перейти в корзину -->
+                <v-btn class="custom-rounded text-none pa-0" @click="routing('/mybusket')"
+                       dark elevation="0" width="50%" height="inherit" color="#159d4f" style="letter-spacing: .3px">
                   <v-icon class="mr-2" style="font-size: 18px">mdi-briefcase-outline</v-icon>
                   Перейти <br> в корзину
                 </v-btn>
+
               </v-card>
             </v-card-actions>
 
@@ -263,77 +264,61 @@
 </template>
 <script lang="ts">
 import {Component, Ref, Vue, Watch} from "vue-property-decorator"
+
 @Component
 export default class Productpage extends Vue {
   carousel: number = 0
 
   show: boolean = false
   readMoreDialog: boolean = false
+
+  countInCart: number = 0
+
   model: any = 0
   item: any = {}
-  product: any = {}
-  busketItem: any = {}
+
+  textLoad: boolean = true
 
   listAdvantage: any = []
+  listAdvantageLoad: boolean = true
+
   subProducts: any = []
+  subProductsLoad: boolean = true
 
-  async created () {
-    return await this.initAll ()
+  async created() {
+    return await this.initAll()
   }
 
-  createDataToBusket () {
-    let product = this.product
-    let weightProduct = this.subProducts[this.model]
-
-    return {
-      count: 1,
-      productId: weightProduct.id,
-      mainProductId: product.id,
-      productName: weightProduct.ProductName,
-      productPrice: weightProduct.ProductPrice,
-      productImage: weightProduct.ProductImage,
-    }
+  @Watch('model')
+  async changeCurrentRoute() {
+    await this.getDataFromCart()
+    return this.routing(this.linkProductPage(this.item.id, this.subProducts[this.model].id))
   }
 
-  async getDataFromBusket () {
-    let busket = this.$store.getters['busket/getList']
-    if (!busket) return this.busketItem = {}
-
-    let one = busket.map ((e: any) => e.productId).indexOf(this.createDataToBusket().productId)
-    this.busketItem = busket[one]
-  }
-
-  countPlus () {
-    let data = this.createDataToBusket ()
-    this.$store.dispatch ("busket/addOne", data).then(() => {
-      this.getDataFromBusket ()
-    })
-  }
-
-  countMinus () {
-    let data = this.createDataToBusket ()
-    this.$store.dispatch ("busket/deleteOne", data).then(() => {
-      this.getDataFromBusket ()
-    })
-  }
-
-  async initAll () {
+  async initAll() {
     try {
       let {product, sub_product}: any = this.$router.currentRoute.query
       if (!product && !sub_product) {
+        this.listAdvantageLoad = false
+        this.subProductsLoad = false
         return console.log('Нема продукта')
       }
 
       await this.initProduct(product)
+      this.listAdvantage = this.item['advantages']
       this.subProducts = this.item['sub_products']
-      await this.getDataFromBusket()
+      await this.getDataFromCart()
 
     } catch (e) {
       console.log(e)
+    } finally {
+      this.listAdvantageLoad = false
+      this.subProductsLoad = false
+      this.textLoad = false
     }
   }
 
-  async initProduct (product: any) {
+  async initProduct(product: any) {
     await this.$axios.get(`/api-products/product/${product}/`)
       .then((data: any) => {
         this.item = data.data
@@ -343,30 +328,53 @@ export default class Productpage extends Vue {
       })
   }
 
-  @Watch('model')
-  changeCurrentRoute () {
-    this.getDataFromBusket ()
-    return this.routing(this.linkProductPage(this.item.id, this.subProducts[this.model].id))
+  async addToCartItem() {
+    const sub_product = this.subProducts[this.model]['id']
+    const cart_uuid = localStorage.getItem('cart_uuid')
+
+    await this.$axios.post(`/api-products/cart-item/?sub_product=${sub_product}&cart_uuid=${cart_uuid ? cart_uuid : ''}`, {}, {})
+      .then(async (data) => {
+        if (!cart_uuid) localStorage.setItem('cart_uuid', data.data.cart_uuid)
+        await this.getDataFromCart()
+      }).catch((e) => {
+        console.log(e)
+      })
   }
 
-  imageList (image: any) {
+  async getDataFromCart() {
+    const sub_product = this.subProducts[this.model]['id']
+    const cart_uuid = localStorage.getItem('cart_uuid')
+    await this.$axios.get(`/api-products/cart-item/?cart_uuid=${cart_uuid ? cart_uuid : ''}`)
+      .then((data) => {
+        let item: any = data.data.results.filter((item: any) => {
+          return item['sub_product'].id == sub_product
+        })
+
+        return this.countInCart = item.length > 0 ? item[0].count : 0
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+
+  imageList(image: any) {
     if (!image) return []
     return JSON.parse(image.images)
   }
 
-  firstListAdvantage (list: any) {
-    return list.filter ((item: any, i: number) => i <= 5)
+  firstListAdvantage(list: any) {
+    return list.filter((item: any, i: number) => i <= 5)
   }
 
-  secondListAdvantage (list: any) {
-    return list.filter ((item: any, i: number) => i >= 6)
+  secondListAdvantage(list: any) {
+    return list.filter((item: any, i: number) => i >= 6)
   }
 
-  linkProductPage (product: any, sub_product: any) {
+  linkProductPage(product: any, sub_product: any) {
     return `/productpage/?product=${product}&sub_product=${sub_product}`
   }
 
-  routing (link: string) {
+  routing(link: string) {
     return this.$router.push(link)
   }
 }

@@ -17,15 +17,19 @@
         <catalog-item-load v-for="i in limit" :key="i"/>
       </div>
 
-      <div v-else class="d-flex flex-row flex-wrap">
-        <v-chip-group class="mb-5" v-model="category" active-class="white--text" column mandatory>
-          <v-chip v-for="(item, i) in categories" :key="i" :value="item.id"
-                  :color="category === item.id ? '#37a164' : 'white'" style="font-size: 12px; height: 28px">
-            {{ item.title }}
-          </v-chip>
-        </v-chip-group>
+      <div v-else>
+        <div class="d-flex flex-row flex-wrap">
+          <v-chip-group class="mb-5" v-model="category" active-class="white--text" column mandatory>
+            <v-chip v-for="(item, i) in categories" :key="i" :value="item.id"
+                    :color="category === item.id ? '#37a164' : 'white'" style="font-size: 12px; height: 28px">
+              {{ item.title }}
+            </v-chip>
+          </v-chip-group>
+        </div>
 
-        <catalog-item v-for="(item, i) in items" :item="item" :key="i"/>
+        <div class="d-flex flex-row flex-wrap">
+          <catalog-item v-for="(item, i) in items" :item="item" :key="i"/>
+        </div>
       </div>
 
     </v-container>
@@ -35,7 +39,7 @@
 import {Component, Vue, Watch} from "vue-property-decorator"
 
 @Component
-export default class Allproducts extends Vue {
+export default class Stockssale extends Vue {
   items: any = []
   limit: number = 100
   isLoaded: boolean = true

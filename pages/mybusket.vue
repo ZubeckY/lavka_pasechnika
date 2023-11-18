@@ -2,11 +2,7 @@
   <div class="d-flex flex-row">
     <v-dialog class="d-flex justify-center align-center" overlay-color="#e6e6e650" v-model="dialog">
       <div style="width: 100%;" class="d-flex justify-center align-center overflow-hidden">
-        <v-progress-circular :width="6"
-                             :size="150"
-                             color="grey"
-                             indeterminate>
-        </v-progress-circular>
+        <v-progress-circular :width="6" :size="150" color="grey" indeterminate/>
       </div>
     </v-dialog>
 
@@ -19,16 +15,12 @@
       </v-card-actions>
 
       <div v-if="itemsCount > 0">
-        <busket-card v-for="(listItem, i) in list"
-                     :key="i" :listItem="listItem"
-                     @initBusket="initBusket"/>
+        <busket-card v-for="(listItem, i) in list" :key="i"
+                     :listItem="listItem" @initCart="initCart"/>
       </div>
 
-      <v-card v-else
-              class="mx-auto mt-5"
-              elevation="0"
-              width="320"
-              color="transparent">
+      <v-card v-else class="mx-auto mt-5" elevation="0"
+              width="320" color="transparent">
 
         <v-img class="mx-auto" width="174px" height="214px" alt="#"
                :src="require(`~/assets/images/honeyhivecart.png`)"
@@ -83,16 +75,10 @@
 
         <v-card class="d-flex flex-row align-center custom-rounded pl-4 pr-3 mt-4"
                 elevation="0" width="300px" height="50px">
-          <v-text-field class="custom-rounded"
-                        label="Промокод"
-                        hide-details dense
-                        outlined color="primary"/>
-          <v-btn class="ml-2"
-                 min-width="0"
-                 min-height="0"
-                 width="40px"
-                 height="40px"
-                 color="#26ae60" dark>
+          <v-text-field class="custom-rounded" label="Промокод"
+                        hide-details dense outlined color="primary"/>
+          <v-btn class="ml-2" min-width="0" min-height="0"
+                 width="40px" height="40px" color="#26ae60" dark>
             <v-icon>mdi-send</v-icon>
           </v-btn>
         </v-card>
@@ -115,18 +101,14 @@
             <div>{{ couponDiscount }} ₽</div>
           </v-card-subtitle>
 
-          <v-card-title class="d-flex flex-row justify-space-between font-weight-bold mt-3"
-                        style="width: 100%">
+          <v-card-title class="d-flex flex-row justify-space-between font-weight-bold mt-3" style="width: 100%">
             <div>Итого:</div>
             <div>{{ priceWithDiscount }} ₽</div>
           </v-card-title>
         </v-card>
 
-        <v-btn class="text-none mt-4"
-               width="300px"
-               height="45px"
-               color="#26ae60" dark
-               style="font-size: 16px; letter-spacing: .3px" @click="generatePay">
+        <v-btn class="text-none mt-4" width="300px" height="45px"
+               color="#26ae60" dark style="font-size: 16px; letter-spacing: .3px" @click="generatePay">
           Оформить заказ
         </v-btn>
 
@@ -148,18 +130,22 @@ export default class Mybusket extends Vue {
   itemsCount: number = 0
   couponDiscount: number = 0
 
-  created() {
-    this.initBusket()
+  async created() {
+    await this.initCart()
   }
 
-  initBusket() {
-    this.list = this.$store.getters['busket/getList']
-    this.itemsCount = this.totalCountItems ?? 0
+  async initCart() {
+    const cart_uuid = localStorage.getItem('cart_uuid')
+    await this.$axios.get(`/api-products/cart-item/?cart_uuid=${cart_uuid ? cart_uuid : ''}`)
+      .then((data) => {
+        this.list = data.data.results
+        this.itemsCount = data.data.results.length ?? 0
+      })
+      .catch((e) => {
+        console.log(e)
+      })
   }
 
-  routing(link: string) {
-    return this.$router.push(link)
-  }
 
   async generatePay() {
     this.dialog = true
@@ -191,10 +177,6 @@ export default class Mybusket extends Vue {
     })
   }
 
-  get totalCountItems() {
-    return this.$store.getters['busket/getCountItems']
-  }
-
   get priceWithoutDiscount() {
     return this.$store.getters['busket/getTotalPrice']
   }
@@ -210,5 +192,8 @@ export default class Mybusket extends Vue {
     return count - this.discount - this.couponDiscount
   }
 
+  routing(link: string) {
+    return this.$router.push(link)
+  }
 }
 </script>

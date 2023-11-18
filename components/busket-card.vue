@@ -2,8 +2,8 @@
   <v-card class="d-flex flex-row custom-rounded pa-2 mb-2"
           width="100%" elevation="0"
           @click="routing(linkProductPage(
-                  listItem['mainProductId'],
-                  listItem['productId']))">
+                  listItem.id,
+                  listItem['sub_product'].id))">
     <v-card class="custom-rounded"
             elevation="0"
             width="100px"
@@ -41,23 +41,27 @@ import {Component, Prop, Vue, Watch} from "vue-property-decorator"
 export default class BusketCard extends Vue {
   @Prop () listItem?: any
 
-  initBusket () {
-    this.$emit ('initBusket')
+  mounted () {
+    console.log(this.listItem)
   }
 
-  linkProductPage (id: any, product: any) {
-    return '/productpage?docMainproduct=' + id + '&docproduct=' + product
+  initCart () {
+    this.$emit ('initCart')
+  }
+
+  linkProductPage (product: any, sub_product: any) {
+    return `/productpage/?product=${product}&sub_product=${sub_product}`
   }
 
   countPlus (data: any) {
     this.$store.dispatch ("busket/addOne", data).then(() => {
-      this.initBusket()
+      this.initCart()
     })
   }
 
   countMinus (data: any) {
     this.$store.dispatch ("busket/deleteOne", data).then(() => {
-      this.initBusket()
+      this.initCart()
     })
   }
 

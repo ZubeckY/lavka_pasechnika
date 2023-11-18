@@ -73,7 +73,7 @@ export default class Locations extends Vue {
   }
 
   changeMapping() {
-    this.$emit('changeMapping', this.localMapping[this.activeChip]['address_map_link'])
+    this.$emit('changeMapping', this.localMapping.length > 0 ? this.localMapping[this.activeChip]['address_map_link'] : '')
   }
 
   get getImages() {
