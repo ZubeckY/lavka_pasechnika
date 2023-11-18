@@ -1,13 +1,8 @@
 <template>
   <section>
     <v-container>
-
       <div class="d-flex flex-row mt-5 mb-10" style="position:relative; left: -10px;">
-        <v-btn style="border-radius: 8px" @click="$router.push('/')"
-               width="44px" height="44px" min-width="0"
-               color="#26ae60" elevation="0" dark>
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
+        <button-back/>
         <v-card-title class="ml-3">Контакты</v-card-title>
       </div>
 

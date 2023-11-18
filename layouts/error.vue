@@ -16,7 +16,7 @@
             </div>
 
             <div class="d-flex justify-center">
-              <NuxtLink to="/">Вернуться на главную</NuxtLink>
+              <NuxtLink to="/" class="blue--text">Вернуться на главную</NuxtLink>
             </div>
 
           </v-card>

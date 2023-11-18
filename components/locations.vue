@@ -1,44 +1,33 @@
 <template>
   <div style="max-width: 290px">
-
     <div>
       <v-card-title class="mb-1" style="font-size: 18px;">До встречи в наших магазинах</v-card-title>
-      <v-chip-group v-model="activeChip" mandatory column
-                    active-class="my-green-color white--text">
-        <v-chip style="font-size: 13px; height: 28px"
-                v-for="(item, i) in localMapping"
-                :key="item.id" :value="i">
-          {{ item['CityShopsFilial'] }}
+      <v-chip-group v-model="activeChip" active-class="my-green-color white--text" mandatory column>
+        <v-chip v-for="(item, i) in localMapping" :key="'city-chip-'+item.id" :value="i"
+                style="font-size: 13px; height: 28px">
+          {{ item['title'] }}
         </v-chip>
       </v-chip-group>
     </div>
 
     <div class="mt-3" style="width: 280px">
-      <v-carousel v-model="activeSlide"
-                  class="custom-rounded"
-                  style="width: 100%; max-width: 290px"
-                  height="210px" hide-delimiters>
-        <v-carousel-item v-for="item in getImages"
-                         :key="item" :src="item">
+      <v-carousel v-model="activeSlide" class="custom-rounded" style="width: 100%; max-width: 290px" height="210px"
+                  hide-delimiters>
+        <v-carousel-item v-for="(item, i) in getImages" :key="'city-image-'+i" :src="item">
         </v-carousel-item>
       </v-carousel>
 
 
-      <div class="d-flex flex-column"
-           style="position: relative; width: inherit; top: -60px">
-
+      <div class="d-flex flex-column" style="position: relative; width: inherit; top: -60px">
         <!-- Слайды поменьше -->
-        <small-slides :activeSlide="activeSlide"
-                      :countSlide="getImages.length"/>
+        <small-slides :activeSlide="activeSlide" :countSlide="getImages"/>
 
         <!-- Адреса -->
-        <v-card class="custom-rounded px-2 py-1 mx-auto"
-                width="250px"
-                height="60px"
-                elevation="0"
-                :img="require(`~/assets/images/bgmainhoneypattern.jpg`)">
-          <v-card-subtitle style="font-size: 13px; line-height: 15px; letter-spacing: .1px; width: calc(100% - 20px); height: calc(100%)"
-                           class="d-flex justify-center align-center font-weight-medium text-center white--text mx-auto">
+        <v-card class="custom-rounded px-2 py-1 mx-auto" width="250px" height="60px"
+                elevation="0" :img="require(`~/assets/images/bgmainhoneypattern.jpg`)">
+          <v-card-subtitle
+            style="font-size: 13px; line-height: 15px; letter-spacing: .1px; width: calc(100% - 20px); height: calc(100%)"
+            class="d-flex justify-center align-center font-weight-medium text-center white--text mx-auto">
             <div>{{ getAddress }}</div>
           </v-card-subtitle>
         </v-card>
@@ -49,41 +38,60 @@
 </template>
 <script lang="ts">
 import {Component, Vue, Watch} from "vue-property-decorator"
+
 @Component
 export default class Locations extends Vue {
   localMapping: any = []
   activeChip: number = 0
   activeSlide: number = 0
 
-  created () {
-    this.getResult ()
+  created() {
+    this.getResult()
   }
 
-  async getResult () {
-    this.localMapping = await this.$store.dispatch('filialsShop/loadFilialShop')
-    this.changeMapping ()
+  async getResult() {
+    await this.$axios.get(`/api-products/shop/`)
+      .then((data: any) => {
+        this.localMapping = data.data.results
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+      .finally(() => {
+        this.changeMapping()
+      })
   }
 
   @Watch('activeChip')
-  changeController () {
+  changeController() {
     this.changeMapping()
-    this.emptyActiveSlide ()
+    this.emptyActiveSlide()
   }
 
-  changeMapping () {
-   this.$emit('changeMapping', this.localMapping[this.activeChip]['htmltagyandexmap'])
-  }
-
-  emptyActiveSlide () {
+  emptyActiveSlide() {
     return this.activeSlide = -1
   }
 
-  get getImages () {
-    return this.localMapping.length ? this.localMapping[this.activeChip]['ImgsShopFilial'] : []
+  changeMapping() {
+    this.$emit('changeMapping', this.localMapping[this.activeChip]['address_map_link'])
   }
 
-  get getAddress () {
-    return this.localMapping.length ? this.localMapping[this.activeChip]['AdressShopFilial'] : ""
+  get getImages() {
+    return this.localMapping.length > 0 ? JSON.parse(this.localMapping[this.activeChip].images) : []
+  }
+
+  get getAddress() {
+    if (this.localMapping.length <= 0) return ""
+    const activeItem: any = this.localMapping[this.activeChip]
+    const activeArray = []
+
+    activeArray.push(activeItem.address_region)
+    activeArray.push(activeItem.address_district)
+    activeArray.push(activeItem.address_city)
+    activeArray.push(activeItem.address_street)
+    activeArray.push(activeItem.address_home)
+
+    return (activeArray.filter(Boolean)).join(', ')
   }
 }
 </script>

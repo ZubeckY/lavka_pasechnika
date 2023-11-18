@@ -15,31 +15,31 @@
         <v-card-text>Более 10 категорий и подкатегорий натуральной продукции</v-card-text>
 
         <div class="d-flex flex-row flex-wrap mt-2">
-          <v-card class="custom-rounded ma-1 pa-3" elevation="1" color="#765337" @click="routing('/allproducts')"
+          <v-card class="custom-rounded ma-1 pa-3" elevation="0" color="#765337" @click="routing('/allproducts')"
                   width="480px" height="120px" dark :img="require(`~/assets/images/cards/honey.jpg`)">
             <v-card-title class="font-weight-medium pt-1" style="font-size: 16px; line-height: 18px !important;">
               Мёд: <br> классический, <br> с добавками, <br> с орехами
             </v-card-title>
           </v-card>
-          <v-card class="custom-rounded ma-1 pa-3" elevation="1" color="#786e24" @click="routing('/allproducts')"
+          <v-card class="custom-rounded ma-1 pa-3" elevation="0" color="#786e24" @click="routing('/allproducts')"
                   width="190px" height="120px" dark :img="require(`~/assets/images/cards/chai.jpg`)">
             <v-card-title class="font-weight-medium pt-1" style="font-size: 16px; line-height: 18px !important;">
               Чай и травы
             </v-card-title>
           </v-card>
-          <v-card class="custom-rounded ma-1 pa-3" elevation="1" color="#ae794b" @click="routing('/allproducts')"
+          <v-card class="custom-rounded ma-1 pa-3" elevation="0" color="#ae794b" @click="routing('/allproducts')"
                   width="480px" height="120px" dark :img="require(`~/assets/images/cards/cosmetics.png`)">
             <v-card-title class="font-weight-medium pt-1" style="font-size: 16px; line-height: 18px !important;">
               Натуральная <br> косметика
             </v-card-title>
           </v-card>
-          <v-card class="custom-rounded ma-1 pa-3" elevation="1" color="#cf8e0e" @click="routing('/allproducts')"
+          <v-card class="custom-rounded ma-1 pa-3" elevation="0" color="#cf8e0e" @click="routing('/allproducts')"
                   width="480px" height="120px" dark :img="require(`~/assets/images/cards/beeproduct.png`)">
             <v-card-title class="font-weight-medium pt-1" style="font-size: 16px; line-height: 18px !important;">
               Пчелопродукция: <br> соты, перга, пыльца <br> забрус и т.д.
             </v-card-title>
           </v-card>
-          <v-card class="custom-rounded ma-1 pa-3" elevation="1" color="#98806d" @click="routing('/allproducts')"
+          <v-card class="custom-rounded ma-1 pa-3" elevation="0" color="#98806d" @click="routing('/allproducts')"
                   width="480px" height="120px" dark :img="require(`~/assets/images/cards/balzams.png`)">
             <v-card-title class="font-weight-medium pt-1" style="font-size: 16px; line-height: 18px !important;">
               Бальзамы, сиропы <br> масла
@@ -119,16 +119,13 @@
 
       </v-container>
     </section>
-
   </div>
 </template>
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator"
-
 @Component
 export default class Pages extends Vue {
   items: any = []
-
   limit: number = 6
   isLoaded: boolean = true
 
@@ -148,33 +145,6 @@ export default class Pages extends Vue {
         this.isLoaded = false
       })
   }
-
-  // getCollections () {
-  //   try {
-  //     let count = 3
-  //     let interval: any = setInterval (async () => {
-  //
-  //       if (count <= 0 || this.items.length > 0) {
-  //         this.isLoaded = false
-  //         return clearInterval(interval)
-  //       }
-  //
-  //       count --
-  //       return this.items = await this.$store.dispatch
-  //       (
-  //         'mainproducts/loadProducts',
-  //         {
-  //           store: this.$store,
-  //           limitVal: this.limit
-  //         }
-  //       )
-  //     }, 750)
-  //   } catch (e: any) {
-  //     console.log(e)
-  //   }
-  //
-  //   // return this.$store.getters['mainproducts/mainProducts'];
-  // }
 
   routing (link: string) {
     return this.$router.push(link)

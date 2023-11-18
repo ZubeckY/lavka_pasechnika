@@ -6,8 +6,8 @@
         <button-back/>
 
         <!-- Название мёда -->
-        <v-skeleton-loader v-if="!onlyNameProduct" class="custom-rounded" type="image" width="200px" height="35px"></v-skeleton-loader>
-        <v-card-title v-else class="philosopher-font ml-3" style="font-size: 24px">{{ onlyNameProduct }}</v-card-title>
+        <v-skeleton-loader v-if="!item['title']" class="custom-rounded" type="image" width="200px" height="35px"></v-skeleton-loader>
+        <v-card-title v-else class="philosopher-font ml-3" style="font-size: 24px">{{ item['title'] }}</v-card-title>
 
         <v-btn style="border-radius: 8px"
                width="44px" height="44px" min-width="0"
@@ -21,17 +21,14 @@
         <v-col class="ma-0 pa-0" cols="auto">
 
           <!-- Слайдер--загрузка -->
-          <div v-if="!weightProducts.length">
+          <div v-if="!subProducts.length">
             <div>
-              <v-skeleton-loader type="image" width="340px"
-                                 style="border-radius: 15px 15px 0 0"/>
-              <v-skeleton-loader type="image" width="340px"
-                                 style="border-radius: 0 0 15px 15px"/>
+              <v-skeleton-loader type="image" width="340px" style="border-radius: 15px 15px 0 0"/>
+              <v-skeleton-loader type="image" width="340px" style="border-radius: 0 0 15px 15px"/>
             </div>
 
             <div class="d-flex flex-row">
-              <v-skeleton-loader v-for="i in 2" :key="i"
-                                 class="custom-rounded ml-0 ma-3"
+              <v-skeleton-loader v-for="i in 2" :key="i" class="custom-rounded ml-0 ma-3"
                                  type="image" width="80px" height="100px"/>
             </div>
           </div>
@@ -39,33 +36,25 @@
           <!-- Слайдер--контент -->
           <div v-else>
             <!-- Слайды побольше -->
-            <carousel-dialog maxWidth="572px"
-                             :carousel="carousel"
-                             :img="imageList(weightProducts[model])">
+            <carousel-dialog maxWidth="572px" :carousel="carousel"
+                             :img="imageList(subProducts[model])">
 
-              <v-carousel v-model="carousel"
-                          class="custom-rounded"
+              <v-carousel v-model="carousel" class="custom-rounded"
                           style="width: 340px"
                           hide-delimiters height="460px"
-                          :show-arrows="!(imageList(weightProducts[model]).length <= 1)">
-                <v-carousel-item v-for="image in imageList(weightProducts[model])" :key="image" :src="image"/>
+                          :show-arrows="!(imageList(subProducts[model]).length <= 1)">
+                <v-carousel-item v-for="image in imageList(subProducts[model])" :key="image" :src="image"/>
               </v-carousel>
             </carousel-dialog>
 
             <!-- Слайды поменьше -->
             <v-sheet max-width="800" color="transparent">
-              <v-slide-group v-model="carousel"
-                             center-active
-                             show-arrows>
-                <v-slide-item v-for="(item, i) in imageList(weightProducts[model])"
+              <v-slide-group v-model="carousel" center-active show-arrows>
+                <v-slide-item v-for="(item, i) in imageList(subProducts[model])"
                               :key="i" v-slot="{ active, toggle }">
                   <!-- Картинки -->
                   <v-card :style="active ? 'filter: grayscale(20%) contrast(125%); border: 3px solid #26ae60' : 'filter: grayscale(60%)'"
-                          class="custom-rounded ml-0 ma-3"
-                          width="80px"
-                          height="100px"
-                          @click="toggle"
-                          :img="item">
+                          class="custom-rounded ml-0 ma-3" width="80px" height="100px" @click="toggle" :img="item">
                   </v-card>
                 </v-slide-item>
               </v-slide-group>
@@ -111,7 +100,7 @@
           </div>
 
           <!-- Описание--загрузка -->
-          <v-card v-if="!product['Description']" color="transparent" elevation="0">
+          <v-card v-if="!item['description']" color="transparent" elevation="0">
             <v-card-title style="font-size: 14px; line-height: 14px;">Описание</v-card-title>
 
             <v-skeleton-loader class="mt-3" type="sentences"></v-skeleton-loader>
@@ -128,7 +117,7 @@
             <!-- описание по количеству строк -->
             <v-card-text class="overflow-y-hidden" style="max-height: calc(14px * 12);">
               <div style="font-size: 14px; line-height: 14px; white-space: pre-line;">
-                {{ product['Description'] }}
+                {{ item['description'] }}
               </div>
             </v-card-text>
 
@@ -150,7 +139,7 @@
                 </v-card-actions>
 
                 <v-card-text class="pt-0 px-4 pb-5" style="font-size: 14px; line-height: 14px; white-space: pre-line;">
-                  {{ product['Description'] }}
+                  {{ item['description'] }}
                 </v-card-text>
 
               </v-card>
@@ -163,7 +152,7 @@
         <v-col class="ma-0 pa-0" cols="auto">
 
           <!-- Вес--загрузка -->
-          <v-card v-if="!weightProducts.length"
+          <v-card v-if="!subProducts.length"
                   class="custom-rounded py-1 px-3"
                   width="350px" height="275px">
 
@@ -188,14 +177,14 @@
                   elevation="5" width="350px">
 
             <div class="pl-4 pr-1 py-2">
-              <v-card-title class="mt-2" style="font-size: 19px">{{ weightProducts[model] ? weightProducts[model]['ProductName'] : '' }}</v-card-title>
+              <v-card-title class="mt-2" style="font-size: 19px">{{ subProducts[model] ? subProducts[model]['title'] : '' }}</v-card-title>
               <v-card-title class="mt-1 mb-2" style="font-size: 16px">Вес </v-card-title>
             </div>
 
             <v-item-group v-model="model" mandatory
                           class="d-flex flex-row flex-wrap my-0 py-0 px-2"
                           active-class="product-card__variables_card--active">
-              <v-item v-for="(value, i) in weightProducts" :key="i"
+              <v-item v-for="(value, i) in subProducts" :key="i"
                       v-slot="{ active, toggle }">
 
                 <v-card class="product-card__variables_card cursor-pointer ml-2 mb-3"
@@ -204,12 +193,12 @@
 
                   <div class="d-flex flex-column justify-center align-center" style="height: inherit">
                     <v-card-subtitle class="text-center font-weight-bold" style="font-size: 15px; color:#000; line-height: 10px;">
-                      <span>{{ value ? value['volumeinml'] : '' }}</span>
-                      <span>мл.</span>
+                      <span>{{ value.weight_value }}</span>
+                      <span>{{ value.weight_measure.value }}</span>
                     </v-card-subtitle>
 
                     <v-card-text class="text-center ml-2" style="font-size: 13px">
-                      <span>{{ value ? value['ProductPrice'] : '' }}</span> &nbsp;
+                      <span>{{ value ? value['price'] : '' }}</span> &nbsp;
                       <v-icon style="position:relative; left: -5px;" class="ma-0 pa-0" x-small>mdi-currency-rub</v-icon>
                     </v-card-text>
                   </div>
@@ -219,13 +208,12 @@
             </v-item-group>
 
             <v-card-title class="mb-2 pl-4 pr-1 py-2">
-              <span> {{ weightProducts[model] ? weightProducts[model]['ProductPrice'] : '' }} </span>
+              <span> {{ subProducts[model] ? subProducts[model]['price'] : '' }} </span>
               <v-icon color="black" style="font-size: 20px">mdi-currency-rub</v-icon>
             </v-card-title>
 
             <v-card-actions class="pa-4 pt-0">
-              <v-btn v-if="!busketItem"
-                     @click="countPlus"
+              <v-btn v-if="!busketItem" @click="countPlus"
                      class="custom-rounded font-weight-regular text-none"
                      elevation="0" height="50px" color="#26ae60"
                      style="font-size: 16px; letter-spacing: .4px;" dark block>
@@ -287,7 +275,7 @@ export default class Productpage extends Vue {
   busketItem: any = {}
 
   listAdvantage: any = []
-  weightProducts: any = []
+  subProducts: any = []
 
   async created () {
     return await this.initAll ()
@@ -295,7 +283,7 @@ export default class Productpage extends Vue {
 
   createDataToBusket () {
     let product = this.product
-    let weightProduct = this.weightProducts[this.model]
+    let weightProduct = this.subProducts[this.model]
 
     return {
       count: 1,
@@ -331,19 +319,13 @@ export default class Productpage extends Vue {
 
   async initAll () {
     try {
-      let {docMainproduct, docproduct}: any = this.$router.currentRoute.query
-
-      if (!docMainproduct && !docproduct) {
-        console.log('Нема продукта')
-        return
+      let {product, sub_product}: any = this.$router.currentRoute.query
+      if (!product && !sub_product) {
+        return console.log('Нема продукта')
       }
 
-      this.item = await this.initItem(docproduct)
-      this.product = await this.initProduct(docMainproduct)
-      this.listAdvantage = await this.initList('listadvantage', 'advantage/getProduct')
-      this.weightProducts = await this.initList ('weightproducts', 'products/getProduct')
-      this.model = this.weightProducts.map((elem: any) => elem.id).indexOf(docproduct)
-
+      await this.initProduct(product)
+      this.subProducts = this.item['sub_products']
       await this.getDataFromBusket()
 
     } catch (e) {
@@ -351,47 +333,25 @@ export default class Productpage extends Vue {
     }
   }
 
-  async initItem (id: any) {
-    return await this.$store.dispatch ('products/getProduct', id)
-  }
-
-  async initProduct (id: any) {
-    return await this.$store.dispatch ('mainproducts/getProduct', id)
-  }
-
-  async initList (type: string, storage: string) {
-    let array: any = []
-
-    let products = this.product[type].map((doc: any) => {
-      let link = doc['_key']['path']['segments']
-      return link[link.length - 1]
-    });
-
-    for (let i = 0; i < products.length; i++) {
-      let product = await this.$store.dispatch (storage, products[i])
-      array.push(product)
-    }
-
-    return array
+  async initProduct (product: any) {
+    await this.$axios.get(`/api-products/product/${product}/`)
+      .then((data: any) => {
+        this.item = data.data
+      })
+      .catch((e) => {
+        console.log(e)
+      })
   }
 
   @Watch('model')
   changeCurrentRoute () {
     this.getDataFromBusket ()
-    return this.routing(this.linkProductPage(this.product.id, this.weightProducts[this.model].id))
+    return this.routing(this.linkProductPage(this.item.id, this.subProducts[this.model].id))
   }
 
   imageList (image: any) {
-    if (!image) {
-      return []
-    }
-
-    let firstImage = image['ProductImage'] ? image['ProductImage'] : ''
-    let images = image['imgsProduct'] ? image['imgsProduct'] : []
-    let array = []
-    array.push(firstImage)
-    array.push(...images)
-    return array
+    if (!image) return []
+    return JSON.parse(image.images)
   }
 
   firstListAdvantage (list: any) {
@@ -402,12 +362,8 @@ export default class Productpage extends Vue {
     return list.filter ((item: any, i: number) => i >= 6)
   }
 
-  linkProductPage (id: any, product: any) {
-    return '/productpage?docMainproduct=' + id + '&docproduct=' + product
-  }
-
-  get onlyNameProduct () {
-    return this.item['ProductName'] ? this.item['ProductName'].split(',')[0] : ''
+  linkProductPage (product: any, sub_product: any) {
+    return `/productpage/?product=${product}&sub_product=${sub_product}`
   }
 
   routing (link: string) {
