@@ -230,7 +230,7 @@
                 <div class="d-flex align-center flex-row">
 
                   <!-- Добавить кол-во -->
-                  <v-btn icon dark large>
+                  <v-btn icon dark large @click="countMinus">
                     <v-icon>mdi-minus</v-icon>
                   </v-btn>
 
@@ -240,7 +240,7 @@
                   </v-card-title>
 
                   <!-- Добавить убрать кол-во -->
-                  <v-btn icon dark larg>
+                  <v-btn icon dark larg @click="countPlus">
                     <v-icon>mdi-plus</v-icon>
                   </v-btn>
                 </div>
@@ -342,16 +342,50 @@ export default class Productpage extends Vue {
   }
 
   async getDataFromCart() {
+    const item: any = await this.getCartItem()
+    return this.countInCart = item.length > 0 ? item[0].count : 0
+  }
+
+  async getCartItem() {
     const sub_product = this.subProducts[this.model]['id']
     const cart_uuid = localStorage.getItem('cart_uuid')
+    let item: any = []
     await this.$axios.get(`/api-products/cart-item/?cart_uuid=${cart_uuid ? cart_uuid : ''}`)
       .then((data) => {
-        let item: any = data.data.results.filter((item: any) => {
+        return item = data.data.results.filter((item: any) => {
           return item['sub_product'].id == sub_product
         })
-
-        return this.countInCart = item.length > 0 ? item[0].count : 0
       })
+      .catch((e) => {
+        console.log(e)
+      })
+    return item
+  }
+
+  async countPlus() {
+    const item: any = await this.getCartItem()
+    this.countInCart ++
+    await this.$axios.patch(`/api-products/cart-item/${item[0].id}/`, {
+      count: this.countInCart
+    }, {})
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+
+  async countMinus() {
+    const item: any = await this.getCartItem()
+    this.countInCart --
+    if (this.countInCart <= 0) {
+      return await this.$axios.delete(`/api-products/cart-item-delete/${item[0].id}/`)
+        .catch((e) => {
+          console.log(e)
+        })
+    }
+
+    await this.$axios.patch(`/api-products/cart-item/${item[0].id}/`, {
+      count: this.countInCart
+    }, {})
       .catch((e) => {
         console.log(e)
       })

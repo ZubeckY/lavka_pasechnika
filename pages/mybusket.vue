@@ -130,7 +130,7 @@ export default class Mybusket extends Vue {
   itemsCount: number = 0
   couponDiscount: number = 0
 
-  async created() {
+  async mounted() {
     await this.initCart()
   }
 
@@ -138,14 +138,17 @@ export default class Mybusket extends Vue {
     const cart_uuid = localStorage.getItem('cart_uuid')
     await this.$axios.get(`/api-products/cart-item/?cart_uuid=${cart_uuid ? cart_uuid : ''}`)
       .then((data) => {
-        this.list = data.data.results
-        this.itemsCount = data.data.results.length ?? 0
+        this.initItems(data)
       })
       .catch((e) => {
         console.log(e)
       })
   }
 
+  initItems(data: any) {
+    this.itemsCount = data.data.results.length ?? 0
+    this.list = data.data.results
+  }
 
   async generatePay() {
     this.dialog = true
@@ -178,18 +181,21 @@ export default class Mybusket extends Vue {
   }
 
   get priceWithoutDiscount() {
-    return this.$store.getters['busket/getTotalPrice']
+    let total_price = 0
+    for (let i = 0; i < this.list.length; i++) {
+      const item = this.list[i]
+      total_price += item.count * item['sub_product'].price
+    }
+    return total_price
   }
 
   get priceWithDiscount() {
-    let count = 0
-    let storeData = this.$store.getters['busket/getList']
-
-    if (!storeData) return 0
-    for (let i = 0; i < storeData.length; i++) {
-      count += storeData[i]['count'] * storeData[i]['productPrice']
+    let total_price = 0
+    for (let i = 0; i < this.list.length; i++) {
+      const item = this.list[i]
+      total_price += item.count * item['sub_product'].price
     }
-    return count - this.discount - this.couponDiscount
+    return total_price
   }
 
   routing(link: string) {
