@@ -217,10 +217,9 @@
               <v-btn v-if="countInCart <= 0" class="custom-rounded font-weight-regular text-none"
                      elevation="0" height="50px" color="#26ae60" style="font-size: 16px; letter-spacing: .4px;"
                      dark block @click="addToCartItem">
-                <!-- todo заменить v-icon-->
                 <v-card class="d-flex justify-center align-center rounded-circle pa-2 mr-2" color="#159d4f"
                         elevation="0">
-                  <v-icon style="font-size: 18px">mdi-briefcase-outline</v-icon>
+                  <v-icon style="font-size: 18px">mdi-cart-variant</v-icon>
                 </v-card>
                 <span>Добавить в корзину</span>
               </v-btn>
@@ -263,7 +262,7 @@
   </section>
 </template>
 <script lang="ts">
-import {Component, Ref, Vue, Watch} from "vue-property-decorator"
+import {Component, Vue, Watch} from "vue-property-decorator"
 
 @Component
 export default class Productpage extends Vue {
@@ -286,7 +285,15 @@ export default class Productpage extends Vue {
   subProductsLoad: boolean = true
 
   async created() {
-    return await this.initAll()
+    await this.initAll()
+  }
+
+  mounted () {
+    this.$root.$on('checkCart', this.initAll)
+  }
+
+  destroyed() {
+    return this.$root.$off('checkCart', this.initAll)
   }
 
   @Watch('model')
@@ -364,7 +371,7 @@ export default class Productpage extends Vue {
 
   async countPlus() {
     const item: any = await this.getCartItem()
-    this.countInCart ++
+    this.countInCart++
     await this.$axios.patch(`/api-products/cart-item/${item[0].id}/`, {
       count: this.countInCart
     }, {})
@@ -375,7 +382,7 @@ export default class Productpage extends Vue {
 
   async countMinus() {
     const item: any = await this.getCartItem()
-    this.countInCart --
+    this.countInCart--
     if (this.countInCart <= 0) {
       return await this.$axios.delete(`/api-products/cart-item-delete/${item[0].id}/`)
         .catch((e) => {

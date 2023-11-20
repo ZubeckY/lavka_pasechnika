@@ -9,12 +9,11 @@
             <v-container>
 
               <div class="d-flex flex-row my-5" style="position:relative; left: -10px;">
-                <v-btn style="border-radius: 8px" @click="getBack"
-                       width="44px" height="44px" min-width="0"
-                       color="#26ae60" elevation="0" dark>
+                <v-btn style="border-radius: 8px" @click="getBack" width="44px" height="44px"
+                       min-width="0" color="#26ae60" elevation="0" dark>
                   <v-icon>mdi-chevron-left</v-icon>
                 </v-btn>
-                <v-card-title class="ml-3">Личный кабинет — {{whatIsPape }} </v-card-title>
+                <v-card-title class="ml-3">Личный кабинет — {{ whatIsPape }}</v-card-title>
               </div>
 
               <div class="d-flex flex-row">
@@ -22,17 +21,13 @@
                         elevation="0" width="200px" height="295px">
 
                   <v-list width="inherit" dense rounded>
-                    <v-list-item-group v-model="model" mandatory
-                                       active-class="my-green-color white--text">
-
-                      <v-list-item v-for="(item, i) in items"
-                                   :key="i" router
-                                   :to="item.link">
+                    <v-list-item-group v-model="model" active-class="my-green-color white--text" mandatory>
+                      <v-list-item v-for="(item, i) in items" :key="i" router :to="item.link">
                         <v-list-item-icon class="mr-2">
                           <v-icon v-text="item.icon"></v-icon>
                         </v-list-item-icon>
-                        <v-list-item-content style="font-size: 14px; line-height: 14px"
-                                             class="font-weight-medium" v-text="item.text"/>
+                        <v-list-item-content style="font-size: 14px; line-height: 14px" class="font-weight-medium"
+                                             v-text="item.text"/>
                       </v-list-item>
 
                     </v-list-item-group>
@@ -57,7 +52,7 @@
 </template>
 <script lang="ts">
 import {Component, Vue, Watch} from "vue-property-decorator"
-import getBusketFromLocalStorage from "~/assets/scripts/getBusketFromLocalStorage";
+
 @Component
 export default class Lk extends Vue {
   model: number = 0
@@ -100,11 +95,6 @@ export default class Lk extends Vue {
     },
   ]
 
-  created () {
-    this.getBusket ()
-    // console.log(this.$cookies.get('auth'))
-  }
-
   getBack() {
     if (!document.referrer) {
       return location.href = '/'
@@ -113,20 +103,15 @@ export default class Lk extends Vue {
     }
   }
 
-  getBusket () {
-    let data = getBusketFromLocalStorage()
-    this.$store.dispatch ('busket/initList', data)
-  }
-
   @Watch('$route')
-  changeScrollTo () {
-    window.scrollTo ({
+  changeScrollTo() {
+    window.scrollTo({
       top: 0,
       left: 0
     })
   }
 
-  get whatIsPape () {
+  get whatIsPape() {
     return this.items[this.model]['title']
   }
 }
