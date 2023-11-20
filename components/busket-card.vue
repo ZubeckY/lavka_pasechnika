@@ -1,6 +1,6 @@
 <template>
   <v-card class="d-flex flex-row custom-rounded pa-2 mb-2" width="100%" elevation="0"
-          @click="routing(linkProductPage(listItem.id, listItem['sub_product'].id))">
+          @click="routing(linkProductPage(listItem.main_product_id, listItem['sub_product'].id))">
     <v-card class="custom-rounded" elevation="0" color="#e5e5e5"
             width="100px" height="100px" :img="JSON.parse(listItem['sub_product'].images)[0]">
     </v-card>
