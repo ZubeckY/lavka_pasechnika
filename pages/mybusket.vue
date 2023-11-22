@@ -51,38 +51,6 @@
 
     <div class="ml-8" v-if="itemsCount > 0">
       <div>
-        <v-card class="d-flex align-center custom-rounded pl-4 pr-3"
-                elevation="0" width="300px" height="50px">
-          <v-card-subtitle style="font-size: 18px">Получатель</v-card-subtitle>
-          <v-spacer/>
-          <v-btn class="font-weight-bold text-none custom-rounded"
-                 min-height="0" height="30px" width="140px" color="#26ae60"
-                 dark style="font-size: 16px; letter-spacing: .3px">
-            Заполнить
-          </v-btn>
-        </v-card>
-
-        <v-card class="d-flex align-center custom-rounded pl-4 pr-3 mt-4"
-                elevation="0" width="300px" height="50px">
-          <v-card-subtitle style="font-size: 18px">Доставка</v-card-subtitle>
-          <v-spacer/>
-          <v-btn class="font-weight-bold text-none custom-rounded"
-                 min-height="0" height="30px" width="140px" color="#26ae60"
-                 dark style="font-size: 16px; letter-spacing: .3px">
-            Выбрать
-          </v-btn>
-        </v-card>
-
-        <v-card class="d-flex flex-row align-center custom-rounded pl-4 pr-3 mt-4"
-                elevation="0" width="300px" height="50px">
-          <v-text-field class="custom-rounded" label="Промокод"
-                        hide-details dense outlined color="primary"/>
-          <v-btn class="ml-2" min-width="0" min-height="0"
-                 width="40px" height="40px" color="#26ae60" dark>
-            <v-icon>mdi-send</v-icon>
-          </v-btn>
-        </v-card>
-
         <v-card class="d-flex flex-column custom-rounded pl-4 pr-3 py-3 mt-4"
                 elevation="0" width="300px">
           <v-card-subtitle class="d-flex flex-row justify-space-between font-weight-bold"
@@ -107,9 +75,19 @@
           </v-card-title>
         </v-card>
 
-        <v-btn class="text-none mt-4" width="300px" height="45px"
-               color="#26ae60" dark style="font-size: 16px; letter-spacing: .3px" @click="generatePay">
-          Оформить заказ
+        <v-card class="d-flex flex-row align-center custom-rounded pl-4 pr-3 mt-4"
+                elevation="0" width="300px" height="50px">
+          <v-text-field class="custom-rounded" label="Промокод"
+                        hide-details dense outlined color="primary"/>
+          <v-btn class="ml-2" min-width="0" min-height="0"
+                 width="40px" height="40px" color="#26ae60" dark>
+            <v-icon>mdi-send</v-icon>
+          </v-btn>
+        </v-card>
+
+
+        <v-btn class="mt-4 text-none d-inline" width="300px" :height="isAuth ? '45px' : '55px'" v-html="orderButtonText"
+               color="#26ae60" dark style="font-size: 14px; letter-spacing: .3px; white-space: pre-line" @click="managerAuthORPay">
         </v-btn>
 
       </div>
@@ -125,6 +103,7 @@ import {Component, Vue, Watch} from "vue-property-decorator"
 })
 export default class Mybusket extends Vue {
   list: any = []
+  isAuth: boolean = false
   dialog: boolean = false
   discount: number = 0
   itemsCount: number = 0
@@ -148,6 +127,14 @@ export default class Mybusket extends Vue {
   initItems(data: any) {
     this.itemsCount = data.data.results.length ?? 0
     this.list = data.data.results
+  }
+
+  managerAuthORPay() {
+    return this.isAuth ? this.generatePay() : this.goToAuth()
+  }
+
+  goToAuth() {
+    console.log('going to auth')
   }
 
   async generatePay() {
@@ -195,6 +182,10 @@ export default class Mybusket extends Vue {
       total_price += item.count * item['sub_product'].price
     }
     return total_price
+  }
+
+  get orderButtonText () {
+    return this.isAuth ? 'Оформить заказ' : '<span style="border-bottom: .06cm white dashed;">Войти</span> или <span style="border-bottom: .06cm white dashed;">зарегестрироваться,</span> \ чтобы офорить заказ'
   }
 
   routing(link: string) {
