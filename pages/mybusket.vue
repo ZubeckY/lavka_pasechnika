@@ -152,6 +152,8 @@ export default class Mybusket extends Vue {
 
   async generatePay() {
     this.dialog = true
+    const cart_uuid = localStorage.getItem('cart_uuid')
+    const return_url = process.env.MAIN_LINK + `myorders?cart_uuid=${cart_uuid ? cart_uuid : ''}`
 
     await this.$store.dispatch(
       'orders/generatePayLink',
@@ -159,20 +161,17 @@ export default class Mybusket extends Vue {
         store: this.$store,
         value: this.priceWithoutDiscount,
         description: "Заказ №1",
-        return_url: location.href
+        return_url: return_url
       }
     ).then(async (data: any) => {
-      console.log(data)
-      await this.$store.dispatch(
-        'orders/createOrder',
-        {
-          Total_Value: this.priceWithoutDiscount,
-          payment_id: data.data.id,
-        }
-      )
+      // console.log(data)
+      const payment_id = data.data.id ? data.data.id : ''
+      const payment_status = data.data.paid ? data.data.paid : ''
 
-      window.open(data.data.confirmation.confirmation_url, '_blank')
-      // window.location.href = data.data.confirmation.confirmation_url
+      await this.$axios.post(process.env.MAIN_LINK + `api-products/order/?cart_uuid=${cart_uuid ? cart_uuid : ''}&payment_id=${payment_id}&payment_status=${payment_status}`,
+        {}, {}).then(() => {}).catch(() => {})
+
+      location.href = data.data.confirmation.confirmation_url
     }).catch((e) => {
       console.log(e)
     }).finally(() => {

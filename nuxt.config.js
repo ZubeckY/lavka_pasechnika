@@ -10,7 +10,7 @@ export default {
   },
   head: {
     titleTemplate: '%s - client',
-    title: 'client',
+    title: 'Лавка пасечника',
     htmlAttrs: {
       lang: 'ru'
     },

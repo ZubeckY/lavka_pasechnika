@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {v4 as uuidv4} from 'uuid';
-import * as process from "process";
 
 export const state = () => ({})
 
@@ -10,7 +9,7 @@ export const actions = {
   async generatePayLink(_conf: any, data: any) {
     try {
       const {value, description, return_url} = data
-      const yookassa_link = 'http://localhost:3003/api-payment/'
+      const yookassa_link = process.env.MAIN_LINK + 'api-payment/'
       const youkassa_config = {
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +40,7 @@ export const actions = {
   async checkOrderToPayment(_conf: any, data: any) {
     try {
       const {payment_id} = data
-      const yookassa_link = 'http://localhost:3003/api-payment/' + payment_id
+      const yookassa_link = process.env.MAIN_LINK + '/api-payment/' + payment_id
       const youkassa_config = {
         headers: {
           'Content-Type': 'application/json',
