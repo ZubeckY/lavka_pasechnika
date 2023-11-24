@@ -11,10 +11,9 @@
     </div>
 
     <div class="mt-3" style="width: 280px">
-      <v-carousel v-model="activeSlide" class="custom-rounded" style="width: 100%; max-width: 290px" height="210px"
-                  hide-delimiters>
-        <v-carousel-item v-for="(item, i) in getImages" :key="'city-image-'+i" :src="item">
-        </v-carousel-item>
+      <v-carousel v-model="activeSlide" class="custom-rounded" style="width: 100%; max-width: 290px"
+                  height="210px" hide-delimiters>
+        <v-carousel-item v-for="(item, i) in getImages" :key="'city-image-'+i" :src="item"/>
       </v-carousel>
 
 
@@ -77,7 +76,8 @@ export default class Locations extends Vue {
   }
 
   get getImages() {
-    return this.localMapping.length > 0 ? JSON.parse(this.localMapping[this.activeChip].images) : []
+    if (this.localMapping.length <= 0) return []
+    return JSON.parse(this.localMapping[this.activeChip].images.replace(/[\'\`]/g, '"'))
   }
 
   get getAddress() {

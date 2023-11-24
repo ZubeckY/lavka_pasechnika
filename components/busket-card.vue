@@ -2,14 +2,15 @@
   <v-card class="d-flex flex-row custom-rounded pa-2 mb-2" width="100%" elevation="0"
           @click="routing(linkProductPage(listItem['sub_product'].main_product_id, listItem['sub_product'].id))">
     <v-card class="custom-rounded" elevation="0" color="#e5e5e5"
-            width="100px" height="100px" :img="JSON.parse(listItem['sub_product'].images)[0]">
+            width="100px" height="100px" :img="getImages">
     </v-card>
 
     <div class="mt-2 ml-2">
-      <v-card-title class="font-weight-medium" style="font-size: 16px">{{listItem['sub_product'].title }}
+      <v-card-title class="font-weight-medium" style="font-size: 16px">{{ listItem['sub_product'].title }}
       </v-card-title>
       <v-card-subtitle>Цена: {{ listItem['sub_product'].price }} ₽</v-card-subtitle>
-      <v-card-text class="font-weight-regular">Подитог: {{ listItem.count * listItem['sub_product'].price }} ₽</v-card-text>
+      <v-card-text class="font-weight-regular">Подитог: {{ listItem.count * listItem['sub_product'].price }} ₽
+      </v-card-text>
     </div>
 
     <v-spacer/>
@@ -74,6 +75,12 @@ export default class BusketCard extends Vue {
       .finally(() => {
         this.$emit('initCart')
       })
+  }
+
+  get getImages() {
+    if (!this.listItem['sub_product']) return []
+    return JSON.parse(this.listItem['sub_product'].images).length ?
+      JSON.parse(this.listItem['sub_product'].images)[0].replace(/[\'\`]/g, '"') : []
   }
 
   routing(link: string) {

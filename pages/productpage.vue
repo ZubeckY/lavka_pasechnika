@@ -150,9 +150,7 @@
         <v-col class="ma-0 pa-0" cols="auto">
 
           <!-- Вес--загрузка -->
-          <v-card v-if="subProductsLoad"
-                  class="custom-rounded py-1 px-3"
-                  width="350px" height="275px">
+          <v-card v-if="subProductsLoad" class="custom-rounded py-1 px-3" width="350px" height="275px">
 
             <v-skeleton-loader class="mt-4" type="heading"/>
             <v-skeleton-loader class="mt-2" type="text" width="75px"/>

@@ -48,13 +48,15 @@
   </v-app>
 </template>
 <script lang="ts">
-import {Component, Vue, Watch} from "vue-property-decorator"
+import {Component, Provide, Vue, Watch} from "vue-property-decorator"
 
 @Component
 export default class Lk extends Vue {
-  user: any = {
+  @Provide() user: any = {
+    id: 1,
     isAdmin: true
   }
+
   model: number = 0
   items: any = [
     {

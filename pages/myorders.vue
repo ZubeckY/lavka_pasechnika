@@ -4,12 +4,13 @@
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator"
+import {Component, Inject, Vue} from "vue-property-decorator"
 
 @Component({
   layout: 'lk'
 })
 export default class Myorders extends Vue {
+  @Inject() user!: any;
   list: any = []
 
   async mounted() {
