@@ -52,19 +52,7 @@ export const actions = {
     } catch (e) {
       console.log(e)
     }
-  },
-
-  async createOrder(_conf: any, data: any) {
-    try {
-      let {Total_Value, payment_id} = data
-
-      let model = {
-        Total_Value: Total_Value,
-        payment_id: payment_id
-      }
-    } catch (e) {
-      console.log(e)
-    }
   }
+
 }
 export const getters = {}
