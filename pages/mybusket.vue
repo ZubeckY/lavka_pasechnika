@@ -35,12 +35,13 @@
         </v-card-text>
 
         <v-card-actions class="d-flex flex-column mx-auto mt-2" style="width: 220px;">
-          <v-btn class="font-weight-bold text-none custom-rounded" dark block height="40px"
-                 color="#26ae60" style="font-size: 16px; letter-spacing: .3px"
+          <v-btn class="font-weight-bold text-none custom-rounded"
+                 elevation="0" dark block height="40px" color="#26ae60"
+                 style="font-size: 16px; letter-spacing: .3px"
                  @click="routing('/allproducts')">
             К покупкам
           </v-btn>
-          <v-btn class="font-weight-bold text-none mt-2" text
+          <v-btn class="font-weight-bold text-none mt-2" text elevation="0"
                  color="#26ae60" style="font-size: 16px; letter-spacing: .3px"
                  @click="routing('/stockssale')">
             Акции и скидки
@@ -79,15 +80,14 @@
                 elevation="0" width="300px" height="50px">
           <v-text-field class="custom-rounded" label="Промокод"
                         hide-details dense outlined color="primary"/>
-          <v-btn class="ml-2" min-width="0" min-height="0"
+          <v-btn elevation="0" class="ml-2" min-width="0" min-height="0"
                  width="40px" height="40px" color="#26ae60" dark>
             <v-icon>mdi-send</v-icon>
           </v-btn>
         </v-card>
 
-
-        <v-btn class="mt-4 text-none d-inline" width="300px" :height="isAuth ? '45px' : '55px'" v-html="orderButtonText"
-               color="#26ae60" dark style="font-size: 14px; letter-spacing: .3px; white-space: pre-line" @click="managerAuthORPay">
+        <v-btn class="mt-4 text-none d-inline" color="#26ae60" width="300px" :height="isAuth ? '45px' : '55px'"
+               v-html="orderButtonText" elevation="0" @click="managerAuthORPay" style="font-size: 14px; letter-spacing: .3px; white-space: pre-line" dark>
         </v-btn>
 
       </div>
@@ -103,7 +103,7 @@ import {Component, Vue, Watch} from "vue-property-decorator"
 })
 export default class Mybusket extends Vue {
   list: any = []
-  isAuth: boolean = false
+  isAuth: boolean = true
   dialog: boolean = false
   discount: number = 0
   itemsCount: number = 0
@@ -156,7 +156,9 @@ export default class Mybusket extends Vue {
       const payment_status = data.data.paid ? data.data.paid : ''
 
       await this.$axios.post(process.env.MAIN_LINK + `api-products/order/?cart_uuid=${cart_uuid ? cart_uuid : ''}&payment_id=${payment_id}&payment_status=${payment_status}`,
-        {}, {}).then(() => {}).catch(() => {})
+        {}, {}).then(() => {
+      }).catch(() => {
+      })
 
       location.href = data.data.confirmation.confirmation_url
     }).catch((e) => {
@@ -184,7 +186,7 @@ export default class Mybusket extends Vue {
     return total_price
   }
 
-  get orderButtonText () {
+  get orderButtonText() {
     return this.isAuth ? 'Оформить заказ' : '<span style="border-bottom: .06cm white dashed;">Войти</span> или <span style="border-bottom: .06cm white dashed;">зарегестрироваться,</span> \ чтобы офорить заказ'
   }
 

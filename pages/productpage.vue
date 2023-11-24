@@ -314,6 +314,7 @@ export default class Productpage extends Vue {
       await this.initProduct(product)
       this.listAdvantage = this.item['advantages']
       this.subProducts = this.item['sub_products']
+      this.model = Number(sub_product - 1)
       await this.getDataFromCart()
 
     } catch (e) {

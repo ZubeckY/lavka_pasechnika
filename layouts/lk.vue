@@ -9,10 +9,7 @@
             <v-container>
 
               <div class="d-flex flex-row my-5" style="position:relative; left: -10px;">
-                <v-btn style="border-radius: 8px" @click="getBack" width="44px" height="44px"
-                       min-width="0" color="#26ae60" elevation="0" dark>
-                  <v-icon>mdi-chevron-left</v-icon>
-                </v-btn>
+                <button-back/>
                 <v-card-title class="ml-3">Личный кабинет — {{ whatIsPape }}</v-card-title>
               </div>
 
@@ -22,14 +19,14 @@
 
                   <v-list width="inherit" dense rounded>
                     <v-list-item-group v-model="model" active-class="my-green-color white--text" mandatory>
-                      <v-list-item v-for="(item, i) in items" :key="i" router :to="item.link">
+                      <v-list-item v-for="(item, i) in items" :key="'lk-router-item-'+i" :to="item.link"
+                                   v-if="getCondition(item)" :href="item.href" :target="item.target" router>
                         <v-list-item-icon class="mr-2">
                           <v-icon v-text="item.icon"></v-icon>
                         </v-list-item-icon>
                         <v-list-item-content style="font-size: 14px; line-height: 14px" class="font-weight-medium"
                                              v-text="item.text"/>
                       </v-list-item>
-
                     </v-list-item-group>
                   </v-list>
                 </v-card>
@@ -55,14 +52,11 @@ import {Component, Vue, Watch} from "vue-property-decorator"
 
 @Component
 export default class Lk extends Vue {
+  user: any = {
+    isAdmin: true
+  }
   model: number = 0
   items: any = [
-    {
-      icon: 'mdi-chart-donut',
-      title: 'Главная',
-      text: 'Главная',
-      link: '/lk'
-    },
     {
       icon: 'mdi-history',
       title: 'Мои заказы',
@@ -76,6 +70,15 @@ export default class Lk extends Vue {
       link: '/mybusket'
     },
     {
+      icon: 'mdi-chart-donut',
+      title: 'Админ панель',
+      text: 'Админ панель',
+      link: '',
+      href: process.env.API_ADMIN_LINK,
+      target: '_blank',
+      role: 'admin',
+    },
+    {
       icon: 'mdi-star-outline',
       title: 'Бонусные баллы',
       text: 'Бонусные баллы',
@@ -85,7 +88,7 @@ export default class Lk extends Vue {
       icon: 'mdi-moped-outline',
       title: 'Адрес доставки',
       text: 'Адрес доставки и личные данные',
-      link: '/adress-delivery'
+      link: '/profile-info'
     },
     {
       icon: 'mdi-exit-to-app',
@@ -95,19 +98,15 @@ export default class Lk extends Vue {
     },
   ]
 
-  getBack() {
-    if (!document.referrer) {
-      return location.href = '/'
-    } else {
-      return location.href = document.referrer
-    }
+  getCondition(item: any) {
+    if (!item.role) return true
+    return item.role === 'admin' && this.user.isAdmin
   }
 
   @Watch('$route')
   changeScrollTo() {
     window.scrollTo({
-      top: 0,
-      left: 0
+      top: 0, left: 0
     })
   }
 

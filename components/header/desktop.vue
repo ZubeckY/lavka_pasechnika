@@ -49,10 +49,8 @@
         </div>
 
         <div class="d-flex align-center ml-9 mt-3">
-          <v-btn @click="routing('/lk')"
-                 class="text-none font-weight-bold" dark
-                 elevation="1" min-width="0" height="30px"
-                 style="font-size: 12px; letter-spacing: -0.1px; border-radius: 8px" color="#26ae60">
+          <v-btn @click="routing('/myorders')" class="text-none font-weight-bold" dark
+                 elevation="0" min-width="0" height="30px" style="font-size: 12px; letter-spacing: -0.1px; border-radius: 8px" color="#26ae60">
             <v-icon class="mr-1" small>mdi-account-outline</v-icon>
             Личный кабинет
           </v-btn>

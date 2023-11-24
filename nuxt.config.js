@@ -58,6 +58,8 @@ export default {
   },
 
   proxy: {
+    '/auth/': { target: process.env.API_AUTH_LINK, pathRewrite: {'^/auth/': ''} },
+    '/admin/': { target: process.env.API_ADMIN_LINK, pathRewrite: {'^/admin/': ''} },
     '/api-payment/': { target: process.env.API_YOO_KASSA_LINK, pathRewrite: {'^/api-payment/': ''} },
     '/api-products/': { target: process.env.API_PRODUCTS_LINK, pathRewrite: {'^/api-products/': ''} }
   },
