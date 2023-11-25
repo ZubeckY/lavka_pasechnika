@@ -62,7 +62,7 @@
               <div style="width: 10px; height: 10px; border-radius: 50%; background: #31eca8; margin-bottom: 2px; margin-right: 7px;"></div>
               <div style="font-size: 10px">Пн-Вск 7:00-21:00</div>
             </div>
-            <div class="font-weight-bold mt-1" style="font-size: 15px">+7 (928) 960-61-50</div>
+            <a class="font-weight-bold mt-1" href="tel:+78002000564" style="font-size: 15px">+7 (800) 200-05-64</a>
           </div>
         </div>
       </div>

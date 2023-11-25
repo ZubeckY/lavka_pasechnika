@@ -54,7 +54,8 @@ import {Component, Provide, Vue, Watch} from "vue-property-decorator"
 export default class Lk extends Vue {
   @Provide() user: any = {
     id: 1,
-    isAdmin: true
+    isAdmin: true,
+    address: 'Адрес, город, улица, дом, индекс'
   }
 
   model: number = 0

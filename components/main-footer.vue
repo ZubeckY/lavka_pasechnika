@@ -23,7 +23,10 @@
           </div>
 
           <div>
-            <v-card-title class="my-4" style="font-size: 24px">+7 (918) 325-55-56</v-card-title>
+
+            <v-card-title class="my-4">
+              <a href="tel:+78002000564" style="color: black !important; font-size: 24px">+7 (800) 200-05-64</a>
+            </v-card-title>
             <v-btn class="text-none rounded-xxl" color="#26ae60" elevation="0"
                    style="font-size: 16px; letter-spacing: .1px" width="214px" height="40px" dark>
               Задать вопрос
