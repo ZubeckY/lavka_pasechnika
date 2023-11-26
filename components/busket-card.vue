@@ -38,7 +38,7 @@ export default class BusketCard extends Vue {
   @Prop() listItem?: any
 
   linkProductPage(product: any, sub_product: any) {
-    return `/productpage/?product=${product}&sub_product=${sub_product}`
+    return `/product/?product=${product}&sub_product=${sub_product}`
   }
 
   async countPlus() {

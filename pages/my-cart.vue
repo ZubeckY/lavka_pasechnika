@@ -38,7 +38,7 @@
           <v-btn class="font-weight-bold text-none custom-rounded"
                  elevation="0" dark block height="40px" color="#26ae60"
                  style="font-size: 16px; letter-spacing: .3px"
-                 @click="routing('/allproducts')">
+                 @click="routing('/catalog')">
             К покупкам
           </v-btn>
           <v-btn class="font-weight-bold text-none mt-2" text elevation="0"
@@ -86,8 +86,9 @@
           </v-btn>
         </v-card>
 
-        <v-btn class="mt-4 text-none d-inline" color="#26ae60" width="300px" :height="isAuth ? '45px' : '55px'"
-               v-html="orderButtonText" elevation="0" @click="managerAuthORPay" style="font-size: 14px; letter-spacing: .3px; white-space: pre-line" dark>
+        <v-btn class="mt-4 text-none d-inline" color="#26ae60" width="300px" :height="isUser ? '45px' : '55px'"
+               v-html="orderButtonText" elevation="0" @click="managerAuthORPay"
+               style="font-size: 14px; letter-spacing: .3px; white-space: pre-line" dark>
         </v-btn>
 
       </div>
@@ -97,14 +98,17 @@
 </template>
 <script lang="ts">
 import {Component, Inject, Vue} from "vue-property-decorator"
+import ReturnUrl from "~/assets/scripts/returnUrl"
+import cartItems from "~/assets/scripts/init/cartItems"
+import PriceWithoutDiscount from "~/assets/scripts/cart/priceWithoutDiscount"
+import PriceWithDiscount from "~/assets/scripts/cart/priceWithDiscount"
 
 @Component({
   layout: 'lk'
 })
-export default class Mybusket extends Vue {
+export default class MyCart extends Vue {
   @Inject() user!: any;
   list: any = []
-  isAuth: boolean = true
   dialog: boolean = false
   discount: number = 0
   itemsCount: number = 0
@@ -115,8 +119,7 @@ export default class Mybusket extends Vue {
   }
 
   async initCart() {
-    const cart_uuid = localStorage.getItem('cart_uuid')
-    await this.$axios.get(`/api-products/cart-item/?cart_uuid=${cart_uuid ? cart_uuid : ''}`)
+    await cartItems()
       .then((data) => {
         this.initItems(data)
       })
@@ -131,17 +134,15 @@ export default class Mybusket extends Vue {
   }
 
   managerAuthORPay() {
-    return this.isAuth ? this.generatePay() : this.goToAuth()
+    return this.isUser ? this.generatePay() : this.goToAuth()
   }
 
   goToAuth() {
-    console.log('going to auth')
+    this.$router.push('/auth')
   }
 
   async generatePay() {
     this.dialog = true
-    const cart_uuid = localStorage.getItem('cart_uuid')
-    const return_url = process.env.MAIN_LINK + `myorders?cart_uuid=${cart_uuid ? cart_uuid : ''}`
 
     await this.$store.dispatch(
       'orders/generatePayLink',
@@ -149,17 +150,17 @@ export default class Mybusket extends Vue {
         store: this.$store,
         value: this.priceWithoutDiscount,
         description: "Заказ №1",
-        return_url: return_url
+        return_url: ReturnUrl
       }
     ).then(async (data: any) => {
       // console.log(data)
       const payment_id = data.data.id ? data.data.id : ''
       const payment_status = data.data.paid ? data.data.paid : ''
 
-      await this.$axios.post(process.env.MAIN_LINK + `api-products/order/?cart_uuid=${cart_uuid ? cart_uuid : ''}&payment_id=${payment_id}&payment_status=${payment_status}`,
-        {}, {}).then(() => {
-      }).catch(() => {
-      })
+      // await this.$axios.post(process.env.MAIN_LINK + `api-products/order/?cart_uuid=${cart_uuid ? cart_uuid : ''}&payment_id=${payment_id}&payment_status=${payment_status}`,
+      //   {}, {}).then(() => {
+      // }).catch(() => {
+      // })
 
       location.href = data.data.confirmation.confirmation_url
     }).catch((e) => {
@@ -170,25 +171,19 @@ export default class Mybusket extends Vue {
   }
 
   get priceWithoutDiscount() {
-    let total_price = 0
-    for (let i = 0; i < this.list.length; i++) {
-      const item = this.list[i]
-      total_price += item.count * item['sub_product'].price
-    }
-    return total_price
+    return PriceWithoutDiscount(this.list)
   }
 
   get priceWithDiscount() {
-    let total_price = 0
-    for (let i = 0; i < this.list.length; i++) {
-      const item = this.list[i]
-      total_price += item.count * item['sub_product'].price
-    }
-    return total_price
+    return PriceWithDiscount(this.list)
   }
 
   get orderButtonText() {
-    return this.isAuth ? 'Оформить заказ' : '<span style="border-bottom: .06cm white dashed;">Войти</span> или <span style="border-bottom: .06cm white dashed;">зарегестрироваться,</span> \ чтобы офорить заказ'
+    return this.isUser ? 'Оформить заказ' : '<span style="border-bottom: .06cm white dashed;">Войти</span> или <span style="border-bottom: .06cm white dashed;">зарегестрироваться,</span> \ чтобы офорить заказ'
+  }
+
+  get isUser() {
+    return this.user?.id
   }
 
   routing(link: string) {

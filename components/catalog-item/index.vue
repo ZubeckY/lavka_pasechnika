@@ -81,7 +81,7 @@ export default class CatalogItem extends Vue {
   }
 
   linkProductPage(product: any, sub_product: any) {
-    return `/productpage/?product=${product}&sub_product=${sub_product}`
+    return `/product/?product=${product}&sub_product=${sub_product}`
   }
 
   routing(link: string) {

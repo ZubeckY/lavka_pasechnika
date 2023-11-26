@@ -10,6 +10,7 @@ export default class Gotoauthbutton extends Vue {
   orderButtonText: string = '<span style="border-bottom: .06cm white dashed;">Войти</span> или <span style="border-bottom: .06cm white dashed;">зарегестрироваться</span>'
 
   goToAuth() {
+    this.$router.push('/auth')
   }
 }
 </script>

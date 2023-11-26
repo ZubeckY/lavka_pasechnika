@@ -10,7 +10,7 @@
 
               <div class="d-flex flex-row my-5" style="position:relative; left: -10px;">
                 <button-back/>
-                <v-card-title class="ml-3">Личный кабинет — {{ whatIsPape }}</v-card-title>
+                <v-card-title class="ml-3">Личный кабинет — {{ whatIsPage }}</v-card-title>
               </div>
 
               <div class="d-flex flex-row">
@@ -22,7 +22,8 @@
                         <v-list-item-icon class="mr-2">
                           <v-icon v-text="item.icon"></v-icon>
                         </v-list-item-icon>
-                        <v-list-item-content class="font-weight-medium" style="font-size: 14px; line-height: 14px" v-text="item.text"/>
+                        <v-list-item-content class="font-weight-medium" style="font-size: 14px; line-height: 14px"
+                                             v-text="item.text"/>
                       </v-list-item>
                     </v-list-item-group>
                   </v-list>
@@ -45,62 +46,22 @@
   </v-app>
 </template>
 <script lang="ts">
+import lkMenu from "~/assets/scripts/static/lk-menu"
+import scrollToTopPage from "~/assets/scripts/scrollToTopPage"
 import {Component, Provide, Vue, Watch} from "vue-property-decorator"
 
 @Component
 export default class Lk extends Vue {
+  model: number = 0
+  items: any = lkMenu
   @Provide() user: any = {
     // id: 1,
     // isAdmin: true,
     // address: 'Адрес, город, улица, дом, индекс'
   }
 
-  model: number = 0
-  items: any = [
-    {
-      icon: 'mdi-history',
-      title: 'Мои заказы',
-      text: 'Мои заказы',
-      link: '/myorders'
-    },
-    {
-      icon: 'mdi-cart-outline',
-      title: 'Моя корзина',
-      text: 'Моя корзина',
-      link: '/mybusket'
-    },
-    {
-      icon: 'mdi-chart-donut',
-      title: 'Админ панель',
-      text: 'Админ панель',
-      link: '',
-      href: process.env.API_ADMIN_LINK,
-      target: '_blank',
-      role: 'admin',
-    },
-    {
-      icon: 'mdi-star-outline',
-      title: 'Бонусные баллы',
-      text: 'Бонусные баллы',
-      link: '/bonuscard'
-    },
-    {
-      icon: 'mdi-moped-outline',
-      title: 'Адрес доставки',
-      text: 'Адрес доставки и личные данные',
-      link: '/profile-info'
-    },
-    {
-      icon: 'mdi-exit-to-app',
-      title: 'Выход',
-      text: 'Выход',
-      link: '/?logout=true',
-      role: 'is_login'
-    },
-  ]
-
   getCondition(item: any) {
-    switch (item.role){
+    switch (item.role) {
       case 'admin':
         return this.user.isAdmin
       case 'is_login':
@@ -112,12 +73,10 @@ export default class Lk extends Vue {
 
   @Watch('$route')
   changeScrollTo() {
-    window.scrollTo({
-      top: 0, left: 0
-    })
+    scrollToTopPage()
   }
 
-  get whatIsPape() {
+  get whatIsPage() {
     return this.items[this.model]['title']
   }
 }

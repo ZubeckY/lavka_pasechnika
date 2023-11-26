@@ -68,7 +68,7 @@
             <v-card-title class="mb-3" style="font-size: 19px">Меню</v-card-title>
             <div class="d-flex flex-column">
               <a @click="routing('/')" style="font-size: 16px; line-height: 26px;">Главная</a>
-              <a @click="routing('/allproducts')" style="font-size: 16px; line-height: 26px;">Каталог</a>
+              <a @click="routing('/catalog')" style="font-size: 16px; line-height: 26px;">Каталог</a>
               <a @click="routing('/stockssale')" style="font-size: 16px; line-height: 26px;">Акции</a>
               <a style="font-size: 16px; line-height: 26px;">О магазине</a>
               <a style="font-size: 16px; line-height: 26px;">Отзывы</a>

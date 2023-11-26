@@ -34,8 +34,3 @@ import {Vue, Component, Watch} from 'vue-property-decorator'
 export default class Auth extends Vue {
 }
 </script>
-<style>
-.auth-button.v-btn::before {
-  background-color: transparent !important;
-}
-</style>

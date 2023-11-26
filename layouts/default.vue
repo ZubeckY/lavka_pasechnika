@@ -36,7 +36,7 @@
                 <v-card-actions class="pa-0">
                   <v-btn class="rounded-0 rounded-bl-lg font-weight-bold"
                          elevation="0" width="88%" height="60px" color="#26ae60"
-                         style="font-size: 18px; letter-spacing: .4px" @click="routing('/mybusket')" dark>
+                         style="font-size: 18px; letter-spacing: .4px" @click="routing('/my-cart')" dark>
                     Оформить заказ
                   </v-btn>
                   <v-btn color="black" text icon
@@ -56,7 +56,10 @@
   </v-app>
 </template>
 <script lang="ts">
+import CartItems from "~/assets/scripts/init/cartItems"
+import scrollToTopPage from "~/assets/scripts/scrollToTopPage"
 import {Component, Vue, Watch} from "vue-property-decorator"
+
 @Component
 export default class Default extends Vue {
   list: any = []
@@ -69,14 +72,14 @@ export default class Default extends Vue {
 
   @Watch('cartDialog')
   async initCart() {
-    const cart_uuid = localStorage.getItem('cart_uuid')
-    await this.$axios.get(`/api-products/cart-item/?cart_uuid=${cart_uuid ? cart_uuid : ''}`)
+    await CartItems()
       .then((data) => {
         this.initItems(data)
       })
       .catch((e) => {
         console.log(e)
-      }).finally(() => {
+      })
+      .finally(() => {
         this.$root.$emit('checkCart')
       })
   }
@@ -88,7 +91,7 @@ export default class Default extends Vue {
 
   @Watch('$route')
   changeScrollTo() {
-    window.scrollTo({top: 0, left: 0})
+    scrollToTopPage()
   }
 
   routing(link: string) {

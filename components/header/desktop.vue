@@ -49,7 +49,7 @@
         </div>
 
         <div class="d-flex align-center ml-9 mt-3">
-          <v-btn @click="routing('/myorders')" class="text-none font-weight-bold" dark
+          <v-btn @click="routing('/my-orders')" class="text-none font-weight-bold" dark
                  elevation="0" min-width="0" height="30px" style="font-size: 12px; letter-spacing: -0.1px; border-radius: 8px" color="#26ae60">
             <v-icon class="mr-1" small>mdi-account-outline</v-icon>
             Личный кабинет
@@ -69,7 +69,7 @@
 
       <div class="d-flex flex-row justify-space-between">
         <a @click="routing('/')">Главная</a>
-        <a @click="routing('/allproducts')">Каталог</a>
+        <a @click="routing('/catalog')">Каталог</a>
         <a @click="routing('')">Условия доставки и оплаты</a>
         <a @click="routing('/stockssale')">Акции</a>
         <a @click="routing('')">О магазине</a>

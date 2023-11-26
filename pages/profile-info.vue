@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="user.id" class="d-block">
+    <div v-if="isUser" class="d-block">
       <div>
         <v-card-title>Личная информация</v-card-title>
         <div class="mt-6" style="width: 430px">
@@ -16,10 +16,10 @@
           <v-card class="py-2" elevation="0">
             <div v-if="user.address">
               <div class="d-flex justify-space-between align-center mx-2">
-                <div>{{user.address}}</div>
+                <div>{{ user.address }}</div>
                 <div class="d-flex flex-row" style="max-width: 40px">
                   <v-btn icon color="success darken-1">
-                    <v-icon size="20" >mdi-pen</v-icon>
+                    <v-icon size="20">mdi-pen</v-icon>
                   </v-btn>
                 </div>
               </div>
@@ -60,5 +60,9 @@ import {Component, Inject, Vue} from "vue-property-decorator"
 })
 export default class ProfileInfo extends Vue {
   @Inject() user!: any;
+
+  get isUser() {
+    return this.user?.id
+  }
 }
 </script>

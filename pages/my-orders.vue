@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="user.id">
+    <div v-if="isUser">
       <order-card v-for="order in list" :key="'order'+order.id" :order="order"/>
     </div>
     <div v-else class="d-flex justify-center align-center" style="width: 60vw; max-width: 950px; height: 50vh">
@@ -14,12 +14,16 @@ import {Component, Inject, Vue} from "vue-property-decorator"
 @Component({
   layout: 'lk'
 })
-export default class Myorders extends Vue {
+export default class MyOrders extends Vue {
   @Inject() user!: any;
   list: any = []
 
   async mounted() {
-    this.user.id && await this.initOrders()
+    this.isUser && await this.initOrders()
+  }
+
+  get isUser() {
+    return this.user?.id
   }
 
   async initOrders() {

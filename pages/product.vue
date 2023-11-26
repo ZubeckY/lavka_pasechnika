@@ -243,7 +243,7 @@
                 </div>
 
                 <!-- Перейти в корзину -->
-                <v-btn class="custom-rounded text-none pa-0" @click="routing('/mybusket')"
+                <v-btn class="custom-rounded text-none pa-0" @click="routing('/my-cart')"
                        dark elevation="0" width="50%" height="inherit" color="#159d4f" style="letter-spacing: .3px">
                   <v-icon class="mr-2" style="font-size: 18px">mdi-briefcase-outline</v-icon>
                   Перейти <br> в корзину
@@ -411,7 +411,7 @@ export default class Productpage extends Vue {
   }
 
   linkProductPage(product: any, sub_product: any) {
-    return `/productpage/?product=${product}&sub_product=${sub_product}`
+    return `/product/?product=${product}&sub_product=${sub_product}`
   }
 
   routing(link: string) {
