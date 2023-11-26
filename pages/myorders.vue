@@ -1,6 +1,11 @@
 <template>
   <div>
-    <order-card v-for="order in list" :key="'order'+order.id" :order="order"/>
+    <div v-if="user.id">
+      <order-card v-for="order in list" :key="'order'+order.id" :order="order"/>
+    </div>
+    <div v-else class="d-flex justify-center align-center" style="width: 60vw; max-width: 950px; height: 50vh">
+      <gotoauthbutton/>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -14,7 +19,7 @@ export default class Myorders extends Vue {
   list: any = []
 
   async mounted() {
-    await this.initOrders()
+    this.user.id && await this.initOrders()
   }
 
   async initOrders() {

@@ -14,18 +14,15 @@
               </div>
 
               <div class="d-flex flex-row">
-                <v-card class="d-flex align-center custom-rounded"
-                        elevation="0" width="200px" height="295px">
-
-                  <v-list width="inherit" dense rounded>
+                <v-card class="d-flex align-center custom-rounded" elevation="0" width="200px" height="100%">
+                  <v-list style="border-radius: 15px !important" width="inherit" dense rounded>
                     <v-list-item-group v-model="model" active-class="my-green-color white--text" mandatory>
                       <v-list-item v-for="(item, i) in items" :key="'lk-router-item-'+i" :to="item.link"
                                    v-if="getCondition(item)" :href="item.href" :target="item.target" router>
                         <v-list-item-icon class="mr-2">
                           <v-icon v-text="item.icon"></v-icon>
                         </v-list-item-icon>
-                        <v-list-item-content style="font-size: 14px; line-height: 14px" class="font-weight-medium"
-                                             v-text="item.text"/>
+                        <v-list-item-content class="font-weight-medium" style="font-size: 14px; line-height: 14px" v-text="item.text"/>
                       </v-list-item>
                     </v-list-item-group>
                   </v-list>
@@ -53,9 +50,9 @@ import {Component, Provide, Vue, Watch} from "vue-property-decorator"
 @Component
 export default class Lk extends Vue {
   @Provide() user: any = {
-    id: 1,
-    isAdmin: true,
-    address: 'Адрес, город, улица, дом, индекс'
+    // id: 1,
+    // isAdmin: true,
+    // address: 'Адрес, город, улица, дом, индекс'
   }
 
   model: number = 0
@@ -97,13 +94,20 @@ export default class Lk extends Vue {
       icon: 'mdi-exit-to-app',
       title: 'Выход',
       text: 'Выход',
-      link: '/?logout=true'
+      link: '/?logout=true',
+      role: 'is_login'
     },
   ]
 
   getCondition(item: any) {
-    if (!item.role) return true
-    return item.role === 'admin' && this.user.isAdmin
+    switch (item.role){
+      case 'admin':
+        return this.user.isAdmin
+      case 'is_login':
+        return this.user.id
+      default:
+        return true
+    }
   }
 
   @Watch('$route')

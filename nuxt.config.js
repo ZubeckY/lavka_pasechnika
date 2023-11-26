@@ -34,6 +34,7 @@ export default {
   ],
 
   plugins: [
+    '~/plugins/v-mask.js'
   ],
 
   components: true,
@@ -150,12 +151,6 @@ export default {
         gifsicle: {
           interlaced: true
         }
-        // plugins: [
-        //   imageminMozjpeg ({
-        //     quality: 70,
-        //     progressive: true
-        //   })
-        // ]
       })
       if (!ctx.isDev) config.plugins.push(imageMinPlugin)
 
