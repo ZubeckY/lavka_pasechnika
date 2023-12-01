@@ -39,6 +39,7 @@ export default {
 
   plugins: [
     '~/plugins/v-mask.js',
+    '~/plugins/vue-meta.js',
     '~/plugins/vue-jsonld.js'
   ],
 
@@ -50,10 +51,15 @@ export default {
   ],
 
   modules: [
+    'nuxt-seo',
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     'nuxt-webfontloader',
     "cookie-universal-nuxt"
+  ],
+
+  seo: [
+
   ],
 
   axios: {

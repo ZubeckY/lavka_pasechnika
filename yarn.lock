@@ -4217,7 +4217,7 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   dependencies:
     ms "2.0.0"
 
-debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.4, debug@~4.3.1:
+debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.2.0, debug@^4.3.1, debug@^4.3.4, debug@~4.3.1:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.4.tgz#1319f6579357f2338d3337d2cdd4914bb5dcc865"
   integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==
@@ -7733,6 +7733,13 @@ nth-check@^2.0.1:
   integrity sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==
   dependencies:
     boolbase "^1.0.0"
+
+nuxt-seo@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/nuxt-seo/-/nuxt-seo-1.6.1.tgz#08e9365390d5eae5065bfbf88f272a104c88eb5d"
+  integrity sha512-GROnW5ntmmmmeOUCdYsmCEHJ+Wo0Sil+5ma4N5UVreXUTNNw9zZ9lJ6jO0/cDU24oo7nUvDAUNxzIqCjKKJoYQ==
+  dependencies:
+    debug "^4.2.0"
 
 nuxt-start@^2.17.1:
   version "2.17.1"
