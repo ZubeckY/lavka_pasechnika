@@ -72,11 +72,16 @@ export default class Locations extends Vue {
   }
 
   changeMapping() {
-    this.$emit('changeMapping', this.localMapping.length > 0 ? this.localMapping[this.activeChip]['address.map_link'] : '')
+    this.$emit('changeMapping', this.localMapping.length > 0 ? this.localMapping[this.activeChip]['address']['map_link'] : '')
   }
 
   get getImages() {
-    if (this.localMapping.length <= 0) return []
+    if (this.localMapping.length <= 0) {
+      return []
+    }
+    if (!JSON.parse(this.localMapping[this.activeChip].images.replace(/[\'\`]/g, '"').length)) {
+      return []
+    }
     return JSON.parse(this.localMapping[this.activeChip].images.replace(/[\'\`]/g, '"'))
   }
 

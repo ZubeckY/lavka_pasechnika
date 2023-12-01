@@ -4,10 +4,18 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default
 const isDev = process.env.NODE_ENV !== 'production' ?? false
 
 export default {
+  ssr: true,
   server: {
     host: '0.0.0.0',
     port: 3003
   },
+
+  components: true,
+  rootDir: __dirname,
+  serverMiddleware: [
+  ],
+
+
   head: {
     titleTemplate: '%s - client',
     title: 'Лавка пасечника',
@@ -25,19 +33,14 @@ export default {
     ]
   },
 
-  rootDir: __dirname,
-  serverMiddleware: [
-  ],
-
   css: [
     "~/assets/main.css"
   ],
 
   plugins: [
-    '~/plugins/v-mask.js'
+    '~/plugins/v-mask.js',
+    '~/plugins/vue-jsonld.js'
   ],
-
-  components: true,
 
   buildModules: [
     '@nuxt/typescript-build',
