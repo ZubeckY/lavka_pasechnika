@@ -72,7 +72,7 @@ export default class Locations extends Vue {
   }
 
   changeMapping() {
-    this.$emit('changeMapping', this.localMapping.length > 0 ? this.localMapping[this.activeChip]['address_map_link'] : '')
+    this.$emit('changeMapping', this.localMapping.length > 0 ? this.localMapping[this.activeChip]['address.map_link'] : '')
   }
 
   get getImages() {
@@ -85,11 +85,11 @@ export default class Locations extends Vue {
     const activeItem: any = this.localMapping[this.activeChip]
     const activeArray = []
 
-    activeArray.push(activeItem.address_region)
-    activeArray.push(activeItem.address_district)
-    activeArray.push(activeItem.address_city)
-    activeArray.push(activeItem.address_street)
-    activeArray.push(activeItem.address_home)
+    activeArray.push(activeItem.address.region)
+    activeArray.push(activeItem.address.district)
+    activeArray.push(activeItem.address.city)
+    activeArray.push(activeItem.address.street)
+    activeArray.push(activeItem.address.home)
 
     return (activeArray.filter(Boolean)).join(', ')
   }

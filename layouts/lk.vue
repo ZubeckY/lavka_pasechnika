@@ -56,14 +56,14 @@ export default class Lk extends Vue {
   items: any = lkMenu
   @Provide() user: any = {
     // id: 1,
-    // isAdmin: true,
+    // is_superuser: true,
     // address: 'Адрес, город, улица, дом, индекс'
   }
 
   getCondition(item: any) {
     switch (item.role) {
       case 'admin':
-        return this.user.isAdmin
+        return this.user.is_superuser
       case 'is_login':
         return this.user.id
       default:

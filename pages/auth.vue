@@ -35,6 +35,27 @@
       </div>
     </v-form>
 
+    <v-form v-if="step === 3" lazy-validation
+            v-model="formValid.name" ref="name">
+      <div class="mt-10 mx-auto" style="width: 260px">
+        <v-text-field v-model="firstName" label="Имя"
+                      required outlined dense
+                      placeholder="Иван"/>
+        <!--        @click="resetFormValidation" @input="resetFormValidation"-->
+
+        <v-text-field v-model="secondName" label="Фамилия"
+                      required outlined dense
+                      placeholder="Иванов"/>
+        <!--        @click="resetFormValidation" @input="resetFormValidation"-->
+      </div>
+      <v-card-actions class="d-flex justify-center pt-0">
+        <v-btn class="font-weight-medium text-none" width="260px" height="40px"
+               elevation="0" color="#26ae60" style="letter-spacing: .3px" dark>
+          Далее
+        </v-btn>
+      </v-card-actions>
+    </v-form>
+
     <div v-if="step < 3" class="d-flex justify-end mt-2 mx-auto" style="width: 260px">
       <v-btn class="text-none pa-0 ma-0" height="23px" min-height="none" @click="closeForm"
              text small style="letter-spacing: .4px; font-size: 13px">
@@ -55,6 +76,8 @@ export default class Authentication extends Vue {
   @Ref() otp!: HTMLDivElement[];
   step: number = 1
   phoneNumber: string = ''
+  firstName: string = ''
+  secondName: string = ''
   OTPNumber: string = ''
   rules: any = [
     (v: string) => !!v || 'Телефон является обязательным полем',
@@ -63,6 +86,7 @@ export default class Authentication extends Vue {
   formValid: any = {
     phone: false,
     otp: false,
+    name: false,
   }
   disableOTP: any = {
     form: false,
@@ -107,7 +131,7 @@ export default class Authentication extends Vue {
     return code
   }
 
-  async sendSMSCode (code: any) {
+  async sendSMSCode(code: any) {
     await this.$axios.post('', {})
       .then((data: any) => {
 
@@ -117,7 +141,7 @@ export default class Authentication extends Vue {
       })
   }
 
-  closeForm () {
+  closeForm() {
     this.$router.push('/')
   }
 
