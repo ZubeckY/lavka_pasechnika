@@ -283,15 +283,15 @@ export default class Productpage extends Vue {
   subProductsLoad: boolean = true
 
   async created() {
-    await this.initAll()
+    await this.asyncData()
   }
 
   mounted () {
-    this.$root.$on('checkCart', this.initAll)
+    this.$root.$on('checkCart', this.asyncData)
   }
 
   destroyed() {
-    return this.$root.$off('checkCart', this.initAll)
+    return this.$root.$off('checkCart', this.asyncData)
   }
 
   @Watch('model')
@@ -300,7 +300,8 @@ export default class Productpage extends Vue {
     return this.routing(this.linkProductPage(this.item.id, this.subProducts[this.model].id))
   }
 
-  async initAll() {
+
+  async asyncData() {
     try {
       let {product, sub_product}: any = this.$router.currentRoute.query
       if (!product && !sub_product) {
