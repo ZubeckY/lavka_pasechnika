@@ -197,7 +197,7 @@
                     </v-card-subtitle>
 
                     <v-card-text class="text-center ml-2" style="font-size: 13px">
-                      <span>{{ value ? value['price'] : '' }}</span> &nbsp;
+                      <span itemprop="price">{{ value ? value['price'] : '' }}</span> &nbsp;
                       <v-icon style="position:relative; left: -5px;" class="ma-0 pa-0" x-small>mdi-currency-rub</v-icon>
                     </v-card-text>
                   </div>
