@@ -6,6 +6,14 @@
 * {
   font-family: 'HelveticaNeueCyr', sans-serif !important;
 }
+:root {
+  --honey-primary: #26AE60;
+  --honey-secondary: #574F4F;
+  --honey-background: #fef6f2;
+  --honey-golden: #FCC000;
+  --honey-dark-brown: #411A04;
+  --honey-light-brown: #7F411A60;
+}
 /* */
 a {
   font-size: 14px;
