@@ -10,10 +10,13 @@
   --honey-primary: #26AE60;
   --honey-secondary: #574F4F;
   --honey-background: #fef6f2;
+  --honey-grey-card: #e0e0e0;
+  --honey-grey-card-dark: #787070;
   --honey-golden: #FCC000;
   --honey-dark-brown: #411A04;
   --honey-light-brown: #7F411A60;
 }
+
 /* */
 a {
   font-size: 14px;

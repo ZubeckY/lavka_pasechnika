@@ -58,28 +58,21 @@
     <section class="mt-5">
       <v-container>
         <v-card-title>Популярные товары</v-card-title>
-
         <div class="d-flex flex-row mt-4" v-if="isLoaded">
           <catalog-item-load v-for="i in limit" :key="i"/>
         </div>
-
         <div class="d-flex flex-row mt-4" v-else>
           <catalog-item v-for="(item, i) in items" :item="item" :key="i"/>
         </div>
-
       </v-container>
     </section>
 
     <section style="margin-top: 110px;">
       <v-container>
-        <div class="d-flex flex-row">
-
+        <div class="d-flex flex-row flex-wrap">
           <div>
-
             <v-card-title style="color: #411a04;">Семейная пасека <br> с 10-ти летней историей </v-card-title>
-
             <div class="my-4" style="width: 70px; height: 2px; background: #eb9f11"></div>
-
             <v-card-text class="font-weight-light" style="max-width: 620px; font-size: 16px; color: #411a04; line-height: 16px; letter-spacing: .1px !important">
               У нас есть цель — сделать наш родной Южный мёд таким же популярным, как Башкирский и Алтайский.
               У нас есть все условия и возможности ее добиться.
@@ -89,34 +82,27 @@
               Человечество не сможет и трёх лет продержаться, если с пчёлами что-то случиться, поэтому сейчас в условиях кризиса окружающей среды как никогда важно заботится об этом.
               Мы <br> постоянно сотрудничаем с НИИ в области пчеловодства и способствуем развитию селекционной работы в России в целом.
             </v-card-text>
-
             <v-card-subtitle class="font-weight-bold mt-4" style="color: #411a04; font-size: 16px; line-height: 14px">Квитко Николай Игнатьевич</v-card-subtitle>
             <v-card-text style="color:#eb9f11; font-size: 13px; line-height: 15px">основатель пасеки и пчеловод</v-card-text>
           </div>
 
-
           <div style="width: 500px; height: 330px; position: relative; top: -40px;">
             <img class="d-block" style="width: 100%; height: 100%" alt="#" src="~assets/images/company.png">
           </div>
-
         </div>
       </v-container>
     </section>
 
-    <section class="mt-6">
+    <section class="whyWe mt-6">
       <v-container>
         <v-card-title class="justify-center mb-2" style="color: #411a04; font-size: 28px; letter-spacing: -0.1px;">Почему выбирают нас?</v-card-title>
-        <v-card-text class="font-weight-regular text-center" style="color: #411a04; font-size: 18px; letter-spacing: -0.1px; line-height: 20px">
-          Медовая и натуральная продукция
+        <v-card-text class="font-weight-regular text-center" style="color: #411a04; font-size: 18px; letter-spacing: -0.1px; line-height: 20px; white-space: pre-line">Медовая и натуральная продукция
           <span class="font-weight-bold">с высоким качеством</span>
-          <br>
           и историей происхождения
         </v-card-text>
-
-        <div class="mt-5" style="width: 1200px; height: 630px">
-          <img class="d-block" style="width: 100%; height: 100%" alt="#" src="~assets/images/why-me.png">
+        <div class="mt-5" style="max-width: 1200px; width: 100%; height: 630px">
+          <img class="d-block" style="width: 100%; height: 100%; object-fit: cover" alt="#" src="~assets/images/why-me.png">
         </div>
-
       </v-container>
     </section>
   </div>
@@ -151,4 +137,11 @@ export default class Pages extends Vue {
   }
 }
 </script>
+<style>
+@media (max-width: 1000px) {
+  .whyWe {
+    display: none;
+  }
+}
+</style>
 

@@ -1,21 +1,62 @@
 <template>
-  <div @click="$emit('click')" class="d-flex flex-row align-center">
-    <div style="width: 60px; height: 60px">
-      <img class="d-block" style="width: 100%; height: 100%;" alt="#" src="~../assets/images/LOGO_ЛАВКА.jpg">
-    </div>
-
-    <div style="width: 1px; height: 50px; background: #a79185; margin: 0 7px"></div>
-
-    <div class="d-flex flex-column" style="font-size: 12px; line-height: 13px; color: #4e2915 !important">
-      <div class="font-weight-medium">Семейный магазин</div>
-      <div class="font-weight-bold">натуральных продуктов</div>
-      <div class="font-weight-medium">пчеловодства с доставкой по РФ</div>
-    </div>
+  <div class="d-flex flex-row align-items-center justify-content-between">
+    <a class="logo" href="/">
+      <div class="logo-container d-flex flex-row align-items-center">
+        <img class="logo-img" src="/img/logo.svg" alt="logo" title="logo"/>
+        <div class="logo-delimiter"></div>
+        <div class="logo-title">Семейный магазин
+          <b>натуральных продуктов</b>
+          пчеловодства с доставкой по РФ
+        </div>
+      </div>
+    </a>
   </div>
 </template>
-<script lang="ts">
-import {Component, Vue} from "vue-property-decorator"
-@Component
-export default class Logo extends Vue {
+<script>
+export default {
+  name: "Logo"
 }
 </script>
+<style scoped>
+.logo {
+  text-decoration: none;
+}
+
+.logo-img {
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+}
+
+.logo-delimiter {
+  display: block;
+  width: 2px;
+  height: 50px;
+  margin: 0 14px;
+  background: var(--honey-light-brown);
+}
+
+.footerLogo .logo-delimiter {
+  margin: 0 5px;
+}
+
+.logo-title {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 13px;
+  letter-spacing: .1px;
+  white-space: pre-line;
+  color: var(--honey-dark-brown);
+}
+
+@media (max-width: 1199px) {
+  .header-logo .logo-title {
+    display: none;
+  }
+
+  .header-logo .logo-delimiter {
+    display: none;
+  }
+}
+</style>

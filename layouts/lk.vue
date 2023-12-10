@@ -3,7 +3,7 @@
     <v-main>
       <v-fade-transition>
         <v-card class="d-flex flex-column" elevation="0" height="100%" color="#fef6f2">
-          <header-desktop/>
+          <header-main/>
 
           <div style="flex: 1 1 auto;">
             <v-container>
@@ -39,7 +39,7 @@
             </v-container>
           </div>
 
-          <main-footer/>
+          <footer-main/>
         </v-card>
       </v-fade-transition>
     </v-main>

@@ -3,7 +3,6 @@
     <v-main>
       <v-fade-transition>
         <v-card class="d-flex flex-column" elevation="0" height="100%" color="#fef6f2">
-
           <header-main/>
 
           <div style="flex: 1 1 auto;">
@@ -41,8 +40,7 @@
                          style="font-size: 18px; letter-spacing: .4px" @click="routing('/my-cart')" dark>
                     Оформить заказ
                   </v-btn>
-                  <v-btn color="black" text icon
-                         @click="cartDialog = false">
+                  <v-btn @click="cartDialog = false" color="black" text icon>
                     <v-icon large>mdi-close</v-icon>
                   </v-btn>
                 </v-card-actions>
@@ -51,7 +49,7 @@
             </div>
           </v-overlay>
 
-          <main-footer/>
+          <footer-main/>
         </v-card>
       </v-fade-transition>
     </v-main>
