@@ -22,7 +22,7 @@
                 <div class="footerContacts-phone">
                   <a href="tel:+78002000564">+7 (800) 200-05-64</a>
                 </div>
-                <a class="footerContacts-askWe">Задать вопрос</a>
+                <a class="footerContacts-askWe white--text">Задать вопрос</a>
                 <div class="footerContacts-askWe__second">
                   <pulse-animation/>
                   <div class="footerContacts-askWe__second-title">Задайте нам
@@ -67,11 +67,15 @@
               Лавка-пасечника.РФ
             </div>
 
-            <img class="footerDownload-qr" src="https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Flavkapasechnika.ru%2F&chs=180x180&choe=UTF-8&chld=L|2"
+            <img class="footerDownload-qr"
+                 src="https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Flavkapasechnika.ru%2F&chs=180x180&choe=UTF-8&chld=L|2"
                  rel="nofollow" alt="qr code">
 
-            <div class="footerDownload-text">Нажмите и скачайте бесплатное
-              приложение Лавка-Пасечника.РФ
+            <div class="footerDownload-text">
+              <span class="desktop">Наведите камеру и скачайте бесплатное
+                приложение Лавка-Пасечника.РФ</span>
+              <span class="mobile">Нажмите и скачайте бесплатное
+              приложение Лавка-Пасечника.РФ</span>
             </div>
 
             <div class="footerDownload-platform">
@@ -304,8 +308,17 @@ export default {
   color: white;
   font-size: 18px;
   font-weight: 600;
+  margin-top: 15px;
   text-align: center;
   white-space: pre-line;
+}
+
+.footerDownload-qr {
+  display: block;
+  width: 120px;
+  height: 120px;
+  margin: 20px auto;
+  border-radius: 13px;
 }
 
 .footerDownload-text {
@@ -314,6 +327,16 @@ export default {
   font-size: 12px;
   line-height: 1.2;
   text-align: center;
+  margin-bottom: 15px;
+}
+
+.footerDownload-text .desktop {
+  display: block;
+  white-space: pre-line;
+}
+
+.footerDownload-text .mobile {
+  display: none;
   white-space: pre-line;
 }
 
@@ -376,6 +399,28 @@ export default {
 
   .footerMenu {
     margin-bottom: 20px;
+  }
+
+  .footerDownload {
+    width: 90%;
+    height: auto;
+    padding-bottom: 15px;
+  }
+
+  .footerDownload-qr {
+    display: none;
+  }
+
+  .footerDownload-text .desktop {
+    display: none;
+  }
+
+  .footerDownload-text .mobile {
+    display: block;
+  }
+
+  .footerDownload-platform {
+    justify-content: space-around;
   }
 
   .footerMazur-container {

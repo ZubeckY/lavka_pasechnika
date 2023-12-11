@@ -1,6 +1,6 @@
 <template>
   <header class="header header-desktop">
-    <v-container class="header-container container">
+    <v-container class="header-container">
 
       <div class="header-wrapper d-flex flex-row align-center justify-space-between">
         <a class="logo" href="/">
