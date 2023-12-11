@@ -14,7 +14,7 @@
           <a class="headerUtility-notifications-link" href="#">
             <img class="headerUtility-notifications" src="/img/notifications.svg" alt="notifications" title="notifications">
           </a>
-          <a class="headerUtility-personal-link" href="#">
+          <a class="headerUtility-personal-link" href="/profile-info">
             <img class="headerUtility-personal" src="/img/personal_mobile.svg" alt="personal" title="personal">
           </a>
         </div>

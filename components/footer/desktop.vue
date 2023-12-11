@@ -67,7 +67,8 @@
               Лавка-пасечника.РФ
             </div>
 
-            <img class="footerDownload-qr" src="#" alt="#">
+            <img class="footerDownload-qr" src="https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Flavkapasechnika.ru%2F&chs=180x180&choe=UTF-8&chld=L|2"
+                 rel="nofollow" alt="qr code">
 
             <div class="footerDownload-text">Нажмите и скачайте бесплатное
               приложение Лавка-Пасечника.РФ
